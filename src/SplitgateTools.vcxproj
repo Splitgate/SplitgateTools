@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Development|x64">
+      <Configuration>Development</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{9a9e06a2-b5f3-41af-a966-8e39ff543660}</ProjectGuid>
+    <RootNamespace>SplitgateTools</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Development|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)Build\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)Build\$(Configuration)\Intermediate\</IntDir>
+    <TargetName>version</TargetName>
+    <AllProjectIncludesArePublic>false</AllProjectIncludesArePublic>
+    <PublicIncludeDirectories>$(PublicIncludeDirectories)</PublicIncludeDirectories>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Development|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>DEVELOPMENT;_CRT_SECURE_NO_WARNINGS;NDEBUG;SplitgateTools_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <AdditionalIncludeDirectories>$(ProjectDir)Utilities/imgui;$(ProjectDir);$(ProjectDir)Engine/Core;$(ProjectDir)Utilities;$(ProjectDir)SplitgateTools</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>5103;26495;</DisableSpecificWarnings>
+      <LanguageStandard_C>stdclatest</LanguageStandard_C>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableUAC>false</EnableUAC>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="Engine\ApplicationCore\FWindowsWindow.cpp" />
+    <ClCompile Include="Engine\Core\FMemory.cpp" />
+    <ClCompile Include="Engine\Core\Misc\FApp.cpp" />
+    <ClCompile Include="Engine\Core\UObject\FName.cpp" />
+    <ClCompile Include="Engine\Core\UObject\FWeakObjectPtr.cpp" />
+    <ClCompile Include="Engine\Core\UObject\UClass.cpp" />
+    <ClCompile Include="Engine\Core\UObject\UFunction.cpp" />
+    <ClCompile Include="Engine\Core\UObject\UObject.cpp" />
+    <ClCompile Include="Engine\Core\UObject\UStruct.cpp" />
+    <ClCompile Include="Engine\Core\UObject\XProperty.cpp" />
+    <ClCompile Include="Engine\GameFramework\AActor.cpp" />
+    <ClCompile Include="Engine\GameFramework\AController.cpp" />
+    <ClCompile Include="Engine\GameFramework\AGameStateBase.cpp" />
+    <ClCompile Include="Engine\GameFramework\APlayerController.cpp" />
+    <ClCompile Include="Engine\Kismet\UGameplayStatics.cpp" />
+    <ClCompile Include="Engine\Misc\FNetworkVersion.cpp" />
+    <ClCompile Include="Engine\RHI\FWindowsDynamicRHI.cpp" />
+    <ClCompile Include="Engine\UEngine.cpp" />
+    <ClCompile Include="Engine\UGameEngine.cpp" />
+    <ClCompile Include="Engine\UWorld.cpp" />
+    <ClCompile Include="SplitgateTools\Renderer.cpp" />
+    <ClCompile Include="Games\BaseGame.cpp" />
+    <ClCompile Include="Games\Splitgate\Splitgate.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="SplitgateTools\SplitgateTools.cpp" />
+    <ClCompile Include="SplitgateTools\UI\UIElement.cpp" />
+    <ClCompile Include="Utilities\imgui\backends\imgui_impl_dx11.cpp" />
+    <ClCompile Include="Utilities\imgui\backends\imgui_impl_dx12.cpp" />
+    <ClCompile Include="Utilities\imgui\backends\imgui_impl_win32.cpp" />
+    <ClCompile Include="Utilities\imgui\imgui.cpp" />
+    <ClCompile Include="Utilities\imgui\imgui_demo.cpp" />
+    <ClCompile Include="Utilities\imgui\imgui_draw.cpp" />
+    <ClCompile Include="Utilities\imgui\imgui_tables.cpp" />
+    <ClCompile Include="Utilities\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="Utilities\Memory\Memory.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="Utilities\spdlog\fmt\bundled\fmt.license.rst" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Engine\ApplicationCore\FWindowsWindow.h" />
+    <ClInclude Include="Engine\Core\Containers\FString.h" />
+    <ClInclude Include="Engine\Core\Containers\TArray.h" />
+    <ClInclude Include="Engine\Core\FMemory.h" />
+    <ClInclude Include="Engine\Core\Math\FVector.h" />
+    <ClInclude Include="Engine\Core\Misc\FApp.h" />
+    <ClInclude Include="Engine\Core\Misc\FGuid.h" />
+    <ClInclude Include="Engine\Core\UObject\FName.h" />
+    <ClInclude Include="Engine\Core\UObject\FWeakObjectPtr.h" />
+    <ClInclude Include="Engine\Core\UObject\ObjectMacros.h" />
+    <ClInclude Include="Engine\Core\UObject\UClass.h" />
+    <ClInclude Include="Engine\Core\UObject\UFunction.h" />
+    <ClInclude Include="Engine\Core\UObject\UObject.h" />
+    <ClInclude Include="Engine\Core\UObject\UStruct.h" />
+    <ClInclude Include="Engine\Core\UObject\XProperty.h" />
+    <ClInclude Include="Engine\GameFramework\AActor.h" />
+    <ClInclude Include="Engine\GameFramework\AController.h" />
+    <ClInclude Include="Engine\GameFramework\AGameStateBase.h" />
+    <ClInclude Include="Engine\GameFramework\APlayerController.h" />
+    <ClInclude Include="Engine\Kismet\UGameplayStatics.h" />
+    <ClInclude Include="Engine\Misc\FNetworkVersion.h" />
+    <ClInclude Include="Engine\RHI\FWindowsDynamicRHI.h" />
+    <ClInclude Include="Engine\UConsole.h" />
+    <ClInclude Include="Engine\UEngine.h" />
+    <ClInclude Include="Engine\UGameEngine.h" />
+    <ClInclude Include="Engine\UGameViewportClient.h" />
+    <ClInclude Include="Engine\UWorld.h" />
+    <ClInclude Include="SplitgateTools\SplitgateTools.h" />
+    <ClInclude Include="SplitgateTools\Globals.h" />
+    <ClInclude Include="SplitgateTools\Renderer.h" />
+    <ClInclude Include="SplitgateTools\UI\UIElement.h" />
+    <ClInclude Include="Games\BaseGame.h" />
+    <ClInclude Include="Games\Splitgate\Splitgate.h" />
+    <ClInclude Include="Utilities\imgui\backends\imgui_impl_dx11.h" />
+    <ClInclude Include="Utilities\imgui\backends\imgui_impl_dx12.h" />
+    <ClInclude Include="Utilities\imgui\backends\imgui_impl_win32.h" />
+    <ClInclude Include="Utilities\imgui\imconfig.h" />
+    <ClInclude Include="Utilities\imgui\imgui.h" />
+    <ClInclude Include="Utilities\imgui\imgui_internal.h" />
+    <ClInclude Include="Utilities\imgui\imstb_rectpack.h" />
+    <ClInclude Include="Utilities\imgui\imstb_textedit.h" />
+    <ClInclude Include="Utilities\imgui\imstb_truetype.h" />
+    <ClInclude Include="Utilities\Memory\Hook.h" />
+    <ClInclude Include="Utilities\Memory\Memory.h" />
+    <ClInclude Include="Utilities\Memory\Signature.h" />
+    <ClInclude Include="Utilities\spdlog\async.h" />
+    <ClInclude Include="Utilities\spdlog\async_logger-inl.h" />
+    <ClInclude Include="Utilities\spdlog\async_logger.h" />
+    <ClInclude Include="Utilities\spdlog\cfg\argv.h" />
+    <ClInclude Include="Utilities\spdlog\cfg\env.h" />
+    <ClInclude Include="Utilities\spdlog\cfg\helpers-inl.h" />
+    <ClInclude Include="Utilities\spdlog\cfg\helpers.h" />
+    <ClInclude Include="Utilities\spdlog\common-inl.h" />
+    <ClInclude Include="Utilities\spdlog\common.h" />
+    <ClInclude Include="Utilities\spdlog\details\backtracer-inl.h" />
+    <ClInclude Include="Utilities\spdlog\details\backtracer.h" />
+    <ClInclude Include="Utilities\spdlog\details\circular_q.h" />
+    <ClInclude Include="Utilities\spdlog\details\console_globals.h" />
+    <ClInclude Include="Utilities\spdlog\details\file_helper-inl.h" />
+    <ClInclude Include="Utilities\spdlog\details\file_helper.h" />
+    <ClInclude Include="Utilities\spdlog\details\fmt_helper.h" />
+    <ClInclude Include="Utilities\spdlog\details\log_msg-inl.h" />
+    <ClInclude Include="Utilities\spdlog\details\log_msg.h" />
+    <ClInclude Include="Utilities\spdlog\details\log_msg_buffer-inl.h" />
+    <ClInclude Include="Utilities\spdlog\details\log_msg_buffer.h" />
+    <ClInclude Include="Utilities\spdlog\details\mpmc_blocking_q.h" />
+    <ClInclude Include="Utilities\spdlog\details\null_mutex.h" />
+    <ClInclude Include="Utilities\spdlog\details\os-inl.h" />
+    <ClInclude Include="Utilities\spdlog\details\os.h" />
+    <ClInclude Include="Utilities\spdlog\details\periodic_worker-inl.h" />
+    <ClInclude Include="Utilities\spdlog\details\periodic_worker.h" />
+    <ClInclude Include="Utilities\spdlog\details\registry-inl.h" />
+    <ClInclude Include="Utilities\spdlog\details\registry.h" />
+    <ClInclude Include="Utilities\spdlog\details\synchronous_factory.h" />
+    <ClInclude Include="Utilities\spdlog\details\tcp_client-windows.h" />
+    <ClInclude Include="Utilities\spdlog\details\tcp_client.h" />
+    <ClInclude Include="Utilities\spdlog\details\thread_pool-inl.h" />
+    <ClInclude Include="Utilities\spdlog\details\thread_pool.h" />
+    <ClInclude Include="Utilities\spdlog\details\udp_client-windows.h" />
+    <ClInclude Include="Utilities\spdlog\details\udp_client.h" />
+    <ClInclude Include="Utilities\spdlog\details\windows_include.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bin_to_hex.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bundled\args.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bundled\argv.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bundled\backtracer-inl.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bundled\backtracer.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bundled\base.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bundled\bin_to_hex.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bundled\chrono.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bundled\circular_q.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bundled\color.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bundled\compile.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bundled\console_globals.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bundled\core.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bundled\details\backtracer-inl.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bundled\details\backtracer.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bundled\details\circular_q.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bundled\details\console_globals.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bundled\details\file_helper-inl.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bundled\details\file_helper.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bundled\details\fmt_helper.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bundled\details\log_msg-inl.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bundled\details\log_msg.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bundled\details\log_msg_buffer-inl.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bundled\details\log_msg_buffer.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bundled\details\mpmc_blocking_q.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bundled\details\null_mutex.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bundled\details\os-inl.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bundled\details\os.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bundled\details\periodic_worker-inl.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bundled\details\periodic_worker.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bundled\details\registry-inl.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bundled\details\registry.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bundled\details\synchronous_factory.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bundled\details\tcp_client-windows.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bundled\details\tcp_client.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bundled\details\thread_pool-inl.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bundled\details\thread_pool.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bundled\details\udp_client-windows.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bundled\details\udp_client.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bundled\details\windows_include.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bundled\env.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bundled\file_helper-inl.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bundled\file_helper.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bundled\fmt.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bundled\fmt_helper.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bundled\format-inl.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bundled\format.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bundled\helpers-inl.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bundled\helpers.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bundled\locale.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bundled\log_msg-inl.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bundled\log_msg.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bundled\log_msg_buffer-inl.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bundled\log_msg_buffer.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bundled\mpmc_blocking_q.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bundled\null_mutex.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bundled\os-inl.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bundled\os.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bundled\ostr.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bundled\ostream.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bundled\periodic_worker-inl.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bundled\periodic_worker.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bundled\printf.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bundled\ranges.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bundled\registry-inl.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bundled\registry.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bundled\std.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bundled\synchronous_factory.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bundled\tcp_client-windows.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bundled\tcp_client.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bundled\thread_pool-inl.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bundled\thread_pool.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bundled\udp_client-windows.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bundled\udp_client.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bundled\windows_include.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\bundled\xchar.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\chrono.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\compile.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\fmt.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\ostr.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\ranges.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\std.h" />
+    <ClInclude Include="Utilities\spdlog\fmt\xchar.h" />
+    <ClInclude Include="Utilities\spdlog\formatter.h" />
+    <ClInclude Include="Utilities\spdlog\fwd.h" />
+    <ClInclude Include="Utilities\spdlog\logger-inl.h" />
+    <ClInclude Include="Utilities\spdlog\logger.h" />
+    <ClInclude Include="Utilities\spdlog\mdc.h" />
+    <ClInclude Include="Utilities\spdlog\pattern_formatter-inl.h" />
+    <ClInclude Include="Utilities\spdlog\pattern_formatter.h" />
+    <ClInclude Include="Utilities\spdlog\sinks\android_sink.h" />
+    <ClInclude Include="Utilities\spdlog\sinks\ansicolor_sink-inl.h" />
+    <ClInclude Include="Utilities\spdlog\sinks\ansicolor_sink.h" />
+    <ClInclude Include="Utilities\spdlog\sinks\base_sink-inl.h" />
+    <ClInclude Include="Utilities\spdlog\sinks\base_sink.h" />
+    <ClInclude Include="Utilities\spdlog\sinks\basic_file_sink-inl.h" />
+    <ClInclude Include="Utilities\spdlog\sinks\basic_file_sink.h" />
+    <ClInclude Include="Utilities\spdlog\sinks\callback_sink.h" />
+    <ClInclude Include="Utilities\spdlog\sinks\daily_file_sink.h" />
+    <ClInclude Include="Utilities\spdlog\sinks\dist_sink.h" />
+    <ClInclude Include="Utilities\spdlog\sinks\dup_filter_sink.h" />
+    <ClInclude Include="Utilities\spdlog\sinks\hourly_file_sink.h" />
+    <ClInclude Include="Utilities\spdlog\sinks\kafka_sink.h" />
+    <ClInclude Include="Utilities\spdlog\sinks\mongo_sink.h" />
+    <ClInclude Include="Utilities\spdlog\sinks\msvc_sink.h" />
+    <ClInclude Include="Utilities\spdlog\sinks\null_sink.h" />
+    <ClInclude Include="Utilities\spdlog\sinks\ostream_sink.h" />
+    <ClInclude Include="Utilities\spdlog\sinks\qt_sinks.h" />
+    <ClInclude Include="Utilities\spdlog\sinks\ringbuffer_sink.h" />
+    <ClInclude Include="Utilities\spdlog\sinks\rotating_file_sink-inl.h" />
+    <ClInclude Include="Utilities\spdlog\sinks\rotating_file_sink.h" />
+    <ClInclude Include="Utilities\spdlog\sinks\sink-inl.h" />
+    <ClInclude Include="Utilities\spdlog\sinks\sink.h" />
+    <ClInclude Include="Utilities\spdlog\sinks\stdout_color_sinks-inl.h" />
+    <ClInclude Include="Utilities\spdlog\sinks\stdout_color_sinks.h" />
+    <ClInclude Include="Utilities\spdlog\sinks\stdout_sinks-inl.h" />
+    <ClInclude Include="Utilities\spdlog\sinks\stdout_sinks.h" />
+    <ClInclude Include="Utilities\spdlog\sinks\syslog_sink.h" />
+    <ClInclude Include="Utilities\spdlog\sinks\systemd_sink.h" />
+    <ClInclude Include="Utilities\spdlog\sinks\tcp_sink.h" />
+    <ClInclude Include="Utilities\spdlog\sinks\udp_sink.h" />
+    <ClInclude Include="Utilities\spdlog\sinks\wincolor_sink-inl.h" />
+    <ClInclude Include="Utilities\spdlog\sinks\wincolor_sink.h" />
+    <ClInclude Include="Utilities\spdlog\sinks\win_eventlog_sink.h" />
+    <ClInclude Include="Utilities\spdlog\spdlog-inl.h" />
+    <ClInclude Include="Utilities\spdlog\spdlog.h" />
+    <ClInclude Include="Utilities\spdlog\stopwatch.h" />
+    <ClInclude Include="Utilities\spdlog\tweakme.h" />
+    <ClInclude Include="Utilities\spdlog\version.h" />
+    <ClInclude Include="Utilities\Strings\Strings.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\packages\Detours.4.0.1\build\native\Detours.targets" Condition="Exists('..\packages\Detours.4.0.1\build\native\Detours.targets')" />
+  </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Detours.4.0.1\build\native\Detours.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Detours.4.0.1\build\native\Detours.targets'))" />
+  </Target>
+</Project>
