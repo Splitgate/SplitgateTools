@@ -16,3 +16,19 @@ UObject* UGameplayStatics::SpawnObject(UClass* ObjectClass, UObject* Outer)
 
 	return p.ReturnValue;
 }
+
+APlayerController* UGameplayStatics::GetPlayerController(UObject* WorldContenxtObject, int32_t LocalPlayerIndex)
+{
+	struct {
+		UObject* WorldContenxtObject;
+		int32_t LocalPlayerIndex;
+		APlayerController* ReturnValue;
+	} p = {
+		WorldContenxtObject, LocalPlayerIndex
+	};
+
+	UFunction* Func = StaticClass()->FindFunction(L"GetPlayerController");
+	DefaultObject()->ProcessEvent(Func, &p);
+
+	return p.ReturnValue;
+}

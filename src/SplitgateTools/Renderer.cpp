@@ -7,6 +7,9 @@
 #include "UI/System/VersionWindow.h"
 #include "UI/System/SystemVersionWindow.h"
 
+// Games
+#include "Games/BaseGame.h"
+
 // DirectX includes
 #include <dxgi.h>
 #include <dxgi1_4.h>
@@ -38,12 +41,7 @@ bool Renderer::SetupDirectX11()
 	DXGI_SWAP_CHAIN_DESC SwapChainDescription = {};
 	D3D_FEATURE_LEVEL FeatureLevel = D3D_FEATURE_LEVEL_11_0;
 
-	DXGI_MODE_DESC BufferDescription;
-	ZeroMemory(&BufferDescription, sizeof(DXGI_MODE_DESC));
-
-	BufferDescription.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-
-	SwapChainDescription.BufferDesc = BufferDescription;
+	SwapChainDescription.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 	SwapChainDescription.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
 	SwapChainDescription.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
 	SwapChainDescription.SampleDesc.Count = 1;
@@ -343,7 +341,12 @@ extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT uMs
 LRESULT Renderer::DXShared::WndProc_Hook(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 	if (uMsg == WM_KEYUP && wParam == VK_F1)
+	{
 		ShowUI = !ShowUI;
+		
+		if (Game)
+			Game->OnUIVisibilityChange(ShowUI);
+	}
 
 	if (ShowUI)
 		ImGui_ImplWin32_WndProcHandler(hWnd, uMsg, wParam, lParam);
@@ -417,6 +420,8 @@ void Renderer::ImGui_DrawAll()
 		}
 		if (ImGui::BeginMenu("Weapons"))
 		{
+			ImGui::SeparatorText("Levels");
+
 			if (ImGui::MenuItem("Weapon List"))
 			{
 			}

@@ -15,6 +15,9 @@
 #include "UObject/UFunction.h"
 #include "UObject/UStruct.h"
 
+#include "Engine/GameFramework/APlayerController.h"
+#include "Engine/UMG/UWidgetBlueprintLibrary.h"
+
 std::unique_ptr<BaseGame> BaseGame::Create()
 {
 	Init_PreGame();
@@ -73,4 +76,20 @@ void BaseGame::Init_PostEngine()
 	
 	UClass::Init_PostEngine();
 	UFunction::Init_PostEngine();
+
+	APlayerController::Init_PostEngine();
+}
+
+void BaseGame::OnUIVisibilityChange(bool bVisible)
+{
+	if (!World || !GWorld) return;
+
+	APlayerController* PlayerController = UGameplayStatics::GetPlayerController(GWorld, 0);
+	if (PlayerController)
+	{
+		if (bVisible)
+			UWidgetBlueprintLibrary::SetInputMode_UIOnly(PlayerController);
+		else
+			UWidgetBlueprintLibrary::SetInputMode_GameAndUI(PlayerController, nullptr, true, false);
+	}
 }

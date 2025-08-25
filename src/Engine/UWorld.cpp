@@ -2,7 +2,7 @@
 
 void UWorld::Init_PreEngine()
 {
-	Game->World = Memory::FindStringRef(L"_Leaks.txt")
-		.ReverseScan("48 8B ?? ?? ?? ?? ?? 48").Add(3).Rel32();
+	Game->World = Memory::FindStringRef(L"%03d_%s")
+		.ReverseScan("48 8B ?? ?? ?? ?? 02").Add(3).Rel32();
 	LOG_ADDRESS(Game->World, "GWorld");
 }

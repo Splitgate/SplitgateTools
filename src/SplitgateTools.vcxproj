@@ -84,6 +84,7 @@
     <ClCompile Include="Engine\RHI\FWindowsDynamicRHI.cpp" />
     <ClCompile Include="Engine\UEngine.cpp" />
     <ClCompile Include="Engine\UGameEngine.cpp" />
+    <ClCompile Include="Engine\UMG\UWidgetBlueprintLibrary.cpp" />
     <ClCompile Include="Engine\UWorld.cpp" />
     <ClCompile Include="SplitgateTools\Renderer.cpp" />
     <ClCompile Include="Games\BaseGame.cpp" />
@@ -135,6 +136,7 @@
     <ClInclude Include="Engine\UEngine.h" />
     <ClInclude Include="Engine\UGameEngine.h" />
     <ClInclude Include="Engine\UGameViewportClient.h" />
+    <ClInclude Include="Engine\UMG\UWidgetBlueprintLibrary.h" />
     <ClInclude Include="Engine\UWorld.h" />
     <ClInclude Include="SplitgateTools\SplitgateTools.h" />
     <ClInclude Include="SplitgateTools\Globals.h" />

@@ -3,7 +3,7 @@
 
 void SystemVersionWindow::Render()
 {
-    ImGui::SetWindowSize(ImVec2(240, 120));
+    ImGui::SetWindowSize(ImVec2(240, 140));
 
     ImVec2 Center = ImGui::GetMainViewport()->GetCenter();
     ImGui::SetWindowPos(Center, ImGuiCond_Appearing);
@@ -34,4 +34,6 @@ void SystemVersionWindow::Render()
         MSCVer.substr(0, 2).c_str(),
         MSCVer.substr(2, 2).c_str(),
         MSCVer.substr(4).c_str());
+
+    ImGui::TextWrapped("Avg %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 }

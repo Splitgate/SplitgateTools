@@ -14,6 +14,8 @@ public:
 	static void Init_PreGame();
 	virtual void Init_PreEngine();
 	virtual void Init_PostEngine();
+
+	virtual void OnUIVisibilityChange(bool bVisible);
 };
 
 inline std::unique_ptr<BaseGame> Game;

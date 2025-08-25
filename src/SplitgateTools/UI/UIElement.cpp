@@ -27,8 +27,11 @@ UIElement::UIElement(const char* InWindowName, bool InbCanHaveMultiple, bool Inb
 	{
 		if (bFoundWindow)
 		{
-			sprintf(WindowId, "%s %d", InWindowName, FoundCounter);
-			UE_LOG(LogInit, Warning, "Adding another window {}", std::string(WindowId));
+			char Buf[256];
+			sprintf(Buf, "%s###%d", WindowName, FoundCounter);
+			WindowName = Buf;
+
+			// UE_LOG(LogInit, Warning, "Adding another window {}", std::string(WindowName));
 		}
 
 		// Add an element
@@ -36,10 +39,6 @@ UIElement::UIElement(const char* InWindowName, bool InbCanHaveMultiple, bool Inb
 
 		OnOpen();
 	}
-
-	char Buf[256];
-	sprintf(Buf, "%s###%s", WindowName, WindowId);
-	WindowName = Buf;
 }
 
 UIElement::~UIElement()
