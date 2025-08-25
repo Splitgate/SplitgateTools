@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Development|x64">
@@ -67,6 +67,7 @@
     <ClCompile Include="Engine\ApplicationCore\FWindowsWindow.cpp" />
     <ClCompile Include="Engine\Core\FMemory.cpp" />
     <ClCompile Include="Engine\Core\Misc\FApp.cpp" />
+    <ClCompile Include="Engine\Core\Misc\FEngineVersion.cpp" />
     <ClCompile Include="Engine\Core\UObject\FName.cpp" />
     <ClCompile Include="Engine\Core\UObject\FWeakObjectPtr.cpp" />
     <ClCompile Include="Engine\Core\UObject\UClass.cpp" />
@@ -79,7 +80,7 @@
     <ClCompile Include="Engine\GameFramework\AGameStateBase.cpp" />
     <ClCompile Include="Engine\GameFramework\APlayerController.cpp" />
     <ClCompile Include="Engine\Kismet\UGameplayStatics.cpp" />
-    <ClCompile Include="Engine\Misc\FNetworkVersion.cpp" />
+    <ClCompile Include="Engine\Core\Misc\FNetworkVersion.cpp" />
     <ClCompile Include="Engine\RHI\FWindowsDynamicRHI.cpp" />
     <ClCompile Include="Engine\UEngine.cpp" />
     <ClCompile Include="Engine\UGameEngine.cpp" />
@@ -89,6 +90,8 @@
     <ClCompile Include="Games\Splitgate\Splitgate.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="SplitgateTools\SplitgateTools.cpp" />
+    <ClCompile Include="SplitgateTools\UI\System\SystemVersionWindow.cpp" />
+    <ClCompile Include="SplitgateTools\UI\System\VersionWindow.cpp" />
     <ClCompile Include="SplitgateTools\UI\UIElement.cpp" />
     <ClCompile Include="Utilities\imgui\backends\imgui_impl_dx11.cpp" />
     <ClCompile Include="Utilities\imgui\backends\imgui_impl_dx12.cpp" />
@@ -111,6 +114,7 @@
     <ClInclude Include="Engine\Core\FMemory.h" />
     <ClInclude Include="Engine\Core\Math\FVector.h" />
     <ClInclude Include="Engine\Core\Misc\FApp.h" />
+    <ClInclude Include="Engine\Core\Misc\FEngineVersion.h" />
     <ClInclude Include="Engine\Core\Misc\FGuid.h" />
     <ClInclude Include="Engine\Core\UObject\FName.h" />
     <ClInclude Include="Engine\Core\UObject\FWeakObjectPtr.h" />
@@ -125,7 +129,7 @@
     <ClInclude Include="Engine\GameFramework\AGameStateBase.h" />
     <ClInclude Include="Engine\GameFramework\APlayerController.h" />
     <ClInclude Include="Engine\Kismet\UGameplayStatics.h" />
-    <ClInclude Include="Engine\Misc\FNetworkVersion.h" />
+    <ClInclude Include="Engine\Core\Misc\FNetworkVersion.h" />
     <ClInclude Include="Engine\RHI\FWindowsDynamicRHI.h" />
     <ClInclude Include="Engine\UConsole.h" />
     <ClInclude Include="Engine\UEngine.h" />
@@ -135,6 +139,8 @@
     <ClInclude Include="SplitgateTools\SplitgateTools.h" />
     <ClInclude Include="SplitgateTools\Globals.h" />
     <ClInclude Include="SplitgateTools\Renderer.h" />
+    <ClInclude Include="SplitgateTools\UI\System\SystemVersionWindow.h" />
+    <ClInclude Include="SplitgateTools\UI\System\VersionWindow.h" />
     <ClInclude Include="SplitgateTools\UI\UIElement.h" />
     <ClInclude Include="Games\BaseGame.h" />
     <ClInclude Include="Games\Splitgate\Splitgate.h" />

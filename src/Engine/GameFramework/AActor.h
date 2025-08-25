@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "UObject/UObject.h"
+#include "Math/FVector.h"
 
 class AActor : public UObject
 {

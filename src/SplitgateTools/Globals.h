@@ -9,6 +9,7 @@
 
 //------ Compile time defines
 #define D3D12_ALLOWED false		// We dont want to use dx12 until we support it directly for the gui
+#define COMPILE_DATE __DATE__ " " __TIME__
 
 // Add custom log defines here, these contain nothing as they are used directly for the macro name and so intellisense picks them up
 #define LogInit

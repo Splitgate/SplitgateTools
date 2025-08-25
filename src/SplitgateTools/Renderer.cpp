@@ -1,6 +1,11 @@
 #include "Renderer.h"
 #include "UI/UIElement.h"
 #include "Memory/Hook.h"
+#include "Memory/Memory.h"
+
+// UI Elements
+#include "UI/System/VersionWindow.h"
+#include "UI/System/SystemVersionWindow.h"
 
 // DirectX includes
 #include <dxgi.h>
@@ -21,8 +26,6 @@
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "d3d12.lib")
 
-#pragma warning (disable : 6387)
-
 ////////////////////////////////////////////////////////////////////////////////////////
 /// DirectX 11 implementation
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -35,7 +38,12 @@ bool Renderer::SetupDirectX11()
 	DXGI_SWAP_CHAIN_DESC SwapChainDescription = {};
 	D3D_FEATURE_LEVEL FeatureLevel = D3D_FEATURE_LEVEL_11_0;
 
-	SwapChainDescription.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+	DXGI_MODE_DESC BufferDescription;
+	ZeroMemory(&BufferDescription, sizeof(DXGI_MODE_DESC));
+
+	BufferDescription.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+
+	SwapChainDescription.BufferDesc = BufferDescription;
 	SwapChainDescription.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
 	SwapChainDescription.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
 	SwapChainDescription.SampleDesc.Count = 1;
@@ -120,24 +128,20 @@ inline HRESULT Renderer::DX11::Present_Hook(IDXGISwapChain* Instance, UINT SyncI
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
 
+	//if (bShowDemo)
+	//{
+	//	ImGui::ShowDemoWindow(&bShowDemo);
+	//}
+
 	ImGui_DrawAll();
 	ImGui_VisbilityAlpha();
 
 	ImGui::Render();
-	DeviceContext->OMSetRenderTargets(1, &CurrentRenderTargetView, NULL);
+	DeviceContext->OMSetRenderTargets(1, &DX11::CurrentRenderTargetView, NULL);
 	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 
-	ImGuiIO& IO = ImGui::GetIO();
-	if (IO.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
-	{
-		// These two will cause a crash, would be nice to fix
-
-		ImGui::UpdatePlatformWindows();
-		ImGui::RenderPlatformWindowsDefault();
-	}
-
 	// Call Original
-	return DX11::Present(Instance, SyncInterval, Flags);;
+	return DX11::Present(Instance, SyncInterval, Flags);
 }
 
 HRESULT Renderer::DX11::ResizeBuffers_Hook(IDXGISwapChain* Instance, UINT BufferCount, UINT Width, UINT Height, DXGI_FORMAT NewFormat, UINT SwapChainFlags)
@@ -158,7 +162,7 @@ HRESULT Renderer::DX11::ResizeBuffers_Hook(IDXGISwapChain* Instance, UINT Buffer
 
 bool Renderer::SetupDirectX12()
 {
-	D3D_FEATURE_LEVEL MinimumFeatureLevel = D3D_FEATURE_LEVEL_11_0;
+	D3D_FEATURE_LEVEL MinimumFeatureLevel = D3D_FEATURE_LEVEL_12_0;
 
 	HRESULT FactoryResult = CreateDXGIFactory(__uuidof(IDXGIFactory), (void**)&DX12::Factory);
 	if (FAILED(FactoryResult))
@@ -202,19 +206,23 @@ bool Renderer::SetupDirectX12()
 	}
 
 	DXGI_MODE_DESC BufferDescription;
-	BufferDescription.RefreshRate.Numerator = 0;
-	BufferDescription.RefreshRate.Denominator = 0;
+	BufferDescription.Width = 0;
+	BufferDescription.Height = 0;
+	BufferDescription.RefreshRate.Numerator = 60;
+	BufferDescription.RefreshRate.Denominator = 1;
 	BufferDescription.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 	BufferDescription.ScanlineOrdering = DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED;
+	BufferDescription.Scaling = DXGI_MODE_SCALING_UNSPECIFIED;
 
 	DXGI_SWAP_CHAIN_DESC SwapChainDescription = {};
 	SwapChainDescription.BufferDesc = BufferDescription;
 	// MSAA Sample count
 	SwapChainDescription.SampleDesc.Count = 1;
 	SwapChainDescription.SampleDesc.Quality = 0;
-	SwapChainDescription.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT | DXGI_USAGE_SHADER_INPUT;
-	SwapChainDescription.BufferCount = 3;
+	SwapChainDescription.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
+	SwapChainDescription.BufferCount = 2;
 	SwapChainDescription.OutputWindow = Window;
+	SwapChainDescription.Windowed = true;
 	SwapChainDescription.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
 	SwapChainDescription.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
 
@@ -226,10 +234,17 @@ bool Renderer::SetupDirectX12()
 		return false;
 	}
 
-	PVOID* VTable = *reinterpret_cast<PVOID**>(DX12::SwapChain);
-	PVOID PresentFunc = VTable[DX12::PresentIndex];
-	PVOID ExecuteCommandListsFunc = VTable[DX12::ExecuteCommandListsIndex];
-	PVOID ResizeBuffersFunc = VTable[DX11::ResizeBuffersIndex];
+	//PVOID* VTable = *reinterpret_cast<PVOID**>(DX12::SwapChain);
+	uint64_t* MethodsTable = (uint64_t*)::calloc(150, sizeof(uint64_t));
+	memcpy(MethodsTable, *(uint64_t**)DX12::Device, 44 * sizeof(uint64_t));
+	memcpy(MethodsTable + 44, *(uint64_t**)DX12::CommandQueue, 19 * sizeof(uint64_t));
+	memcpy(MethodsTable + 44 + 19, *(uint64_t**)DX12::CommandAllocator, 9 * sizeof(uint64_t));
+	memcpy(MethodsTable + 44 + 19 + 9, *(uint64_t**)DX12::CommandQueue, 60 * sizeof(uint64_t));
+	memcpy(MethodsTable + 44 + 19 + 9 + 60, *(uint64_t**)DX12::SwapChain, 18 * sizeof(uint64_t));
+
+	uint64_t PresentFunc = MethodsTable[DX12::PresentIndex];
+	uint64_t ExecuteCommandListsFunc = MethodsTable[DX12::ExecuteCommandListsIndex];
+	uint64_t ResizeBuffersFunc = MethodsTable[DX12::ResizeBuffersIndex];
 
 	DX12::Present = decltype(DX12::Present)(PresentFunc);
 	DX12::ExecuteCommandLists = decltype(DX12::ExecuteCommandLists)(ExecuteCommandListsFunc);
@@ -246,14 +261,14 @@ bool Renderer::SetupDirectX12()
 	DX12::SwapChain->Release();
 	DX12::Device->Release();
 	DX12::CommandQueue->Release();
-	DX12::CommandAllocator->Release();
+	//DX12::CommandAllocator->Release();
 	DX12::CommandList->Release();
 	DX12::Factory->Release();
 
 	return true;
 }
 
-inline HRESULT Renderer::DX12::Present_Hook(IDXGISwapChain3* Instance, UINT SyncInterval, UINT Flags)
+inline HRESULT Renderer::DX12::Present_Hook(IDXGISwapChain* Instance, UINT SyncInterval, UINT Flags)
 {
 	static float Width = 0;
 	static float Height = 0;
@@ -268,7 +283,7 @@ inline HRESULT Renderer::DX12::Present_Hook(IDXGISwapChain3* Instance, UINT Sync
 	}
 
 	// Time to draw
-	ImGui_ImplDX11_NewFrame();
+	ImGui_ImplDX12_NewFrame();
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
 
@@ -277,25 +292,30 @@ inline HRESULT Renderer::DX12::Present_Hook(IDXGISwapChain3* Instance, UINT Sync
 
 	ImGui::Render();
 
-	//FrameContext& CurrentFrameContext = DX12::FrameContexts[Instance->GetCurrentBackBufferIndex()];
+	//UINT FrameIndex = DX12::Swapchain3->GetCurrentBackBufferIndex();
 	//
 	//D3D12_RESOURCE_BARRIER Barrier;
 	//Barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
 	//Barrier.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
-	//Barrier.Transition.pResource = CurrentFrameContext.main_render_target_resource;
+	//Barrier.Transition.pResource = DX12::BackBuffer[FrameIndex];
 	//Barrier.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
 	//Barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_PRESENT;
 	//Barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_RENDER_TARGET;
-	//DX12::CommandList->Reset(CurrentFrameContext.command_allocator, nullptr);
+	//DX12::CommandList->Reset(DX12::CommandAllocator[FrameIndex], nullptr);
 	//DX12::CommandList->ResourceBarrier(1, &Barrier);
 	//DX12::CommandList->OMSetRenderTargets(1, &CurrentFrameContext.main_render_target_descriptor, FALSE, nullptr);
 	//DX12::CommandList->SetDescriptorHeaps(1, &DX12::SrvHeapDesc);
-	//ImGui::Render();
+	//
 	//ImGui_ImplDX12_RenderDrawData(ImGui::GetDrawData(), DX12::CommandList);
+	//
 	//Barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;
 	//Barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_PRESENT;
 	//DX12::CommandList->ResourceBarrier(1, &Barrier);
 	//DX12::CommandList->Close();
+	//DX12::CommandQueue->ExecuteCommandLists(1, (ID3D12CommandList**)&DX12::CommandList);
+	//DX12::Swapchain3->Release();
+	//
+	//UE_LOG(LogInit, Warning, "DX12 Present Hook");
 
 	return DX12::Present(Instance, SyncInterval, Flags);
 }
@@ -359,30 +379,69 @@ void Renderer::ImGui_DrawAll()
 		return;
 	}
 
-	for (auto UIElement : UIElements)
-	{
-		if (!UIElement) continue;
-
-		ImGui::Begin()
-		UIElement->Render();
-	}
-
 	if (ImGui::BeginMainMenuBar())
 	{
 		if (ImGui::BeginMenu("[Splitgate]"))
 		{
-			if (ImGui::MenuItem("Game Info")) 
+			if (ImGui::MenuItem("Game Info"))
 			{
+				new VersionWindow();
 			}
-	
-			if (ImGui::MenuItem("Tool Info")) 
+
+			if (ImGui::MenuItem("Tool Info"))
 			{
+				new SystemVersionWindow();
 			}
-	
+
+			//if (ImGui::MenuItem("ImGui Demo"))
+			//{
+			//	bShowDemo = !bShowDemo;
+			//}
+
 			ImGui::Separator();
 			ImGui::EndMenu();
 		}
+		if (ImGui::BeginMenu("Assets"))
+		{
+			ImGui::SeparatorText("Levels");
+		
+			if (ImGui::MenuItem("Playable Maps"))
+			{
+			}
+		
+			if (ImGui::MenuItem("All Maps"))
+			{
+			}
+		
+			ImGui::EndMenu();
+		}
+		if (ImGui::BeginMenu("Weapons"))
+		{
+			if (ImGui::MenuItem("Weapon List"))
+			{
+			}
+		
+			if (ImGui::MenuItem("Weapon Modifications"))
+			{
+			}
+		
+			ImGui::EndMenu();
+		}
 		ImGui::EndMainMenuBar();
+	}
+
+	for (auto UIElement : UIElements)
+	{
+		if (!UIElement) continue;
+
+		UIElement->Tick();
+
+		ImGui::Begin(UIElement->WindowName,
+			(UIElement->bIsClosable ? &UIElement->bIsOpen : nullptr), UIElement->WindowFlags | ImGuiWindowFlags_NoCollapse);
+		
+		UIElement->Render();
+
+		ImGui::End();
 	}
 }
 

@@ -5,6 +5,8 @@
 #include "Renderer.h"
 #include "Misc/FApp.h"
 
+#include "Games/BaseGame.h"
+
 static void (*Initialize)(FWindowsWindow*, __int64, __int64, HINSTANCE, __int64);
 void FWindowsWindow::Init_PreEngine()
 {
@@ -22,15 +24,19 @@ void FWindowsWindow::Initialize(__int64 Application, __int64 InDefinition, HINST
 	::Initialize(this, Application, InDefinition, InHInstance, InParent);
 
 	Renderer::Window = HWnd();
-	switch (FApp::RHI)
+
+	if (Game && Game->bShouldRenderUI)
 	{
-	case EWindowsRHI::D3D11:
-		Renderer::SetupDirectX11();
-		break;
-	case EWindowsRHI::D3D12:
-		Renderer::SetupDirectX12();
-		break;
-	case EWindowsRHI::Unsupported:
-		break;
+		switch (FApp::RHI)
+		{
+		case EWindowsRHI::D3D11:
+			Renderer::SetupDirectX11();
+			break;
+		case EWindowsRHI::D3D12:
+			Renderer::SetupDirectX12();
+			break;
+		case EWindowsRHI::Unsupported:
+			break;
+		}
 	}
 }

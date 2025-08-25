@@ -10,23 +10,29 @@
 // Base class for all ImGui windows that we will render
 class UIElement
 {
-	UIElement(const char* InWindowName, bool InbIsClosable = true, bool InbIsOpen = true, ImGuiWindowFlags InWindowFlags = 0);
+protected:
+
+	UIElement(const char* InWindowName, bool InbCanHaveMultiple = false, bool InbIsClosable = true, bool InbIsOpen = true, ImGuiWindowFlags InWindowFlags = 0);
 	virtual ~UIElement();
 
 public:
 
 	const char* WindowName;
+	char WindowId[256];
+
+	bool bCanHaveMultiple;
 	bool bIsClosable;
 	bool bIsOpen;
 	ImGuiWindowFlags WindowFlags;
 
 	virtual void Tick();
 	virtual void Render();
-
-private:
-
 	void CloseWindow();
 
 	virtual void OnClose() {};
 	virtual void OnOpen() {};
+
+private:
+
+	void CloseInternal();
 };

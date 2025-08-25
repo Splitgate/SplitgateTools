@@ -9,6 +9,7 @@ public:
 	class UGameEngine* Engine;
 	class UWorld** World;
 	bool bUsesFProperty;
+	bool bShouldRenderUI;
 	
 	static void Init_PreGame();
 	virtual void Init_PreEngine();

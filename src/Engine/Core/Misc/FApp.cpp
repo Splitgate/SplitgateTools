@@ -9,11 +9,7 @@ static void (*SetGraphicsRHI)(FString&);
 
 void FApp::Init_PreGame()
 {
-	auto GetBuildVersionCall = Memory::FindStringRef(L"GameSessionID").Scan("E8", 1).Add(1).Rel32();
-	if (GetBuildVersionCall)
-	{
-		::GetBuildVersion = GetBuildVersionCall.Scan("E9").Add(1).Rel32();
-	}
+	::GetBuildVersion = Memory::FindStringRef(L"Build: %s").ReverseScan("E8").Add(1).Rel32();
 	LOG_ADDRESS(::GetBuildVersion, "FApp::GetBuildVersion");
 
 	::SetGraphicsRHI = Memory::FindStringRef(L"RequiredOpenGL").ReverseScan("E8", 3).Add(1).Rel32();
@@ -26,6 +22,7 @@ void FApp::SetGraphicsRHI(FString& RHIString)
 	UE_LOG(LogRHI, Display, "Attempting to setup with {}", RHIString.ToString());
 
 	std::wstring_view RHIName = *RHIString;
+	RendererName = RHIString.ToString();
 	
 	if (RHIName == L"DirectX 12")
 		RHI = EWindowsRHI::D3D12;

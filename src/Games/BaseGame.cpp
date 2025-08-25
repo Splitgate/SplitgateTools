@@ -8,7 +8,8 @@
 #include "Engine/UWorld.h"
 #include "Engine/RHI/FWindowsDynamicRHI.h"
 #include "Engine/ApplicationCore/FWindowsWindow.h"
-#include "Engine/Misc/FNetworkVersion.h"
+#include "Engine/Core/Misc/FNetworkVersion.h"
+#include "Engine/Core/Misc/FEngineVersion.h"
 #include "UObject/FWeakObjectPtr.h"
 #include "UObject/UClass.h"
 #include "UObject/UFunction.h"
@@ -46,6 +47,7 @@ void BaseGame::Init_PreGame()
 {
 	FApp::Init_PreGame();
 	FNetworkVersion::Init_PreGame();
+	FEngineVersion::Init_PreGame();
 }
 
 void BaseGame::Init_PreEngine()

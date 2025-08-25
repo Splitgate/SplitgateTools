@@ -4,6 +4,7 @@
 
 // Need this included in the header for FrameContext::D3D12_CPU_DESCRIPTOR_HANDLE
 #include "d3d12.h"
+#include "dxgi1_4.h"
 
 class Renderer
 {
@@ -17,6 +18,7 @@ public:
 	// ImGui top level controls
 	static inline bool ShowUI = false;
 	static inline bool bUseFade = true;
+	static inline bool bShowDemo = false;
 
 	static inline float OpacityFadeSpeed = 8.f; // Original Value: 3
 	static inline float VisibleAlpha = 0.95f;
@@ -55,12 +57,12 @@ public:
 		// VTable indexes, shouldn't really change
 		static inline int PresentIndex = 0x8C;
 		static inline int ExecuteCommandListsIndex = 0x36;
-		static inline int ResizeBuffersIndex = 0x91;
+		static inline int ResizeBuffersIndex = 0x92;
 
 		// DirectX Functions
-		static inline HRESULT(*Present)(struct IDXGISwapChain3*, UINT, UINT);
+		static inline HRESULT(*Present)(struct IDXGISwapChain*, UINT, UINT);
 		static inline HRESULT(*ExecuteCommandLists)(ID3D12CommandQueue*, UINT, ID3D12CommandList*);
-		static inline HRESULT(*ResizeBuffers)(struct IDXGISwapChain3*, UINT, UINT, UINT, DXGI_FORMAT, UINT);
+		static inline HRESULT(*ResizeBuffers)(struct IDXGISwapChain*, UINT, UINT, UINT, DXGI_FORMAT, UINT);
 
 		// DirectX Variables
 		static inline struct IDXGIFactory* Factory;
@@ -69,14 +71,18 @@ public:
 		static inline ID3D12CommandAllocator* CommandAllocator;
 		static inline ID3D12GraphicsCommandList* CommandList;
 		static inline struct IDXGISwapChain* SwapChain;
+		static inline struct IDXGISwapChain3* Swapchain3;
+		static inline struct DXGI_SWAP_CHAIN_DESC SwapDesc;
 
 		static inline struct ID3D12DescriptorHeap* RtvHeapDesc;
 		static inline struct ID3D12DescriptorHeap* SrvHeapDesc;
 
 		static inline std::vector<FrameContext> FrameContexts;
 
+		static inline bool IsReady = true;
+
 		// DirectX Hooks
-		static inline HRESULT Present_Hook(struct IDXGISwapChain3* Instance, UINT SyncInterval, UINT Flags);
+		static inline HRESULT Present_Hook(struct IDXGISwapChain* Instance, UINT SyncInterval, UINT Flags);
 		static inline HRESULT ExecuteCommandLists_Hook(ID3D12CommandQueue* Queue, UINT NumCommandLists, ID3D12CommandList* CommandLists);
 		static HRESULT ResizeBuffers_Hook(struct IDXGISwapChain3* Instance, UINT BufferCount, UINT Width, UINT Height, DXGI_FORMAT NewFormat, UINT SwapChainFlags);
 	};
