@@ -10,4 +10,6 @@ public:
 
 	virtual void Init_PreEngine() override;
 	virtual void Init_PostEngine() override;
+
+	virtual void ConstructTitleBar() override;
 };

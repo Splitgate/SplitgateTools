@@ -1,5 +1,6 @@
 #include "Renderer.h"
 #include "UI/UIElement.h"
+#include "UI/UITitleBarEntry.h"
 #include "Memory/Hook.h"
 #include "Memory/Memory.h"
 
@@ -404,34 +405,48 @@ void Renderer::ImGui_DrawAll()
 			ImGui::Separator();
 			ImGui::EndMenu();
 		}
-		if (ImGui::BeginMenu("Assets"))
-		{
-			ImGui::SeparatorText("Levels");
-		
-			if (ImGui::MenuItem("Playable Maps"))
-			{
-			}
-		
-			if (ImGui::MenuItem("All Maps"))
-			{
-			}
-		
-			ImGui::EndMenu();
-		}
-		if (ImGui::BeginMenu("Weapons"))
-		{
-			ImGui::SeparatorText("Levels");
 
-			if (ImGui::MenuItem("Weapon List"))
+		for (auto TitleBarEntry : TitleBarEntries)
+		{
+			if (!TitleBarEntry) continue;
+
+			TitleBarEntry->Tick();
+
+			if (ImGui::BeginMenu(TitleBarEntry->EntryName))
 			{
+				TitleBarEntry->Render();
+				ImGui::EndMenu();
 			}
-		
-			if (ImGui::MenuItem("Weapon Modifications"))
-			{
-			}
-		
-			ImGui::EndMenu();
 		}
+
+		//if (ImGui::BeginMenu("Level"))
+		//{
+		//	if (ImGui::MenuItem("Current World"))
+		//	{
+		//	}
+		//
+		//	ImGui::SeparatorText("Assets");
+		//
+		//	if (ImGui::MenuItem("All Maps"))
+		//	{
+		//	}
+		//
+		//	ImGui::EndMenu();
+		//}
+		//if (ImGui::BeginMenu("Weapons"))
+		//{
+		//	ImGui::SeparatorText("Levels");
+		//
+		//	if (ImGui::MenuItem("Weapon List"))
+		//	{
+		//	}
+		//
+		//	if (ImGui::MenuItem("Weapon Modifications"))
+		//	{
+		//	}
+		//
+		//	ImGui::EndMenu();
+		//}
 		ImGui::EndMainMenuBar();
 	}
 

@@ -1,5 +1,6 @@
 #include "SystemVersionWindow.h"
 #include "Globals.h"
+#include <Games/BaseGame.h>
 
 void SystemVersionWindow::Render()
 {

@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "Memory/Hook.h"
+#include "Engine/UWorld.h"
 
 class BaseGame
 {
@@ -10,10 +11,14 @@ public:
 	class UWorld** World;
 	bool bUsesFProperty;
 	bool bShouldRenderUI;
+
+	BaseGame();
 	
 	static void Init_PreGame();
 	virtual void Init_PreEngine();
 	virtual void Init_PostEngine();
+
+	virtual void ConstructTitleBar();
 
 	virtual void OnUIVisibilityChange(bool bVisible);
 };

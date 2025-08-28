@@ -11,6 +11,7 @@ class Renderer
 public:
 
 	static inline std::vector<class UIElement*> UIElements;
+	static inline std::vector<class UITitleBarEntry*> TitleBarEntries;
 
 	// Shared between all renderers
 	static inline HWND Window;

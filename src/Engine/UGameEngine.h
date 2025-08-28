@@ -6,6 +6,7 @@
 class UGameEngine : public UEngine
 {
 	void Init(IEngineLoop* InEngineLoop);
+	void Start();
 	
 public:
 	GENERATED_BODY(UGameEngine, UEngine, "GameEngine", "/Script/Engine")

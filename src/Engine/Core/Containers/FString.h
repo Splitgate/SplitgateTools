@@ -15,10 +15,10 @@ public:
 
 	FString(const wchar_t* InString)
 	{
-		Max = Num = *InString ? std::wcslen(InString) + 1 : 0;
-		if (Num)
+		Max = Count = *InString ? std::wcslen(InString) + 1 : 0;
+		if (Count)
 		{
-			int32_t ByteLength = (Num * sizeof(wchar_t));
+			int32_t ByteLength = (Count * sizeof(wchar_t));
 			Data = (wchar_t*)FMemory::Malloc(ByteLength);
 			FMemory::Memcpy(Data, InString, ByteLength);
 		}
@@ -26,7 +26,7 @@ public:
 
 	std::string ToString() const
 	{
-		if (Num == 0)
+		if (Count == 0)
 			return "";
 		size_t Length = std::wcslen(Data);
 		std::string OutString(Length, '\0');
@@ -37,6 +37,6 @@ public:
 	// TODO: FString operators
 	inline const wchar_t* operator*() const
 	{
-		return Num ? Data : L"";
+		return Count ? Data : L"";
 	}
 };

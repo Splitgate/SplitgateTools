@@ -79,8 +79,10 @@
     <ClCompile Include="Engine\GameFramework\AController.cpp" />
     <ClCompile Include="Engine\GameFramework\AGameStateBase.cpp" />
     <ClCompile Include="Engine\GameFramework\APlayerController.cpp" />
+    <ClCompile Include="Engine\IPlatformFilePak.cpp" />
     <ClCompile Include="Engine\Kismet\UGameplayStatics.cpp" />
     <ClCompile Include="Engine\Core\Misc\FNetworkVersion.cpp" />
+    <ClCompile Include="Engine\Kismet\UKismetSystemLibrary.cpp" />
     <ClCompile Include="Engine\RHI\FWindowsDynamicRHI.cpp" />
     <ClCompile Include="Engine\UEngine.cpp" />
     <ClCompile Include="Engine\UGameEngine.cpp" />
@@ -94,6 +96,8 @@
     <ClCompile Include="SplitgateTools\UI\System\SystemVersionWindow.cpp" />
     <ClCompile Include="SplitgateTools\UI\System\VersionWindow.cpp" />
     <ClCompile Include="SplitgateTools\UI\UIElement.cpp" />
+    <ClCompile Include="SplitgateTools\UI\UITitleBarEntry.cpp" />
+    <ClCompile Include="SplitgateTools\UI\World\MapsMenuEntry.cpp" />
     <ClCompile Include="Utilities\imgui\backends\imgui_impl_dx11.cpp" />
     <ClCompile Include="Utilities\imgui\backends\imgui_impl_dx12.cpp" />
     <ClCompile Include="Utilities\imgui\backends\imgui_impl_win32.cpp" />
@@ -118,6 +122,7 @@
     <ClInclude Include="Engine\Core\Misc\FEngineVersion.h" />
     <ClInclude Include="Engine\Core\Misc\FGuid.h" />
     <ClInclude Include="Engine\Core\UObject\FName.h" />
+    <ClInclude Include="Engine\Core\UObject\FPrimaryAssetId.h" />
     <ClInclude Include="Engine\Core\UObject\FWeakObjectPtr.h" />
     <ClInclude Include="Engine\Core\UObject\ObjectMacros.h" />
     <ClInclude Include="Engine\Core\UObject\UClass.h" />
@@ -129,6 +134,8 @@
     <ClInclude Include="Engine\GameFramework\AController.h" />
     <ClInclude Include="Engine\GameFramework\AGameStateBase.h" />
     <ClInclude Include="Engine\GameFramework\APlayerController.h" />
+    <ClInclude Include="Engine\IPlatformFilePak.h" />
+    <ClInclude Include="Engine\Kismet\UKismetSystemLibrary.h" />
     <ClInclude Include="Engine\Kismet\UGameplayStatics.h" />
     <ClInclude Include="Engine\Core\Misc\FNetworkVersion.h" />
     <ClInclude Include="Engine\RHI\FWindowsDynamicRHI.h" />
@@ -143,9 +150,11 @@
     <ClInclude Include="SplitgateTools\Renderer.h" />
     <ClInclude Include="SplitgateTools\UI\System\SystemVersionWindow.h" />
     <ClInclude Include="SplitgateTools\UI\System\VersionWindow.h" />
+    <ClInclude Include="SplitgateTools\UI\UITitleBarEntry.h" />
     <ClInclude Include="SplitgateTools\UI\UIElement.h" />
     <ClInclude Include="Games\BaseGame.h" />
     <ClInclude Include="Games\Splitgate\Splitgate.h" />
+    <ClInclude Include="SplitgateTools\UI\World\MapsMenuEntry.h" />
     <ClInclude Include="Utilities\imgui\backends\imgui_impl_dx11.h" />
     <ClInclude Include="Utilities\imgui\backends\imgui_impl_dx12.h" />
     <ClInclude Include="Utilities\imgui\backends\imgui_impl_win32.h" />

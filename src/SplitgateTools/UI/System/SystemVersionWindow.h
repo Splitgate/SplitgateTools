@@ -7,6 +7,7 @@ public:
 
 	SystemVersionWindow() : UIElement("Tool Information", false, true, true, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoDocking)
 	{
+
 	}
 
 	virtual void Render() override;

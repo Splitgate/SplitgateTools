@@ -11,9 +11,16 @@
 #define D3D12_ALLOWED false		// We dont want to use dx12 until we support it directly for the gui
 #define COMPILE_DATE __DATE__ " " __TIME__
 
+#ifdef DEDICATED_SERVER
+	#define WITH_SERVER_CODE true
+#elif !defined(DEDICATED_SERVER)
+	#define WITH_SERVER_CODE false
+#endif
+
 // Add custom log defines here, these contain nothing as they are used directly for the macro name and so intellisense picks them up
 #define LogInit
 #define LogRHI
+#define LogImGui
 
 // Defines to shorten the typing rather than inputting the namespace and enum, hijack the debug level to make it a success since we wont use debug really
 #define Display spdlog::level::info

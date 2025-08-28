@@ -1,0 +1,12 @@
+#pragma once
+#include "UObject/UObject.h"
+#include "UObject/FPrimaryAssetId.h"
+
+class UKismetSystemLibrary : public UObject
+{
+public:
+	GENERATED_BODY(UKismetSystemLibrary, UObject, "KismetSystemLibrary", "/Script/Engine")
+
+	static void GetPrimaryAssetIdList(FPrimaryAssetType PrimaryAssetType, TArray<FPrimaryAssetId>* OutPrimaryAssetIdList);
+	static UObject* GetObjectFromPrimaryAssetId(const FPrimaryAssetId PrimaryAssetId);
+};

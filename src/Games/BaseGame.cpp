@@ -14,6 +14,7 @@
 #include "UObject/UClass.h"
 #include "UObject/UFunction.h"
 #include "UObject/UStruct.h"
+#include "Engine/IPlatformFilePak.h"
 
 #include "Engine/GameFramework/APlayerController.h"
 #include "Engine/UMG/UWidgetBlueprintLibrary.h"
@@ -21,6 +22,18 @@
 std::unique_ptr<BaseGame> BaseGame::Create()
 {
 	Init_PreGame();
+
+	/*
+	* Removed until i eventually bother with custom content
+	* 
+	UE_LOG(LogInit, Display, "Patching IO Store Signing checks");
+	auto MissingSignature = Memory::FindStringRef(L"Missing signature").Scan("74");
+	if (MissingSignature)
+	{
+		MissingSignature.Write("EB 37");
+		UE_LOG(LogInit, Display, "Patched IO Store Signing checks");
+	}
+	*/
 
 	UE_LOG(LogInit, Display, "Attempting to find GInternalProjectName");
 	
@@ -34,16 +47,25 @@ std::unique_ptr<BaseGame> BaseGame::Create()
 	
 	if (ProjectName == L"PortalWars")
 	{
+#if WITH_SERVER_CODE
+		UE_LOG(LogInit, Success, "Starting a Splitgate Dedicated Server"); 
+		return std::make_unique<Splitgate>(); // TO:DO actually add this eventually
+#else
 		UE_LOG(LogInit, Success, "Game Detected: Splitgate");
 		return std::make_unique<Splitgate>();
+#endif
 	}
 
 	// Add handlers for past builds if needed potentially, always keep "Splitgate" as the latest version of the game.
 
-
 	// Fallback so features may still work on unsupported games
 	UE_LOG(LogInit, Warning, "Unsupported game! Expect things to break");
 	return std::make_unique<BaseGame>(); 
+}
+
+BaseGame::BaseGame()
+{
+	ConstructTitleBar();
 }
 
 void BaseGame::Init_PreGame()
@@ -63,6 +85,7 @@ void BaseGame::Init_PreEngine()
 	FWeakObjectPtr::Init_PreEngine();
 	
 	UObject::Init_PreEngine();
+	IPlatformFilePak::Init_PreEngine();
 	UGameEngine::Init_PreEngine();
 	UWorld::Init_PreEngine();
 }
@@ -78,6 +101,10 @@ void BaseGame::Init_PostEngine()
 	UFunction::Init_PostEngine();
 
 	APlayerController::Init_PostEngine();
+}
+
+void BaseGame::ConstructTitleBar()
+{
 }
 
 void BaseGame::OnUIVisibilityChange(bool bVisible)

@@ -10,12 +10,12 @@
 // Base class for all ImGui windows that we will render
 class UIElement
 {
+	friend class Renderer;
+
 protected:
 
 	UIElement(const char* InWindowName, bool InbCanHaveMultiple = false, bool InbIsClosable = true, bool InbIsOpen = true, ImGuiWindowFlags InWindowFlags = 0);
 	virtual ~UIElement();
-
-public:
 
 	const char* WindowName;
 	char WindowId[256];
