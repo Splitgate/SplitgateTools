@@ -8,5 +8,5 @@ public:
 	
 	static UObject* SpawnObject(UClass* ObjectClass, UObject* Outer);
 
-	static class APlayerController* GetPlayerController(UObject* WorldContenxtObject, int32_t LocalPlayerIndex);
+	static class APlayerController* GetPlayerController(UObject* WorldContextObject, int32_t LocalPlayerIndex);
 };

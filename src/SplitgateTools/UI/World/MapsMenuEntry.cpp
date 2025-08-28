@@ -4,6 +4,7 @@
 #include "Engine/Core/UObject/UClass.h"
 #include "Engine/Kismet/UGameplayStatics.h"
 #include "Engine/Kismet/UKismetSystemLibrary.h"
+#include "Engine/GameFramework/APlayerController.h"
 
 #include "Strings/Strings.h"
 #include "Globals.h"
@@ -13,9 +14,16 @@ void MapsMenuEntry::OnMapPressed(GameMapEntry Map, const char* RaceType)
 	std::string TravelURL = Map.InternalName;
 	
 	ENetMode CurrentNetMode = GWorld->GetNetMode();
-	if (Map.HasSelectability(MapSelectability::Race))
+	if (RaceType != "" && Map.HasSelectability(MapSelectability::Race))
 	{
 		TravelURL += "?Default";
+
+		//APlayerController* Controller = UGameplayStatics::GetPlayerController(GWorld, 0);
+		//if (Controller)
+		//{
+		//	FString Travel = StringToWide(TravelURL).c_str();
+		//	Controller->LocalTravel(Travel);
+		//}
 	}
 	else
 	{
@@ -50,7 +58,7 @@ void MapsMenuEntry::Render()
 	
 			if (ImGui::MenuItem(Map.DisplayName.c_str()))
 			{
-				OnMapPressed(Map);
+				OnMapPressed(Map, "Medium");
 			}
 		}
 	

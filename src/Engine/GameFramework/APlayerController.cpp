@@ -2,6 +2,8 @@
 #include "Memory/Memory.h"
 #include "Globals.h"
 
+#include "Engine/Core/UObject/UClass.h"
+
 static void (*SetShowMouseCursor)(APlayerController*, bool);
 
 void APlayerController::Init_PostEngine()
@@ -13,4 +15,16 @@ void APlayerController::Init_PostEngine()
 void APlayerController::SetShowMouseCursor(bool bShow)
 {
 	::SetShowMouseCursor(this, bShow);
+}
+
+void APlayerController::LocalTravel(FString& FURL)
+{
+	struct {
+		FString& FURL;
+	} p = {
+		FURL
+	};
+
+	UFunction* Func = StaticClass()->FindFunction(L"LocalTravel");
+	ProcessEvent(Func, &p);
 }

@@ -9,4 +9,5 @@ public:
 	static void Init_PostEngine();
 
 	void SetShowMouseCursor(bool bShow);
+	void LocalTravel(FString& FURL);
 };
