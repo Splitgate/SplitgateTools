@@ -36,16 +36,20 @@ namespace MapSelectability
 }
 
 // Save map data, slight optimisation, maps SHOULDNT be made at runtime...
-struct GameMapEntry
+class GameMapEntry
 {
+public:
+	
 	std::string DisplayName;
 	std::string InternalName;
 	int Types;
 
-	bool HasSelectability(MapSelectability::Type Type)
+	bool HasSelectability(MapSelectability::Type Type) const
 	{
 		return Types & Type;
 	}
+	
+	void OnPressed(const std::string& RaceType = "");
 };
 
 class MapsMenuEntry : public UITitleBarEntry
@@ -58,8 +62,6 @@ public:
 	}
 
 protected:
-
-	void OnMapPressed(GameMapEntry Map, const char* RaceType = "");
 
 	virtual void Render() override;
 	virtual void OnCreate() override;

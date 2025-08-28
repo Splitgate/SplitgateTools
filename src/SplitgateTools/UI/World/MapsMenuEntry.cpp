@@ -9,12 +9,12 @@
 #include "Strings/Strings.h"
 #include "Globals.h"
 
-void MapsMenuEntry::OnMapPressed(GameMapEntry Map, const char* RaceType)
+void GameMapEntry::OnPressed(const std::string& RaceType)
 {
-	std::string TravelURL = Map.InternalName;
+	std::string TravelURL = InternalName;
 	
 	ENetMode CurrentNetMode = GWorld->GetNetMode();
-	if (RaceType != "" && Map.HasSelectability(MapSelectability::Race))
+	if (RaceType != "" && HasSelectability(MapSelectability::Race))
 	{
 		TravelURL += "?Default";
 
@@ -43,7 +43,7 @@ void MapsMenuEntry::Render()
 
 			if (ImGui::MenuItem(Map.DisplayName.c_str()))
 			{
-				OnMapPressed(Map);
+				Map.OnPressed();
 			}
 		}
 
@@ -58,7 +58,8 @@ void MapsMenuEntry::Render()
 	
 			if (ImGui::MenuItem(Map.DisplayName.c_str()))
 			{
-				OnMapPressed(Map, "Medium");
+				// todo: race difficulty
+				Map.OnPressed("Medium");
 			}
 		}
 	
@@ -73,7 +74,7 @@ void MapsMenuEntry::Render()
 	
 			if (ImGui::MenuItem(Map.DisplayName.c_str()))
 			{
-				OnMapPressed(Map);
+				Map.OnPressed();
 			}
 		}
 	
@@ -88,7 +89,7 @@ void MapsMenuEntry::Render()
 
 			if (ImGui::MenuItem(Map.DisplayName.c_str()))
 			{
-				OnMapPressed(Map);
+				Map.OnPressed();
 			}
 		}
 
@@ -206,4 +207,6 @@ void MapsMenuEntry::OnCreate()
 	ADD_GUI_MAP("Tutorial", "/Game/Maps/Tutorial", MapSelectability::Misc);
 	ADD_GUI_MAP("Vessel (Blockout)", "/Game/Maps/Vessel_Blockout_WIP", MapSelectability::Playable);
 	ADD_GUI_MAP("Vintage (Blockout)", "/Game/Maps/Vintage_Blockout_WIP", MapSelectability::Playable);
+
+#undef ADD_GUI_MAP
 }
