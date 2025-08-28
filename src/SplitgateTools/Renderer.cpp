@@ -341,7 +341,8 @@ HRESULT Renderer::DX12::ResizeBuffers_Hook(IDXGISwapChain3* Instance, UINT Buffe
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 LRESULT Renderer::DXShared::WndProc_Hook(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-	if (uMsg == WM_KEYUP && wParam == VK_F1)
+	if ((uMsg == WM_KEYUP && wParam == VK_F1)
+		&& Game->bAllowUIOpen)
 	{
 		ShowUI = !ShowUI;
 		

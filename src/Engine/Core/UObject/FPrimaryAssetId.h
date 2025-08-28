@@ -7,6 +7,10 @@ struct FPrimaryAssetType
 		: Name(Type)
 	{ }
 
+	FPrimaryAssetType()
+		: Name()
+	{ }
+
 	FName Name;
 };
 
@@ -14,6 +18,11 @@ struct FPrimaryAssetId
 {
 	FPrimaryAssetType PrimaryAssetType;
 	FName PrimaryAssetName;
+
+	FPrimaryAssetId()
+		: PrimaryAssetType("None"),
+		PrimaryAssetName("None")
+	{ };
 
 	FPrimaryAssetId(FName Type, FName AssetName)
 		: PrimaryAssetType(Type),

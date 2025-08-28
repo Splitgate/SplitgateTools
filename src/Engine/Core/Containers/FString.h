@@ -13,6 +13,11 @@ public:
 	// TODO: FString constructors
 	FString() {}
 
+	inline bool IsValid() const
+	{
+		return Data != nullptr;
+	}
+
 	FString(const wchar_t* InString)
 	{
 		Max = Count = *InString ? std::wcslen(InString) + 1 : 0;

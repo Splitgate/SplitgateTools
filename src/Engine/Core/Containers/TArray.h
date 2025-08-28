@@ -15,8 +15,7 @@ public:
 
 	~TArray()
 	{
-		if (Data)
-			FMemory::Free(Data);
+		FMemory::Free(Data);
 	}
 
 	inline unsigned int Num() const
@@ -34,9 +33,15 @@ public:
 		return Data[i];
 	}
 
+	inline T& At(int i)
+	{
+		return Data[i];
+	}
+
 	inline void Free()
 	{
-		Max = Count = 0;
+		Count = 0;
+		Max = 0;
 		if (Data)
 			FMemory::Free(Data);
 	}

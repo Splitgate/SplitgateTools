@@ -12,7 +12,7 @@ namespace MapSelectability
 		Playable = 1 << 0,
 		Forge = 1 << 1,
 		Race = 1 << 2,
-		QA = 2 << 2,
+		Misc = 2 << 2,
 	};
 
 	static const char* ToString(MapSelectability::Type MapType)
@@ -28,8 +28,8 @@ namespace MapSelectability
 		case Race:
 			return "Race";
 
-		case QA:
-			return "QA";
+		case Misc:
+			return "Misc";
 		}
 		return "Playable";
 	}
@@ -59,7 +59,7 @@ public:
 
 protected:
 
-	void OnMapPressed(GameMapEntry Map, const char* RaceType = "", bool bForceForRace = false);
+	void OnMapPressed(GameMapEntry Map, const char* RaceType = "");
 
 	virtual void Render() override;
 	virtual void OnCreate() override;

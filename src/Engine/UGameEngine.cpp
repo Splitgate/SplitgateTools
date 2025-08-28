@@ -37,4 +37,7 @@ void UGameEngine::Init(IEngineLoop* InEngineLoop)
 void UGameEngine::Start()
 {
 	::Start(this);
+
+	Game->bAllowUIOpen = true;
+	Game->ConstructTitleBar();
 }

@@ -8,22 +8,21 @@
 #include "Strings/Strings.h"
 #include "Globals.h"
 
-void MapsMenuEntry::OnMapPressed(GameMapEntry Map, const char* RaceType, bool bForceForRace)
+void MapsMenuEntry::OnMapPressed(GameMapEntry Map, const char* RaceType)
 {
 	std::string TravelURL = Map.InternalName;
 	
 	ENetMode CurrentNetMode = GWorld->GetNetMode();
-	if ((CurrentNetMode == ENetMode::NM_Client || CurrentNetMode == ENetMode::NM_Standalone)
-		|| bForceForRace)
+	if (Map.HasSelectability(MapSelectability::Race))
 	{
-		TravelURL += "?Default?closed";
+		TravelURL += "?Default";
 	}
 	else
 	{
 		TravelURL += "?Default";
+
+		GWorld->ServerTravel(StringToWide(TravelURL).c_str());
 	}
-	
-	GWorld->ServerTravel(StringToWide(TravelURL).c_str());
 }
 
 void MapsMenuEntry::Render()
@@ -72,94 +71,131 @@ void MapsMenuEntry::Render()
 	
 		ImGui::EndMenu();
 	}
+
+	if (ImGui::BeginMenu("Misc"))
+	{
+		for (auto& Map : AllMaps)
+		{
+			if (!Map.HasSelectability(MapSelectability::Misc)) continue;
+
+			if (ImGui::MenuItem(Map.DisplayName.c_str()))
+			{
+				OnMapPressed(Map);
+			}
+		}
+
+		ImGui::EndMenu();
+	}
 }
 
 void MapsMenuEntry::OnCreate()
 {
 	// Gather all map entries
 
-	return;
+	//TArray<FPrimaryAssetId> PrimaryMapAssets{};
+	//UKismetSystemLibrary::GetPrimaryAssetIdList(FName("MapData"), PrimaryMapAssets);
+	//UE_LOG(LogImGui, Warning, "PrimaryMapAssets.Num() {}", PrimaryMapAssets.Num());
 
-	static FName NAME_MapData = "MapData";
+	//for (int i = 0; i != PrimaryMapAssets.Num(); i++)
+	//{
+		//FPrimaryAssetId AssetId = PrimaryMapAssets[i];
 
-	TArray<FPrimaryAssetId> PrimaryMapAssets;
-	UKismetSystemLibrary::GetPrimaryAssetIdList(NAME_MapData, &PrimaryMapAssets);
+		//UObject* MapData = UKismetSystemLibrary::GetObjectFromPrimaryAssetId(AssetId);
+		//if (!MapData) {
+		//	UE_LOG(LogImGui, Warning, "MapData Invalid");
+		//}
 
-	for (int i = 0; i != PrimaryMapAssets.Num(); i++)
-	{
-		FPrimaryAssetId AssetId = PrimaryMapAssets[i];
-		UObject* MapData = UKismetSystemLibrary::GetObjectFromPrimaryAssetId(AssetId);
+		//UObject* MapData = StaticLoadObject<UObject>(L"/Game/Maps/_DataAssets/Map_Ozone_Blockout");
+		//UObject* TestData = StaticLoadObject<UObject>(L"/Game/Maps/Blockouts/Ozone_Blockout_Playtest");
+		//
+		//if (MapData)
+		//{
+		//	UE_LOG(LogImGui, Warning, "MapData: {}", MapData->Name.ToString().ToString());
+		//}
+		//
+		//if (TestData)
+		//{
+		//	UE_LOG(LogImGui, Warning, "TestData: {}", MapData->Name.ToString().ToString());
+		//}
 
-		if (!MapData) continue;
+		//FString MapName = MapData->Get<FString>("MapPackageName");
+		//FString MapPackageName = MapData->Get<FString>("MapPackageName");
+		//
+		//FString SelectabilityString = L"Default,Race";
+		//
+		//int SelectedBits = 0;
+		//std::vector<std::string> SplitSelections = Split(SelectabilityString.ToString(), ',');
+		//for (auto& Selection : SplitSelections)
+		//{
+		//	if (Selection == "Default")
+		//		SelectedBits |= MapSelectability::Playable;
+		//
+		//	if (Selection == "Race")
+		//		SelectedBits |= MapSelectability::Race;
+		//
+		//	if (Selection == "Forge")
+		//		SelectedBits |= MapSelectability::Forge;
+		//
+		//	if (Selection == "QA")
+		//		SelectedBits |= MapSelectability::QA;
+		//}
+		//
+		//AllMaps.push_back(
+		//	{
+		//		MapName.ToString(),
+		//		MapPackageName.ToString(),
+		//		SelectedBits
+		//	});
+	//}
 
-		FString MapName = MapData->Get<FString>("MapPackageName");
-		FString MapPackageName = MapData->Get<FString>("MapPackageName");
-		TArray<int> Selectability = MapData->Get<TArray<int>>("Selectability");
-		
-		int SelectedBits = 0;
-		for (int x = 0; x != Selectability.Num(); x++)
-		{
-			int GameSelectability = Selectability[x];
-		
-			switch (GameSelectability)
-			{
-				// Default
-				case 1:
-					SelectedBits |= MapSelectability::Playable;
-					break;
-		
-				// Race
-				case 2:
-					SelectedBits |= MapSelectability::Race;
-					break;
-		
-				// Forge
-				case 3:
-					SelectedBits |= MapSelectability::Forge;
-					break;
-		
-				// QA
-				case 4:
-					SelectedBits |= MapSelectability::QA;
-					break;
-		
-				default:
-					break;
-			}
-		}
+#define ADD_GUI_MAP(Name, Path, Types) \
+	AllMaps.push_back( \
+		{ \
+			Name, \
+			Path, \
+			Types \
+		}) \
 
-		AllMaps.push_back(
-			{
-				MapName.ToString(),
-				MapPackageName.ToString(),
-				SelectedBits
-			});
-	}
-
-	//AllMaps.push_back(
-	//	{
-	//		"Stadium",
-	//		"/Game/Maps/Stadium",
-	//		MapSelectability::Playable | MapSelectability::Race
-	//	});
-	//AllMaps.push_back(
-	//	{
-	//		"Highwind",
-	//		"/Game/Maps/Highwind",
-	//		MapSelectability::Playable | MapSelectability::Race
-	//	});
-	//
-	//AllMaps.push_back(
-	//	{
-	//		"Wet Ocean",
-	//		"/Game/Maps/Forge_Island",
-	//		MapSelectability::Forge
-	//	});
-	//
-	//AllMaps.push_back(
-	//	{
-	//		"Vessel (Blockout)",
-	//		"/Game/Maps/Vessel_Blockout_WIP",
-	//		MapSelectability::Playable
-	//	});
+	ADD_GUI_MAP("Abyss", "/Game/Maps/Abyss", MapSelectability::Playable | MapSelectability::Race);
+	ADD_GUI_MAP("Atlantis", "/Game/Maps/Atlantis", MapSelectability::Playable | MapSelectability::Race);
+	ADD_GUI_MAP("Crag", "/Game/Maps/Crag", MapSelectability::Playable | MapSelectability::Race);
+	ADD_GUI_MAP("Decay (Blockout)", "/Game/Maps/Decay_Blockout_WIP", MapSelectability::Playable);
+	ADD_GUI_MAP("Drift (Blockout)", "/Game/Maps/Drift_Blockout_WIP", MapSelectability::Playable);
+	ADD_GUI_MAP("Foregone Destruction", "/Game/Maps/Foregone_Destruction", MapSelectability::Playable | MapSelectability::Race);
+	ADD_GUI_MAP("Flat Earth", "/Game/Maps/Forge_Flat_Earth", MapSelectability::Forge);
+	ADD_GUI_MAP("Wet Ocean", "/Game/Maps/Forge_Island", MapSelectability::Forge);
+	ADD_GUI_MAP("Frontier (Blockout)", "/Game/Maps/Blockouts/Frontier_Blockout_WIP_Playtest", MapSelectability::Playable);
+	ADD_GUI_MAP("Helix", "/Game/Maps/Helix", MapSelectability::Playable | MapSelectability::Race);
+	ADD_GUI_MAP("Highwind", "/Game/Maps/Highwind", MapSelectability::Playable | MapSelectability::Race);
+	ADD_GUI_MAP("Impact", "/Game/Maps/Impact", MapSelectability::Playable | MapSelectability::Race);
+	ADD_GUI_MAP("Karman Station", "/Game/Maps/Karman_Station", MapSelectability::Playable | MapSelectability::Race);
+	ADD_GUI_MAP("Lavawell", "/Game/Maps/Lavawell", MapSelectability::Playable | MapSelectability::Race);
+	ADD_GUI_MAP("Lobby", "/Game/Maps/Lobby", MapSelectability::Misc);
+	ADD_GUI_MAP("Maya (Blockout)", "/Game/Maps/Maya_Blockout", MapSelectability::Playable);
+	ADD_GUI_MAP("Meridian (Blockout)", "/Game/Maps/Blockouts/Meridian_Blockout_Playtest", MapSelectability::Playable);
+	ADD_GUI_MAP("Neon Sector (Blockout)", "/Game/Maps/Blockouts/Neon_Sector_Blockout_Playtest", MapSelectability::Playable);
+	ADD_GUI_MAP("Noboru Temple (Blockout)", "/Game/Maps/Noboru_Temple_Blockout", MapSelectability::Playable);
+	ADD_GUI_MAP("Oasis", "/Game/Maps/Oasis", MapSelectability::Playable | MapSelectability::Race);
+	ADD_GUI_MAP("Olympus", "/Game/Maps/Olympus", MapSelectability::Playable | MapSelectability::Race);
+	ADD_GUI_MAP("Ozone (Blockout)", "/Game/Maps/Blockouts/Ozone_Blockout_Playtest", MapSelectability::Playable);
+	ADD_GUI_MAP("Pantheon", "/Game/Maps/Pantheon", MapSelectability::Playable | MapSelectability::Race);
+	ADD_GUI_MAP("Practice Range", "/Game/Maps/PracticeRange", MapSelectability::Misc);
+	ADD_GUI_MAP("Sanctum (Blockout)", "/Game/Maps/Blockouts/Sanctum_Blockout_Playtest", MapSelectability::Playable);
+	ADD_GUI_MAP("Club Silo", "/Game/Maps/Silo", MapSelectability::Playable | MapSelectability::Race);
+	ADD_GUI_MAP("Simulation Alpha", "/Game/Maps/Simulation_Alpha", MapSelectability::Playable);
+	ADD_GUI_MAP("Simulation Bravo", "/Game/Maps/Simulation_Bravo", MapSelectability::Playable);
+	ADD_GUI_MAP("Simulation Charlie", "/Game/Maps/Simulation_Charlie", MapSelectability::Playable);
+	ADD_GUI_MAP("Simulation Delta", "/Game/Maps/Simulation_Delta", MapSelectability::Playable);
+	ADD_GUI_MAP("Simulation Echo", "/Game/Maps/Simulation_Echo", MapSelectability::Playable);
+	ADD_GUI_MAP("Simulation Foxtrot", "/Game/Maps/Simulation_Foxtrot", MapSelectability::Playable);
+	ADD_GUI_MAP("Simulation Golf", "/Game/Maps/Simulation_Golf", MapSelectability::Playable);
+	ADD_GUI_MAP("Simulation Hotel", "/Game/Maps/Simulation_Hotel", MapSelectability::Playable);
+	ADD_GUI_MAP("Simulation India", "/Game/Maps/Simulation_India", MapSelectability::Playable);
+	ADD_GUI_MAP("Simulation Juliet", "/Game/Maps/Simulation_Juliet", MapSelectability::Playable);
+	ADD_GUI_MAP("Stadium", "/Game/Maps/Stadium", MapSelectability::Playable | MapSelectability::Race);
+	ADD_GUI_MAP("Titan (Blockout)", "/Game/Maps/Titan_Blockout_WIP", MapSelectability::Playable);
+	ADD_GUI_MAP("Toxic (Blockout)", "/Game/Maps/Toxic_Blockout_Wip", MapSelectability::Playable);
+	ADD_GUI_MAP("Tutorial", "/Game/Maps/Tutorial", MapSelectability::Misc);
+	ADD_GUI_MAP("Vessel (Blockout)", "/Game/Maps/Vessel_Blockout_WIP", MapSelectability::Playable);
+	ADD_GUI_MAP("Vintage (Blockout)", "/Game/Maps/Vintage_Blockout_WIP", MapSelectability::Playable);
 }

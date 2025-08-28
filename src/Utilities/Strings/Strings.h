@@ -55,3 +55,66 @@ static std::string StringToHexString(std::string& input) {
 	}
 	return hexStream.str();
 }
+
+
+static std::vector<std::string> Split(std::string InString, const char Delimiter)
+{
+    std::istringstream StringStream(InString);
+    std::vector<std::string> Values;
+
+    std::string Value;
+    while (std::getline(StringStream, Value, Delimiter))
+        Values.push_back(Value);
+
+    return Values;
+}
+
+static std::vector<std::wstring> Split(std::wstring InString, const wchar_t Delimiter)
+{
+    std::wistringstream StringStream(InString);
+    std::vector<std::wstring> Values;
+
+    std::wstring Value;
+    while (std::getline(StringStream, Value, Delimiter))
+        Values.push_back(Value);
+
+    return Values;
+}
+
+static std::vector<std::string> Split(std::string InString, std::string Delimiter)
+{
+    std::vector<std::string> result;
+
+    size_t start = 0;
+    size_t end = InString.find(Delimiter);
+
+    while (end != std::string::npos) {
+        result.push_back(InString.substr(start, end - start));
+        result.push_back(Delimiter);
+        start = end + Delimiter.length();
+        end = InString.find(Delimiter, start);
+    }
+
+    result.push_back(InString.substr(start));
+
+    return result;
+}
+
+static std::vector<std::wstring> Split(std::wstring InString, std::wstring Delimiter)
+{
+    std::vector<std::wstring> result;
+
+    size_t start = 0;
+    size_t end = InString.find(Delimiter);
+
+    while (end != std::string::npos) {
+        result.push_back(InString.substr(start, end - start));
+        result.push_back(Delimiter);
+        start = end + Delimiter.length();
+        end = InString.find(Delimiter, start);
+    }
+
+    result.push_back(InString.substr(start));
+
+    return result;
+}

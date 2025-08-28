@@ -7,6 +7,6 @@ class UKismetSystemLibrary : public UObject
 public:
 	GENERATED_BODY(UKismetSystemLibrary, UObject, "KismetSystemLibrary", "/Script/Engine")
 
-	static void GetPrimaryAssetIdList(FPrimaryAssetType PrimaryAssetType, TArray<FPrimaryAssetId>* OutPrimaryAssetIdList);
-	static UObject* GetObjectFromPrimaryAssetId(const FPrimaryAssetId PrimaryAssetId);
+	static void GetPrimaryAssetIdList(FPrimaryAssetType PrimaryAssetType, TArray<FPrimaryAssetId>& OutPrimaryAssetIdList);
+	static UObject* GetObjectFromPrimaryAssetId(FPrimaryAssetId PrimaryAssetId);
 };

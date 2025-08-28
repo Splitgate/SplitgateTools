@@ -11,6 +11,7 @@ public:
 	class UWorld** World;
 	bool bUsesFProperty;
 	bool bShouldRenderUI;
+	bool bAllowUIOpen;
 
 	BaseGame();
 	
