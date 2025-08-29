@@ -56,10 +56,24 @@ void MapsMenuEntry::Render()
 		{
 			if (!Map.HasSelectability(MapSelectability::Race)) continue;
 	
-			if (ImGui::MenuItem(Map.DisplayName.c_str()))
+			if (ImGui::BeginMenu(Map.DisplayName.c_str()))
 			{
-				// todo: race difficulty
-				Map.OnPressed("Medium");
+				if (ImGui::MenuItem("Easy"))
+				{
+					Map.OnPressed("Easy");
+				}
+
+				if (ImGui::MenuItem("Medium"))
+				{
+					Map.OnPressed("Medium");
+				}
+
+				if (ImGui::MenuItem("Hard"))
+				{
+					Map.OnPressed("Hard");
+				}
+
+				ImGui::EndMenu();
 			}
 		}
 	
