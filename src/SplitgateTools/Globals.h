@@ -21,6 +21,7 @@
 #define LogInit
 #define LogRHI
 #define LogImGui
+#define LogCustomRace
 
 // Defines to shorten the typing rather than inputting the namespace and enum, hijack the debug level to make it a success since we wont use debug really
 #define Display spdlog::level::info
@@ -75,3 +76,6 @@ else           UE_LOG(LogInit, Warning, "Failed to find {}", DisplayName)
 
 #define WAIT_FOR(a) UE_LOG(LogInit, Display, "Awaiting {}...", #a); while (!(a)) { Sleep(1000); }; if (a) { UE_LOG(LogInit, Display, "{} ready!", #a); }
 #define WAIT_FORNAMED(a, b) UE_LOG(LogInit, Display, "Awaiting {}...", a); while (!(b)) { Sleep(1000); }; if (b) { UE_LOG(LogInit, Display, "{} ready!", a); }
+
+// Http Globals
+static std::vector<std::function<void()>> HttpRequestList;

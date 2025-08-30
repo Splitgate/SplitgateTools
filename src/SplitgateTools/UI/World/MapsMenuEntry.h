@@ -41,7 +41,7 @@ class GameMapEntry
 public:
 	
 	std::string DisplayName;
-	std::string InternalName;
+	std::wstring InternalName;
 	int Types;
 
 	bool HasSelectability(MapSelectability::Type Type) const
@@ -49,7 +49,7 @@ public:
 		return Types & Type;
 	}
 	
-	void OnPressed(const std::string& RaceType = "");
+	void OnPressed(const std::wstring& RaceType = L"");
 };
 
 class MapsMenuEntry : public UITitleBarEntry

@@ -13,6 +13,15 @@ public:
 		: Data(nullptr), Count(0), Max(0)
 	{ }
 
+	TArray(TArray<T>& OtherArray)
+	{
+		Count = OtherArray.Count;
+		Max = OtherArray.Max;
+
+		Data = (T*)FMemory::Malloc(Max);
+		memcpy(Data, OtherArray.Data, Max);
+	}
+
 	~TArray()
 	{
 		FMemory::Free(Data);

@@ -88,6 +88,8 @@
     <ClCompile Include="Engine\UGameEngine.cpp" />
     <ClCompile Include="Engine\UMG\UWidgetBlueprintLibrary.cpp" />
     <ClCompile Include="Engine\UWorld.cpp" />
+    <ClCompile Include="PortalWars\GameModes\Race\APortalWarsRaceGameMode.cpp" />
+    <ClCompile Include="SplitgateTools\HttpSystem\HttpSystem.cpp" />
     <ClCompile Include="SplitgateTools\Renderer.cpp" />
     <ClCompile Include="Games\BaseGame.cpp" />
     <ClCompile Include="Games\Splitgate\Splitgate.cpp" />
@@ -134,6 +136,8 @@
     <ClInclude Include="Engine\GameFramework\AController.h" />
     <ClInclude Include="Engine\GameFramework\AGameStateBase.h" />
     <ClInclude Include="Engine\GameFramework\APlayerController.h" />
+    <ClInclude Include="Engine\GameFramework\Game\AGameMode.h" />
+    <ClInclude Include="Engine\GameFramework\Game\AGameModeBase.h" />
     <ClInclude Include="Engine\IPlatformFilePak.h" />
     <ClInclude Include="Engine\Kismet\UKismetSystemLibrary.h" />
     <ClInclude Include="Engine\Kismet\UGameplayStatics.h" />
@@ -145,6 +149,8 @@
     <ClInclude Include="Engine\UGameViewportClient.h" />
     <ClInclude Include="Engine\UMG\UWidgetBlueprintLibrary.h" />
     <ClInclude Include="Engine\UWorld.h" />
+    <ClInclude Include="PortalWars\GameModes\Race\APortalWarsRaceGameMode.h" />
+    <ClInclude Include="SplitgateTools\HttpSystem\HttpSystem.h" />
     <ClInclude Include="SplitgateTools\SplitgateTools.h" />
     <ClInclude Include="SplitgateTools\Globals.h" />
     <ClInclude Include="SplitgateTools\Renderer.h" />
@@ -155,6 +161,7 @@
     <ClInclude Include="Games\BaseGame.h" />
     <ClInclude Include="Games\Splitgate\Splitgate.h" />
     <ClInclude Include="SplitgateTools\UI\World\MapsMenuEntry.h" />
+    <ClInclude Include="Utilities\httplib\httplib.h" />
     <ClInclude Include="Utilities\imgui\backends\imgui_impl_dx11.h" />
     <ClInclude Include="Utilities\imgui\backends\imgui_impl_dx12.h" />
     <ClInclude Include="Utilities\imgui\backends\imgui_impl_win32.h" />
@@ -164,6 +171,7 @@
     <ClInclude Include="Utilities\imgui\imstb_rectpack.h" />
     <ClInclude Include="Utilities\imgui\imstb_textedit.h" />
     <ClInclude Include="Utilities\imgui\imstb_truetype.h" />
+    <ClInclude Include="Utilities\json\json.hpp" />
     <ClInclude Include="Utilities\Memory\Hook.h" />
     <ClInclude Include="Utilities\Memory\Memory.h" />
     <ClInclude Include="Utilities\Memory\Signature.h" />

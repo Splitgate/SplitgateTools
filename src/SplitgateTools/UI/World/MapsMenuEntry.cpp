@@ -9,28 +9,20 @@
 #include "Strings/Strings.h"
 #include "Globals.h"
 
-void GameMapEntry::OnPressed(const std::string& RaceType)
+void GameMapEntry::OnPressed(const std::wstring& RaceType)
 {
-	std::string TravelURL = InternalName;
-	
-	ENetMode CurrentNetMode = GWorld->GetNetMode();
-	if (RaceType != "" && HasSelectability(MapSelectability::Race))
+	std::wstring TravelURL = InternalName;
+		if (RaceType != L"" && HasSelectability(MapSelectability::Race))
 	{
-		TravelURL += "?Default";
+		TravelURL += L"?Default?Game=RACE";
 
-		//APlayerController* Controller = UGameplayStatics::GetPlayerController(GWorld, 0);
-		//if (Controller)
-		//{
-		//	FString Travel = StringToWide(TravelURL).c_str();
-		//	Controller->LocalTravel(Travel);
-		//}
 	}
 	else
 	{
-		TravelURL += "?Default";
-
-		GWorld->ServerTravel(StringToWide(TravelURL).c_str());
+		TravelURL += L"?Default";
 	}
+
+	GWorld->ServerTravel(TravelURL.c_str());
 }
 
 void MapsMenuEntry::Render()
@@ -60,17 +52,17 @@ void MapsMenuEntry::Render()
 			{
 				if (ImGui::MenuItem("Easy"))
 				{
-					Map.OnPressed("Easy");
+					Map.OnPressed(L"Easy");
 				}
 
 				if (ImGui::MenuItem("Medium"))
 				{
-					Map.OnPressed("Medium");
+					Map.OnPressed(L"Medium");
 				}
 
 				if (ImGui::MenuItem("Hard"))
 				{
-					Map.OnPressed("Hard");
+					Map.OnPressed(L"Hard");
 				}
 
 				ImGui::EndMenu();
@@ -175,7 +167,7 @@ void MapsMenuEntry::OnCreate()
 	AllMaps.push_back( \
 		{ \
 			Name, \
-			Path, \
+			TEXT(Path), \
 			Types \
 		}) \
 

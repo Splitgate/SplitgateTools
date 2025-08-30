@@ -3,6 +3,9 @@
 // Title Bar Entries
 #include "UI/World/MapsMenuEntry.h"
 
+// Classes
+#include "PortalWars/GameModes/Race/APortalWarsRaceGameMode.h"
+
 Splitgate::Splitgate()
 {
 	bShouldRenderUI = true;
@@ -11,6 +14,8 @@ Splitgate::Splitgate()
 void Splitgate::Init_PreEngine()
 {
 	BaseGame::Init_PreEngine();	
+
+	APortalWarsRaceGameMode::Init_PreEngine();
 }
 
 void Splitgate::Init_PostEngine()

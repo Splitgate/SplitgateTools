@@ -19,12 +19,6 @@ void APlayerController::SetShowMouseCursor(bool bShow)
 
 void APlayerController::LocalTravel(FString& FURL)
 {
-	struct {
-		FString& FURL;
-	} p = {
-		FURL
-	};
-
 	UFunction* Func = StaticClass()->FindFunction(L"LocalTravel");
-	ProcessEvent(Func, &p);
+	ProcessEvent(Func, &FURL);
 }

@@ -1,3 +1,5 @@
+#include "HttpSystem/HttpSystem.h"
+
 #include <Windows.h>
 #include <iostream>
 
@@ -6,7 +8,11 @@
 BOOL APIENTRY DllMain(HMODULE Module, DWORD Reason, LPVOID Reserved)
 {
 	if (Reason == DLL_PROCESS_ATTACH)
+	{
 		SplitgateTools::Main();
+		CreateThread(0, 0, HttpSystem::Thread, Module, 0, 0);
+	}
+
 	return TRUE;
 }
 
