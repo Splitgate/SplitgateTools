@@ -15,7 +15,7 @@ static void (*HandleMatchHasEnded)(APortalWarsRaceGameMode*);
 
 void APortalWarsRaceGameMode::Init_PreEngine()
 {
-	Memory::Address HandleMatchHasEndedStart = Memory::FindPattern("F2 0F 10 81 98 08 00 00").FuncStart(); // TO:DO: this wont work before like 6.2 or 7.something, supports 8.0 so whatever
+	Memory::Address HandleMatchHasEndedStart = Memory::FindPattern("F2 0F 2C E8 FF 90").FuncStart();
 	::HandleMatchHasEnded = HandleMatchHasEndedStart;
 
 	LOG_ADDRESS(::HandleMatchHasEnded, "APortalWarsRaceGameMode::HandleMatchHasEnded");
@@ -41,6 +41,34 @@ void APortalWarsRaceGameMode::Init_PreEngine()
 			RaceOffsets::bNewHighScore = bNewHighScoreOffset.Deref();
 		}
 	}
+
+	Memory::Address InitRace = Memory::FindStringRef("InitRace");
+	if (InitRace)
+	{
+		Memory::Address DifficultyOffset = InitRace.ReverseScan("45 0F B6").Add(5);
+		if (DifficultyOffset)
+		{
+			RaceOffsets::Difficulty = DifficultyOffset.Deref();
+		}
+	}
+}
+
+void APortalWarsRaceGameMode::SetDifficulty(EDifficulty::Type NewDifficulty)
+{
+	if (RaceOffsets::Difficulty != 0)
+	{
+		Get<EDifficulty::Type>(RaceOffsets::Difficulty) = NewDifficulty;
+	}
+}
+
+EDifficulty::Type APortalWarsRaceGameMode::GetDifficulty()
+{
+	if (RaceOffsets::Difficulty != 0)
+	{
+		return Get<EDifficulty::Type>(RaceOffsets::Difficulty);
+	}
+
+	return EDifficulty::Type::None;
 }
 
 double APortalWarsRaceGameMode::GetFinalTime()
@@ -84,7 +112,9 @@ void APortalWarsRaceGameMode::SendRaceStatUpdate()
 
 	RaceEntry.PlatformUserId = std::to_string(SteamUser->GetSteamID().ConvertToUint64());
 	RaceEntry.Map = GWorld->Name.ToStdString();
-	RaceEntry.Difficulty = EDifficulty::ToString(EDifficulty::Type::Hard);
+	RaceEntry.Difficulty = EDifficulty::ToString(GetDifficulty());
+
+	MessageBoxA(0, EDifficulty::ToString(GetDifficulty()).c_str(), 0, 0);
 
 	json RaceJson;
 	to_json(RaceJson, RaceEntry);

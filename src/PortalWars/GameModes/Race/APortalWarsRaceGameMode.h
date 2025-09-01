@@ -61,6 +61,8 @@ public:
 
 	static void Init_PreEngine();
 
+	void SetDifficulty(EDifficulty::Type NewDifficulty);
+	EDifficulty::Type GetDifficulty();
 	double GetFinalTime();
 	double GetWorldTime();
 	bool GetNewHighScore();
@@ -72,6 +74,7 @@ private:
 
 	struct RaceOffsets
 	{
+		static inline int Difficulty;
 		static inline int WorldTime;
 		static inline int FinalTime;
 		static inline int bNewHighScore;
