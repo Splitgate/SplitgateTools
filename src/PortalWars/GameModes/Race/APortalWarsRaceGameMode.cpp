@@ -106,7 +106,7 @@ void APortalWarsRaceGameMode::SendRaceStatUpdate()
 	RaceReq.headers.insert({ "Authorization", AuthenticationHeader });
 	RaceReq.body = RaceJson.dump();
 
-	HttpJob(&HttpSystem::ProxyClient, RaceReq, [](httplib::Response Resp)
+	HttpJob(&HttpSystem::RaceBase, RaceReq, [](httplib::Response Resp)
 		{
 			// TODO: Show imgui popup bottom right to say stats uploaded successfully or why if not
 		});
