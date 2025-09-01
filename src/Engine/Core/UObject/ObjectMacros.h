@@ -1,5 +1,8 @@
 ﻿#pragma once
 #include <Windows.h>
+#include "nlohmann/json.hpp"
+
+using namespace nlohmann;
 
 class UObject;
 class UStruct;

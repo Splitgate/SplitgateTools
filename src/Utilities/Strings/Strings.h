@@ -56,7 +56,6 @@ static std::string StringToHexString(std::string& input) {
 	return hexStream.str();
 }
 
-
 static std::vector<std::string> Split(std::string InString, const char Delimiter)
 {
     std::istringstream StringStream(InString);

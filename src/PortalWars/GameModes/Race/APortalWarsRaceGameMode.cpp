@@ -1,11 +1,13 @@
-#include "httplib/httplib.h"
-
+#include "HttpSystem/HttpSystem.h"
 
 #include "APortalWarsRaceGameMode.h"
-#include "Memory/Hook.h"
+#include "Engine/Kismet/UGameplayStatics.h"
+#include "Engine/GameFramework/APlayerController.h"
+#include "Engine/GameFramework/APlayerState.h"
 
-#include <iostream>
-#include <thread>
+#include "Memory/Hook.h"
+#include "Strings/Strings.h"
+#include "Steam/SteamUtilities.h"
 
 static void (*HandleMatchHasEnded)(APortalWarsRaceGameMode*);
 
@@ -69,13 +71,59 @@ bool APortalWarsRaceGameMode::GetNewHighScore()
 	return false;
 }
 
+void APortalWarsRaceGameMode::SendRaceStatUpdate()
+{
+	FUserRaceCourseTime RaceEntry = FUserRaceCourseTime();
+	RaceEntry.TimeMs = GetFinalTime() * 1000;
+
+	ISteamUser* SteamUser = Steam::SteamUser();
+	if (!SteamUser)
+		return; // Bail no user
+
+	RaceEntry.PlatformUserId = std::to_string(SteamUser->GetSteamID().ConvertToUint64());
+	RaceEntry.Map = GWorld->Name.ToStdString();
+	RaceEntry.Difficulty = EDifficulty::ToString(EDifficulty::Type::Hard);
+
+	json RaceJson;
+	to_json(RaceJson, RaceEntry);
+
+	httplib::Request RaceReq = httplib::Request();
+	RaceReq.path = "https://racertest.vercel.app/api/update-pb";
+	RaceReq.method = "POST";
+	RaceReq.headers.insert({ "Content-Type", "application/json" });
+
+	uint8 TicketBuffer[1024];
+	uint32 TicketSize = 0;
+
+	if (SteamUser->GetAuthSessionTicket(TicketBuffer, sizeof(TicketBuffer), &TicketSize) == k_HAuthTicketInvalid)
+	{
+		return; // Failed to get encrypted ticket, do not allow request
+	}
+
+	std::string EncryptedTicket = "";
+	//for (int i = 0; i < sizeof(TicketBuffer); i++)
+	//{
+	//
+	//}
+
+	MessageBoxA(0, EncryptedTicket.c_str(), 0, 0);
+
+	std::string AuthenticationHeader = "Bearer ";
+	RaceReq.headers.insert({ "Authorization", AuthenticationHeader += EncryptedTicket});
+	RaceReq.body = RaceJson.dump();
+
+	HttpJob(&HttpSystem::ProxyClient, RaceReq, [](httplib::Response Resp)
+		{
+			// TODO: Show imgui popup bottom right to say stats uploaded successfully or why if not
+		});
+}
+
 void APortalWarsRaceGameMode::HandleMatchHasEnded()
 {
 	::HandleMatchHasEnded(this);
 
-	HttpRequestList.push_back([]()
-		{
-			httplib::Client cli("http://racertest.vercel.app");
-			cli.Post("/api/update-pb", "{\"platform\":\"STEAM\",\"platformUserId\":\"19416\",\"map\":\"Splitgate2\",\"timeMs\":1900,\"difficulty\":\"Medium\"}", "text/plain");
-		});
+	// Ignore sending if offline or running locally
+	if (Steam::IsSteamReady())
+		SendRaceStatUpdate();
 }
+

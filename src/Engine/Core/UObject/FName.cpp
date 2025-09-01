@@ -24,6 +24,11 @@ FString FName::ToString() const
 	return Out;
 }
 
+std::string FName::ToStdString() const
+{
+	return ToString().ToString();
+}
+
 void FName::ToString(FString& Out) const
 {
 	::ToString(this, Out);

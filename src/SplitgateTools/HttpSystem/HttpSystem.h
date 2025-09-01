@@ -1,30 +1,21 @@
 #pragma once
 
+#define CPPHTTPLIB_OPENSSL_SUPPORT
 #include "httplib/httplib.h"
-
-// TO:DO: Remove and replace with just using httplib::clients
-enum ClientToUse_Temp
-{
-	Race = 0,
-	Forge = 1
-};
 
 class HttpJob
 {
+	friend class HttpSystem;
+
 public:
 
-	HttpJob()
-	{}
-
-	HttpJob(ClientToUse_Temp InClient, std::function<void(httplib::Client)> InRequestFunction, std::function<void(std::string)> OnCompleted = nullptr)
-		: Client(InClient), RequestFunction(InRequestFunction), CompletedCallback(OnCompleted)
-	{ };
+	HttpJob(httplib::Client* InClient, httplib::Request InRequest, std::function<void(httplib::Response)> InCompletedCallback);
 
 private:
 
-	ClientToUse_Temp Client;
-	std::function<void(httplib::Client)> RequestFunction;
-	std::function<void(std::string)> CompletedCallback;
+	httplib::Client* CallingClient;
+	httplib::Request Request;
+	std::function<void(httplib::Response)> CompletedCallback;
 };
 
 class HttpSystem
@@ -38,42 +29,29 @@ public:
 	{
 		for (;;)
 		{
-			for (auto i = JobList.size(); i--;)
+			for (size_t i = JobList.size(); i--;)
 			{
+				auto& Job = JobList[i];
 
+				httplib::Response Resp;
+				httplib::Error Error;
+				Job.CallingClient->send(Job.Request, Resp, Error);
+
+				// Some might not have a callback
+				if (Job.CompletedCallback)
+					Job.CompletedCallback(Resp);
+
+				JobList.erase(JobList.begin(), JobList.end()--);
 			}
 		}
 
 		return NULL;
 	}
 
-	static httplib::Client RaceBaseURL;
+	static httplib::Client ProxyClient;
+	static httplib::Client RaceBase;
 
 private:
 
 	static std::vector<HttpJob> JobList;
 };
-//static HttpSystem GHttpSystem;
-
-//DWORD WINAPI HttpThread(LPVOID)
-//{
-//	while (true)
-//	{
-//		for (auto& OutstandingRequest : HttpRequestList)
-//		{
-//			// This is blocking
-//			OutstandingRequest();
-//
-//			// Remove the request since its done
-//			HttpRequestList.erase(std::remove_if(HttpRequestList.begin(), HttpRequestList.end(),
-//				[&](const std::function<void()>& func) {
-//					return func.target_type() == OutstandingRequest.target_type() &&
-//						func.target<void()>() == OutstandingRequest.target<void>();
-//				}));
-//
-//			UE_LOG(LogThreads, Warning, "Executed event, removing!");
-//		}
-//	}
-//
-//	return NULL;
-//}

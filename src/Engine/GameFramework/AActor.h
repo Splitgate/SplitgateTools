@@ -2,6 +2,8 @@
 #include "UObject/UObject.h"
 #include "Math/FVector.h"
 
+#include "Engine/UWorld.h"
+
 class AActor : public UObject
 {
 public:

@@ -15,6 +15,8 @@ public:
 	static void Init_PreEngine();
 	
 	FString ToString() const;
+	std::string ToStdString() const;
+
 	void ToString(FString& Out) const;
 	
 	bool operator==(FName Other) const {

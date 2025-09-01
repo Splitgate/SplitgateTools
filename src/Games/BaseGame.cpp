@@ -23,17 +23,23 @@ std::unique_ptr<BaseGame> BaseGame::Create()
 {
 	Init_PreGame();
 
-	/*
-	* Removed until i eventually bother with custom content
-	* 
-	UE_LOG(LogInit, Display, "Patching IO Store Signing checks");
-	auto MissingSignature = Memory::FindStringRef(L"Missing signature").Scan("74");
-	if (MissingSignature)
+	//auto KeyPatchJmp = Memory::FindPattern("48 8D 0D ?? ?? ?? 00 E9 ?? ?? ?? ?? CC CC CC CC 48");
+	//if (MissingSignature)
+	//{
+	//	MissingSignature.Write("EB 37");
+	//	UE_LOG(LogInit, Display, "Patched IO Store Signing checks");
+	//}
+
+	Memory::Address SignatureCheck = Memory::FindPattern("0F 8F ?? ?? ?? ?? 45 33 C0 33 C9 41 8D 50 20 E8", 1);
+	if (SignatureCheck)
 	{
-		MissingSignature.Write("EB 37");
-		UE_LOG(LogInit, Display, "Patched IO Store Signing checks");
+		SignatureCheck.FuncStart().Write(RET);
+		UE_LOG(LogInit, Display, "Patched I/O Store signing checks");
 	}
-	*/
+	else
+	{
+		UE_LOG(LogInit, Display, "Failed to patched I/O Store signing checks");
+	}
 
 	UE_LOG(LogInit, Display, "Attempting to find GInternalProjectName");
 	

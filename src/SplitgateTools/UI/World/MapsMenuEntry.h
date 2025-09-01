@@ -15,7 +15,7 @@ namespace MapSelectability
 		Misc = 2 << 2,
 	};
 
-	static const char* ToString(MapSelectability::Type MapType)
+	static inline const char* ToString(MapSelectability::Type MapType)
 	{
 		switch (MapType)
 		{

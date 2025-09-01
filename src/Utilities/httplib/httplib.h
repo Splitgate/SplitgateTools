@@ -328,6 +328,9 @@ using socket_t = int;
 
 #ifdef _MSC_VER
 #pragma comment(lib, "crypt32.lib")
+#pragma comment(lib, "ssl.lib")
+#pragma comment(lib, "crypto.lib")
+#pragma comment(lib, "Bcrypt.lib")
 #endif
 #endif // _WIN32
 
@@ -337,6 +340,8 @@ using socket_t = int;
 #endif
 #endif // CPPHTTPLIB_USE_NON_BLOCKING_GETADDRINFO
 
+// Suppress libressl warning about wincrypt overrides
+#define LIBRESSL_DISABLE_OVERRIDE_WINCRYPT_DEFINES_WARNING
 #include <openssl/err.h>
 #include <openssl/evp.h>
 #include <openssl/ssl.h>
@@ -1731,6 +1736,7 @@ private:
 class Client {
 public:
   // Universal interface
+  Client() = default;
   explicit Client(const std::string &scheme_host_port);
 
   explicit Client(const std::string &scheme_host_port,
