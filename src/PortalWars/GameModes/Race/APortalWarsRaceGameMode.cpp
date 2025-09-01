@@ -9,8 +9,6 @@
 #include "Strings/Strings.h"
 #include "Steam/SteamUtilities.h"
 
-#include <algorithm>
-
 static void (*HandleMatchHasEnded)(APortalWarsRaceGameMode*);
 
 void APortalWarsRaceGameMode::Init_PreEngine()
