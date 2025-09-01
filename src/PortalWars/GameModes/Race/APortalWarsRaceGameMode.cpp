@@ -9,6 +9,8 @@
 #include "Strings/Strings.h"
 #include "Steam/SteamUtilities.h"
 
+#include <algorithm>
+
 static void (*HandleMatchHasEnded)(APortalWarsRaceGameMode*);
 
 void APortalWarsRaceGameMode::Init_PreEngine()
@@ -76,7 +78,7 @@ void APortalWarsRaceGameMode::SendRaceStatUpdate()
 	FUserRaceCourseTime RaceEntry = FUserRaceCourseTime();
 	RaceEntry.TimeMs = GetFinalTime() * 1000;
 
-	ISteamUser* SteamUser = Steam::SteamUser();
+	ISteamUser* SteamUser = Steam::User();
 	if (!SteamUser)
 		return; // Bail no user
 
@@ -93,23 +95,15 @@ void APortalWarsRaceGameMode::SendRaceStatUpdate()
 	RaceReq.headers.insert({ "Content-Type", "application/json" });
 
 	uint8 TicketBuffer[1024];
-	uint32 TicketSize = 0;
+	uint32 TicketSize = 0; // 240 - last test
 
 	if (SteamUser->GetAuthSessionTicket(TicketBuffer, sizeof(TicketBuffer), &TicketSize) == k_HAuthTicketInvalid)
 	{
 		return; // Failed to get encrypted ticket, do not allow request
 	}
 
-	std::string EncryptedTicket = "";
-	//for (int i = 0; i < sizeof(TicketBuffer); i++)
-	//{
-	//
-	//}
-
-	MessageBoxA(0, EncryptedTicket.c_str(), 0, 0);
-
-	std::string AuthenticationHeader = "Bearer ";
-	RaceReq.headers.insert({ "Authorization", AuthenticationHeader += EncryptedTicket});
+	std::string AuthenticationHeader = std::format("Bearer {}", BytesToHex(TicketBuffer, TicketSize));
+	RaceReq.headers.insert({ "Authorization", AuthenticationHeader });
 	RaceReq.body = RaceJson.dump();
 
 	HttpJob(&HttpSystem::ProxyClient, RaceReq, [](httplib::Response Resp)
@@ -123,7 +117,13 @@ void APortalWarsRaceGameMode::HandleMatchHasEnded()
 	::HandleMatchHasEnded(this);
 
 	// Ignore sending if offline or running locally
-	if (Steam::IsSteamReady())
+	if (Steam::IsReady())
+	{
 		SendRaceStatUpdate();
+	}
+	else // TODO: Offline notification - ruby
+	{
+
+	}
 }
 

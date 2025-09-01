@@ -16,8 +16,8 @@ class Steam
 
 public:
 
-	static inline bool IsSteamReady() { return (GetSteamAPI() != NULL); }
+	static inline bool IsReady() { return (GetSteamAPI() != NULL); }
 
-	static ISteamUser* SteamUser();
-	static ISteamUtils* SteamUtils();
+	static ISteamUser* User();
+	static ISteamUtils* Utils();
 };

@@ -1,7 +1,7 @@
 #include "HttpSystem.h"
 
 httplib::Client HttpSystem::ProxyClient = httplib::Client("localhost:8888");
-httplib::Client HttpSystem::RaceBase = httplib::Client("https://racertest.vercel.app/api/update-pb");
+httplib::Client HttpSystem::RaceBase = httplib::Client("https://racertest.vercel.app");
 std::vector<HttpJob> HttpSystem::JobList = {};
 
 HttpJob::HttpJob(httplib::Client* InClient, httplib::Request InRequest, std::function<void(httplib::Response)> InCompletedCallback)

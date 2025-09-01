@@ -117,3 +117,31 @@ static std::vector<std::wstring> Split(std::wstring InString, std::wstring Delim
 
     return result;
 }
+
+static inline CHAR NibbleToChar(uint8_t Num)
+{
+	if (Num > 9)
+	{
+		return 'A' + CHAR(Num - 10);
+	}
+	return '0' + CHAR(Num);
+}
+
+static void ByteToHex(uint8_t In, std::string& Result)
+{
+	Result += NibbleToChar(In >> 4);
+	Result += NibbleToChar(In & 15);
+}
+
+static inline std::string BytesToHex(const uint8_t* In, int32_t Count)
+{
+	std::string Result;
+	Result.reserve(Count);
+
+	while (Count)
+	{
+		ByteToHex(*In++, Result);
+		Count--;
+	}
+	return Result;
+}

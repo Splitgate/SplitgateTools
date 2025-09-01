@@ -3,9 +3,9 @@
 
 #define NAMEOF(Type) #Type
 
-ISteamUser* Steam::SteamUser()
+ISteamUser* Steam::User()
 {
-    if (IsSteamReady())
+    if (IsReady())
     {
         return ((ISteamUser* (__cdecl*)(void))GetProcAddress(GetSteamAPI(), NAMEOF(SteamAPI_SteamUser_v021)))();
     }
@@ -13,9 +13,9 @@ ISteamUser* Steam::SteamUser()
     return nullptr;
 }
 
-ISteamUtils* Steam::SteamUtils()
+ISteamUtils* Steam::Utils()
 {
-    if (IsSteamReady())
+    if (IsReady())
     {
         return ((ISteamUtils* (__cdecl*)(void))GetProcAddress(GetSteamAPI(), NAMEOF(SteamAPI_SteamUtils_v010)))();
     }
