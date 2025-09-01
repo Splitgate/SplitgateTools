@@ -112,8 +112,6 @@ void APortalWarsRaceGameMode::SendRaceStatUpdate()
 	RaceEntry.Map = GWorld->Name.ToStdString();
 	RaceEntry.Difficulty = EDifficulty::ToString(GetDifficulty());
 
-	MessageBoxA(0, EDifficulty::ToString(GetDifficulty()).c_str(), 0, 0);
-
 	json RaceJson;
 	to_json(RaceJson, RaceEntry);
 
@@ -134,7 +132,7 @@ void APortalWarsRaceGameMode::SendRaceStatUpdate()
 	RaceReq.headers.insert({ "Authorization", AuthenticationHeader });
 	RaceReq.body = RaceJson.dump();
 
-	HttpJob(&HttpSystem::RaceBase, RaceReq, [](httplib::Response Resp)
+	HttpJob(&HttpSystem::ProxyClient, RaceReq, [](httplib::Response Resp, std::string Err)
 		{
 			// TODO: Show imgui popup bottom right to say stats uploaded successfully or why if not
 		});
