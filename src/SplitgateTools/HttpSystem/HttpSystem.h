@@ -49,7 +49,10 @@ public:
 	}
 
 	static httplib::Client ProxyClient;
+
+	// Race endpoint base urls
 	static httplib::Client RaceBase;
+	static httplib::Client RaceTestBase;
 
 private:
 

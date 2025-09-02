@@ -12,10 +12,10 @@
 void GameMapEntry::OnPressed(const std::wstring& RaceType)
 {
 	std::wstring TravelURL = InternalName;
-		if (RaceType != L"" && HasSelectability(MapSelectability::Race))
+	if (RaceType != L"" && HasSelectability(MapSelectability::Race))
 	{
-		TravelURL += L"?Default?Game=RACE";
-
+		TravelURL += L"?Default?Game=RACE?Difficulty=";
+		TravelURL += RaceType;
 	}
 	else
 	{

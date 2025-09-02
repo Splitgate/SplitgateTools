@@ -5,11 +5,15 @@
 #include "Engine/GameFramework/APlayerController.h"
 #include "Engine/GameFramework/APlayerState.h"
 
+#include "Parse/FParse.h"
+
 #include "Memory/Hook.h"
 #include "Strings/Strings.h"
 #include "Steam/SteamUtilities.h"
 
 static void (*HandleMatchHasEnded)(APortalWarsRaceGameMode*);
+static void (*InitGame)(APortalWarsRaceGameMode*, const FString&, const FString&, FString&);
+static bool (*LoadSubLevel)(APortalWarsRaceGameMode*);
 
 void APortalWarsRaceGameMode::Init_PreEngine()
 {
@@ -18,6 +22,18 @@ void APortalWarsRaceGameMode::Init_PreEngine()
 
 	LOG_ADDRESS(::HandleMatchHasEnded, "APortalWarsRaceGameMode::HandleMatchHasEnded");
 	HOOK(HandleMatchHasEnded);
+
+	Memory::Address InitGameStart = Memory::FindPattern("C7 83 ?? ?? 00 00 10 0E 00 00 C6 83 ?? ?? 00 00 00 C6 83 ?? ?? 00 00 00").FuncStart();
+	::InitGame = InitGameStart;
+
+	LOG_ADDRESS(::InitGame, "APortalWarsRaceGameMode::InitGame");
+	HOOK(InitGame);
+
+	Memory::Address LoadSubLevelStart = Memory::FindStringRef(L"Race%s").FuncStart();
+	::LoadSubLevel = LoadSubLevelStart;
+
+	LOG_ADDRESS(::LoadSubLevel, "APortalWarsRaceGameMode::LoadSubLevel");
+	HOOK(LoadSubLevel);
 
 	if (HandleMatchHasEndedStart)
 	{
@@ -116,7 +132,7 @@ void APortalWarsRaceGameMode::SendRaceStatUpdate()
 	to_json(RaceJson, RaceEntry);
 
 	httplib::Request RaceReq = httplib::Request();
-	RaceReq.path = "https://racertest.vercel.app/api/update-pb";
+	RaceReq.path = "/api/update-pb";
 	RaceReq.method = "POST";
 	RaceReq.headers.insert({ "Content-Type", "application/json" });
 
@@ -132,7 +148,7 @@ void APortalWarsRaceGameMode::SendRaceStatUpdate()
 	RaceReq.headers.insert({ "Authorization", AuthenticationHeader });
 	RaceReq.body = RaceJson.dump();
 
-	HttpJob(&HttpSystem::ProxyClient, RaceReq, [](httplib::Response Resp, std::string Err)
+	HttpJob(&HttpSystem::RaceBase, RaceReq, [](httplib::Response Resp, std::string Err)
 		{
 			// TODO: Show imgui popup bottom right to say stats uploaded successfully or why if not
 		});
@@ -142,8 +158,8 @@ void APortalWarsRaceGameMode::HandleMatchHasEnded()
 {
 	::HandleMatchHasEnded(this);
 
-	// Ignore sending if offline or running locally
-	if (Steam::IsReady())
+	// Ignore sending if offline or running locally, we only want to send if its a new highscore
+	if (Steam::IsReady() && GetNewHighScore())
 	{
 		SendRaceStatUpdate();
 	}
@@ -153,3 +169,24 @@ void APortalWarsRaceGameMode::HandleMatchHasEnded()
 	}
 }
 
+void APortalWarsRaceGameMode::InitGame(const FString& MapName, const FString& Options, FString& ErrorMessage)
+{
+	FString NewDifficulty;
+	if (FParse::Value(*Options, TEXT("Difficulty="), NewDifficulty))
+	{
+		OverrideDifficulty = EDifficulty::FromString(NewDifficulty.ToString());
+	}
+
+	::InitGame(this, MapName, Options, ErrorMessage);
+}
+
+bool APortalWarsRaceGameMode::LoadSubLevel()
+{
+	if (OverrideDifficulty != EDifficulty::Type::None)
+	{
+		SetDifficulty(OverrideDifficulty);
+		UE_LOG(LogRace, Warning, "Overriding difficulty with {}!", EDifficulty::ToString(OverrideDifficulty));
+	}
+
+	return ::LoadSubLevel(this);
+}

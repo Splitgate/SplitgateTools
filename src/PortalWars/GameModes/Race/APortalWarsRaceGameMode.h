@@ -51,6 +51,26 @@ namespace EDifficulty
 		
 		return "None";
 	}
+
+	Type inline FromString(std::string InDifficulty)
+	{
+		if (InDifficulty == "Easy")
+		{
+			return Type::Easy;
+		}
+
+		if (InDifficulty == "Medium")
+		{
+			return Type::Medium;
+		}
+
+		if (InDifficulty == "Hard")
+		{
+			return Type::Hard;
+		}
+
+		return Type::Easy;
+	}
 }
 
 // temp gamemode, use APortalWarsGameMode as parent
@@ -71,6 +91,11 @@ private:
 
 	void SendRaceStatUpdate();
 	void HandleMatchHasEnded();
+
+	void InitGame(const FString& MapName, const FString& Options, FString& ErrorMessage);
+	bool LoadSubLevel();
+
+	static inline EDifficulty::Type OverrideDifficulty;
 
 	struct RaceOffsets
 	{

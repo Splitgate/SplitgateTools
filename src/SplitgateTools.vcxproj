@@ -68,6 +68,7 @@
     <ClCompile Include="Engine\Core\FMemory.cpp" />
     <ClCompile Include="Engine\Core\Misc\FApp.cpp" />
     <ClCompile Include="Engine\Core\Misc\FEngineVersion.cpp" />
+    <ClCompile Include="Engine\Core\Parse\FParse.cpp" />
     <ClCompile Include="Engine\Core\UObject\FName.cpp" />
     <ClCompile Include="Engine\Core\UObject\FWeakObjectPtr.cpp" />
     <ClCompile Include="Engine\Core\UObject\UClass.cpp" />
@@ -125,6 +126,7 @@
     <ClInclude Include="Engine\Core\Misc\FApp.h" />
     <ClInclude Include="Engine\Core\Misc\FEngineVersion.h" />
     <ClInclude Include="Engine\Core\Misc\FGuid.h" />
+    <ClInclude Include="Engine\Core\Parse\FParse.h" />
     <ClInclude Include="Engine\Core\UObject\FName.h" />
     <ClInclude Include="Engine\Core\UObject\FPrimaryAssetId.h" />
     <ClInclude Include="Engine\Core\UObject\FWeakObjectPtr.h" />
@@ -217,6 +219,7 @@
     <ClInclude Include="Utilities\nlohmann\detail\output\serializer.hpp" />
     <ClInclude Include="Utilities\nlohmann\detail\string_concat.hpp" />
     <ClInclude Include="Utilities\nlohmann\detail\string_escape.hpp" />
+    <ClInclude Include="Utilities\nlohmann\detail\string_utils.hpp" />
     <ClInclude Include="Utilities\nlohmann\detail\value_t.hpp" />
     <ClInclude Include="Utilities\nlohmann\json.hpp" />
     <ClInclude Include="Utilities\nlohmann\json_fwd.hpp" />

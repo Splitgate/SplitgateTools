@@ -3,6 +3,7 @@
 #include "Math/FVector.h"
 
 #include "Engine/UWorld.h"
+#include "Engine/Core/UObject/UClass.h"
 
 class AActor : public UObject
 {

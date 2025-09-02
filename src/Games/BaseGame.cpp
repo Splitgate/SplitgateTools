@@ -3,6 +3,7 @@
 #include "Splitgate/Splitgate.h"
 
 #include "FMemory.h"
+#include "Parse/FParse.h"
 #include "Misc/FApp.h"
 #include "Engine/UGameEngine.h"
 #include "Engine/UWorld.h"
@@ -90,6 +91,8 @@ void BaseGame::Init_PreEngine()
 	FName::Init_PreEngine();
 	FWeakObjectPtr::Init_PreEngine();
 	
+	FParse::Init_PreEngine();
+
 	UObject::Init_PreEngine();
 	IPlatformFilePak::Init_PreEngine();
 	UGameEngine::Init_PreEngine();
