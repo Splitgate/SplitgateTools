@@ -116,6 +116,10 @@ void BaseGame::ConstructTitleBar()
 {
 }
 
+void BaseGame::GatherSettingsEntries()
+{
+}
+
 void BaseGame::OnUIVisibilityChange(bool bVisible)
 {
 	if (!World || !GWorld) return;

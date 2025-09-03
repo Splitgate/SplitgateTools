@@ -67,58 +67,30 @@ void APortalWarsRaceGameMode::Init_PreEngine()
 	}
 }
 
-void APortalWarsRaceGameMode::SetDifficulty(EDifficulty::Type NewDifficulty)
+EDifficulty::Type& APortalWarsRaceGameMode::Difficulty()
 {
-	if (RaceOffsets::Difficulty != 0)
-	{
-		Get<EDifficulty::Type>(RaceOffsets::Difficulty) = NewDifficulty;
-	}
+	return Get<EDifficulty::Type>(RaceOffsets::Difficulty);
 }
 
-EDifficulty::Type APortalWarsRaceGameMode::GetDifficulty()
+double& APortalWarsRaceGameMode::FinalTime()
 {
-	if (RaceOffsets::Difficulty != 0)
-	{
-		return Get<EDifficulty::Type>(RaceOffsets::Difficulty);
-	}
-
-	return EDifficulty::Type::None;
+	return Get<double>(RaceOffsets::FinalTime);
 }
 
-double APortalWarsRaceGameMode::GetFinalTime()
+double& APortalWarsRaceGameMode::WorldTime()
 {
-	if (RaceOffsets::FinalTime != 0)
-	{
-		return Get<double>(RaceOffsets::FinalTime);
-	}
-
-	return 0;
+	return Get<double>(RaceOffsets::WorldTime);
 }
 
-double APortalWarsRaceGameMode::GetWorldTime()
+bool& APortalWarsRaceGameMode::bNewHighScore()
 {
-	if (RaceOffsets::WorldTime != 0)
-	{
-		return Get<double>(RaceOffsets::WorldTime);
-	}
-
-	return 0;
-}
-
-bool APortalWarsRaceGameMode::GetNewHighScore()
-{
-	if (RaceOffsets::bNewHighScore != 0)
-	{
-		return Get<bool>(RaceOffsets::bNewHighScore);
-	}
-
-	return false;
+	return Get<bool>(RaceOffsets::bNewHighScore);
 }
 
 void APortalWarsRaceGameMode::SendRaceStatUpdate()
 {
 	FUserRaceCourseTime RaceEntry = FUserRaceCourseTime();
-	RaceEntry.TimeMs = GetFinalTime() * 1000;
+	RaceEntry.TimeMs = FinalTime() * 1000;
 
 	ISteamUser* SteamUser = Steam::User();
 	if (!SteamUser)
@@ -126,7 +98,7 @@ void APortalWarsRaceGameMode::SendRaceStatUpdate()
 
 	RaceEntry.PlatformUserId = std::to_string(SteamUser->GetSteamID().ConvertToUint64());
 	RaceEntry.Map = GWorld->Name.ToStdString();
-	RaceEntry.Difficulty = EDifficulty::ToString(GetDifficulty());
+	RaceEntry.Difficulty = EDifficulty::ToString(Difficulty());
 
 	json RaceJson;
 	to_json(RaceJson, RaceEntry);
@@ -159,7 +131,7 @@ void APortalWarsRaceGameMode::HandleMatchHasEnded()
 	::HandleMatchHasEnded(this);
 
 	// Ignore sending if offline or running locally, we only want to send if its a new highscore
-	if (Steam::IsReady() && GetNewHighScore())
+	if (Steam::IsReady() && bNewHighScore())
 	{
 		SendRaceStatUpdate();
 	}
@@ -177,6 +149,7 @@ void APortalWarsRaceGameMode::InitGame(const FString& MapName, const FString& Op
 		OverrideDifficulty = EDifficulty::FromString(NewDifficulty.ToString());
 	}
 
+	// CountdownTime() = 250;
 	::InitGame(this, MapName, Options, ErrorMessage);
 }
 
@@ -184,7 +157,7 @@ bool APortalWarsRaceGameMode::LoadSubLevel()
 {
 	if (OverrideDifficulty != EDifficulty::Type::None)
 	{
-		SetDifficulty(OverrideDifficulty);
+		Difficulty() = OverrideDifficulty;
 		UE_LOG(LogRace, Warning, "Overriding difficulty with {}!", EDifficulty::ToString(OverrideDifficulty));
 	}
 

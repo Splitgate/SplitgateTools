@@ -6,6 +6,7 @@
 
 // UI Elements
 #include "UI/System/VersionWindow.h"
+#include "UI/System/ToolSettings.h"
 #include "UI/System/SystemVersionWindow.h"
 
 // Games
@@ -342,12 +343,10 @@ extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT uMs
 LRESULT Renderer::DXShared::WndProc_Hook(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 	if ((uMsg == WM_KEYUP && wParam == VK_F1)
-		&& Game->bAllowUIOpen)
+		&& (Game && Game->bAllowUIOpen))
 	{
 		ShowUI = !ShowUI;
-		
-		if (Game)
-			Game->OnUIVisibilityChange(ShowUI);
+		Game->OnUIVisibilityChange(ShowUI);
 	}
 
 	if (ShowUI)
@@ -396,6 +395,11 @@ void Renderer::ImGui_DrawAll()
 			if (ImGui::MenuItem("Tool Info"))
 			{
 				new SystemVersionWindow();
+			}
+
+			if (ImGui::MenuItem("Settings"))
+			{
+				new ToolSettings();
 			}
 
 			//if (ImGui::MenuItem("ImGui Demo"))

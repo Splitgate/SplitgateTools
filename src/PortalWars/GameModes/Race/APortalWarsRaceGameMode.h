@@ -1,5 +1,5 @@
 #pragma once
-#include "Engine/GameFramework/Game/AGameMode.h"
+#include "PortalWars/GameModes/APortalWarsGameMode.h"
 
 struct FUserRaceCourseTime
 {
@@ -74,18 +74,17 @@ namespace EDifficulty
 }
 
 // temp gamemode, use APortalWarsGameMode as parent
-class APortalWarsRaceGameMode : public AGameMode
+class APortalWarsRaceGameMode : public APortalWarsGameMode
 {
 public:
-	GENERATED_BODY(APortalWarsRaceGameMode, AGameMode, "PortalWarsRaceGameMode", "/Script/PortalWars")
+	GENERATED_BODY(APortalWarsRaceGameMode, APortalWarsGameMode, "PortalWarsRaceGameMode", "/Script/PortalWars")
 
 	static void Init_PreEngine();
 
-	void SetDifficulty(EDifficulty::Type NewDifficulty);
-	EDifficulty::Type GetDifficulty();
-	double GetFinalTime();
-	double GetWorldTime();
-	bool GetNewHighScore();
+	EDifficulty::Type& Difficulty();
+	double& FinalTime();
+	double& WorldTime();
+	bool& bNewHighScore();
 
 private:
 

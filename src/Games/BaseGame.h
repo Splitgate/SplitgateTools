@@ -20,6 +20,7 @@ public:
 	virtual void Init_PostEngine();
 
 	virtual void ConstructTitleBar();
+	virtual void GatherSettingsEntries();
 
 	virtual void OnUIVisibilityChange(bool bVisible);
 };

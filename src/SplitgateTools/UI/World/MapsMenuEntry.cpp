@@ -9,18 +9,28 @@
 #include "Strings/Strings.h"
 #include "Globals.h"
 
+// Maps that should have a default mode but are just TDM instead
+static std::map<std::wstring, std::wstring> GameModeOverride = {
+	{ L"/Game/Maps/Tutorial", L"TUTORIAL" },
+	{ L"/Game/Maps/PracticeRange", L"RANGE" },
+	{ L"/Game/Maps/Lobby", L"LOBBY" }
+};
+
 void GameMapEntry::OnPressed(const std::wstring& RaceType)
 {
 	std::wstring TravelURL = InternalName;
+
 	if (RaceType != L"" && HasSelectability(MapSelectability::Race))
 	{
-		TravelURL += L"?Default?Game=RACE?Difficulty=";
+		TravelURL += L"?Game=RACE?Difficulty=";
 		TravelURL += RaceType;
 	}
-	else
+	else if (GameModeOverride.contains(InternalName))
 	{
-		TravelURL += L"?Default";
+		TravelURL += L"?Game=";
+		TravelURL += GameModeOverride[InternalName];
 	}
+	TravelURL += L"?Default";
 
 	GWorld->ServerTravel(TravelURL.c_str());
 }
@@ -105,64 +115,6 @@ void MapsMenuEntry::Render()
 
 void MapsMenuEntry::OnCreate()
 {
-	// Gather all map entries
-
-	//TArray<FPrimaryAssetId> PrimaryMapAssets{};
-	//UKismetSystemLibrary::GetPrimaryAssetIdList(FName("MapData"), PrimaryMapAssets);
-	//UE_LOG(LogImGui, Warning, "PrimaryMapAssets.Num() {}", PrimaryMapAssets.Num());
-
-	//for (int i = 0; i != PrimaryMapAssets.Num(); i++)
-	//{
-		//FPrimaryAssetId AssetId = PrimaryMapAssets[i];
-
-		//UObject* MapData = UKismetSystemLibrary::GetObjectFromPrimaryAssetId(AssetId);
-		//if (!MapData) {
-		//	UE_LOG(LogImGui, Warning, "MapData Invalid");
-		//}
-
-		//UObject* MapData = StaticLoadObject<UObject>(L"/Game/Maps/_DataAssets/Map_Ozone_Blockout");
-		//UObject* TestData = StaticLoadObject<UObject>(L"/Game/Maps/Blockouts/Ozone_Blockout_Playtest");
-		//
-		//if (MapData)
-		//{
-		//	UE_LOG(LogImGui, Warning, "MapData: {}", MapData->Name.ToString().ToString());
-		//}
-		//
-		//if (TestData)
-		//{
-		//	UE_LOG(LogImGui, Warning, "TestData: {}", MapData->Name.ToString().ToString());
-		//}
-
-		//FString MapName = MapData->Get<FString>("MapPackageName");
-		//FString MapPackageName = MapData->Get<FString>("MapPackageName");
-		//
-		//FString SelectabilityString = L"Default,Race";
-		//
-		//int SelectedBits = 0;
-		//std::vector<std::string> SplitSelections = Split(SelectabilityString.ToString(), ',');
-		//for (auto& Selection : SplitSelections)
-		//{
-		//	if (Selection == "Default")
-		//		SelectedBits |= MapSelectability::Playable;
-		//
-		//	if (Selection == "Race")
-		//		SelectedBits |= MapSelectability::Race;
-		//
-		//	if (Selection == "Forge")
-		//		SelectedBits |= MapSelectability::Forge;
-		//
-		//	if (Selection == "QA")
-		//		SelectedBits |= MapSelectability::QA;
-		//}
-		//
-		//AllMaps.push_back(
-		//	{
-		//		MapName.ToString(),
-		//		MapPackageName.ToString(),
-		//		SelectedBits
-		//	});
-	//}
-
 #define ADD_GUI_MAP(Name, Path, Types) \
 	AllMaps.push_back( \
 		{ \

@@ -89,6 +89,7 @@
     <ClCompile Include="Engine\UGameEngine.cpp" />
     <ClCompile Include="Engine\UMG\UWidgetBlueprintLibrary.cpp" />
     <ClCompile Include="Engine\UWorld.cpp" />
+    <ClCompile Include="PortalWars\GameModes\APortalWarsGameMode.cpp" />
     <ClCompile Include="PortalWars\GameModes\Race\APortalWarsRaceGameMode.cpp" />
     <ClCompile Include="SplitgateTools\HttpSystem\HttpSystem.cpp" />
     <ClCompile Include="SplitgateTools\Renderer.cpp" />
@@ -96,7 +97,9 @@
     <ClCompile Include="Games\Splitgate\Splitgate.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="SplitgateTools\SplitgateTools.cpp" />
+    <ClCompile Include="SplitgateTools\UI\System\SettingsEntry.cpp" />
     <ClCompile Include="SplitgateTools\UI\System\SystemVersionWindow.cpp" />
+    <ClCompile Include="SplitgateTools\UI\System\ToolSettings.cpp" />
     <ClCompile Include="SplitgateTools\UI\System\VersionWindow.cpp" />
     <ClCompile Include="SplitgateTools\UI\UIElement.cpp" />
     <ClCompile Include="SplitgateTools\UI\UITitleBarEntry.cpp" />
@@ -154,12 +157,15 @@
     <ClInclude Include="Engine\UGameViewportClient.h" />
     <ClInclude Include="Engine\UMG\UWidgetBlueprintLibrary.h" />
     <ClInclude Include="Engine\UWorld.h" />
+    <ClInclude Include="PortalWars\GameModes\APortalWarsGameMode.h" />
     <ClInclude Include="PortalWars\GameModes\Race\APortalWarsRaceGameMode.h" />
     <ClInclude Include="SplitgateTools\HttpSystem\HttpSystem.h" />
     <ClInclude Include="SplitgateTools\SplitgateTools.h" />
     <ClInclude Include="SplitgateTools\Globals.h" />
     <ClInclude Include="SplitgateTools\Renderer.h" />
+    <ClInclude Include="SplitgateTools\UI\System\SettingsEntry.h" />
     <ClInclude Include="SplitgateTools\UI\System\SystemVersionWindow.h" />
+    <ClInclude Include="SplitgateTools\UI\System\ToolSettings.h" />
     <ClInclude Include="SplitgateTools\UI\System\VersionWindow.h" />
     <ClInclude Include="SplitgateTools\UI\UITitleBarEntry.h" />
     <ClInclude Include="SplitgateTools\UI\UIElement.h" />
