@@ -96,7 +96,10 @@ void APortalWarsRaceGameMode::SendRaceStatUpdate()
 
 	ISteamUser* SteamUser = Steam::User();
 	if (!SteamUser)
+	{
+		ImGui::InsertNotification({ ImGuiToastType::Error, 5000, "Uploading stats failed. No Steam Authentication."});
 		return; // Bail no user
+	}
 
 	RaceEntry.PlatformUserId = std::to_string(SteamUser->GetSteamID().ConvertToUint64());
 	RaceEntry.Map = GWorld->Name.ToStdString();
@@ -129,7 +132,7 @@ void APortalWarsRaceGameMode::SendRaceStatUpdate()
 		{
 			if (Err == httplib::Error::Success)
 			{
-				ImGui::InsertNotification({ ImGuiToastType::Success, 5000, "Uploaded new record, %s for %s %s!", std::to_string(RaceEntry.TimeMs / 1000), RaceEntry.Map, RaceEntry.Difficulty });
+				ImGui::InsertNotification({ ImGuiToastType::Success, 5000, "Uploaded new record, %s on %s (%s)", std::to_string(RaceEntry.TimeMs / 1000), RaceEntry.Map, RaceEntry.Difficulty });
 			}
 			else
 			{
@@ -143,17 +146,20 @@ void APortalWarsRaceGameMode::HandleMatchHasEnded()
 	::HandleMatchHasEnded(this);
 
 	// Ignore sending if offline or running locally, we only want to send if its a new highscore
-	if (Steam::IsReady() && bNewHighScore())
+	if (Steam::IsReady())
 	{
-		SendRaceStatUpdate();
+		if (bNewHighScore())
+		{
+			SendRaceStatUpdate();
+		}
+		//else
+		//{
+		//	ImGui::InsertNotification({ ImGuiToastType::Success, 3000, "Ah you're well shit mate won't even bother uploading that one" });
+		//}
 	}
-	else if (!bNewHighScore())
+	else
 	{
-		ImGui::InsertNotification({ ImGuiToastType::Success, 3000, "Not a new record not uploading." });
-	}
-	else if (!Steam::IsReady())
-	{
-		ImGui::InsertNotification({ ImGuiToastType::Warning, 3000, "Currently running offline, no stats will be uploaded!" });
+		ImGui::InsertNotification({ ImGuiToastType::Warning, 3000, "Currently running offline, no stats will be uploaded" });
 	}
 }
 
