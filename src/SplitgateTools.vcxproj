@@ -84,6 +84,7 @@
     <ClCompile Include="Engine\Kismet\UGameplayStatics.cpp" />
     <ClCompile Include="Engine\Core\Misc\FNetworkVersion.cpp" />
     <ClCompile Include="Engine\Kismet\UKismetSystemLibrary.cpp" />
+    <ClCompile Include="Engine\OnlineSubsystem\FOnlineFactoryEOSPlus.cpp" />
     <ClCompile Include="Engine\RHI\FWindowsDynamicRHI.cpp" />
     <ClCompile Include="Engine\UEngine.cpp" />
     <ClCompile Include="Engine\UGameEngine.cpp" />
@@ -151,6 +152,7 @@
     <ClInclude Include="Engine\Kismet\UKismetSystemLibrary.h" />
     <ClInclude Include="Engine\Kismet\UGameplayStatics.h" />
     <ClInclude Include="Engine\Core\Misc\FNetworkVersion.h" />
+    <ClInclude Include="Engine\OnlineSubsystem\FOnlineFactoryEOSPlus.h" />
     <ClInclude Include="Engine\RHI\FWindowsDynamicRHI.h" />
     <ClInclude Include="Engine\UConsole.h" />
     <ClInclude Include="Engine\UEngine.h" />

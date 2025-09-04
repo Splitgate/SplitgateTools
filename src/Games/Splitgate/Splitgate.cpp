@@ -7,6 +7,7 @@
 #include "UI/Settings/SettingsEntry.h"
 
 // Classes
+#include "Engine/OnlineSubsystem/FOnlineFactoryEOSPlus.h"
 #include "PortalWars/GameModes/APortalWarsGameMode.h"
 #include "PortalWars/GameModes/Race/APortalWarsRaceGameMode.h"
 
@@ -19,6 +20,9 @@ void Splitgate::Init_PreEngine()
 {
 	BaseGame::Init_PreEngine();	
 
+	// Patch for fixing low fps when not launching through Steam
+	FOnlineFactoryEOSPlus::Init_PreEngine();
+	
 	APortalWarsGameMode::Init_PreEngine();
 	APortalWarsRaceGameMode::Init_PreEngine();
 }
