@@ -9,13 +9,13 @@ class HttpJob
 
 public:
 
-	HttpJob(httplib::Client* InClient, httplib::Request InRequest, std::function<void(httplib::Response, std::string)> InCompletedCallback);
+	HttpJob(httplib::Client* InClient, httplib::Request InRequest, std::function<void(httplib::Response, httplib::Error)> InCompletedCallback);
 
 private:
 
 	httplib::Client* CallingClient;
 	httplib::Request Request;
-	std::function<void(httplib::Response, std::string)> CompletedCallback;
+	std::function<void(httplib::Response, httplib::Error)> CompletedCallback;
 };
 
 class HttpSystem
@@ -39,7 +39,7 @@ public:
 
 				// Some might not have a callback
 				if (Job.CompletedCallback)
-					Job.CompletedCallback(Resp, httplib::to_string(Error));
+					Job.CompletedCallback(Resp, Error);
 
 				JobList.erase(JobList.begin(), JobList.end()--);
 			}

@@ -172,7 +172,11 @@
     <ClInclude Include="Games\BaseGame.h" />
     <ClInclude Include="Games\Splitgate\Splitgate.h" />
     <ClInclude Include="SplitgateTools\UI\World\MapsMenuEntry.h" />
+    <ClInclude Include="Utilities\FontsAwesome\fa-regular-400.h" />
+    <ClInclude Include="Utilities\FontsAwesome\fa-solid-900.h" />
+    <ClInclude Include="Utilities\FontsAwesome\IconsFontAwesome6.h" />
     <ClInclude Include="Utilities\httplib\httplib.h" />
+    <ClInclude Include="Utilities\ImGuiNotify\ImGuiNotify.hpp" />
     <ClInclude Include="Utilities\imgui\backends\imgui_impl_dx11.h" />
     <ClInclude Include="Utilities\imgui\backends\imgui_impl_dx12.h" />
     <ClInclude Include="Utilities\imgui\backends\imgui_impl_win32.h" />

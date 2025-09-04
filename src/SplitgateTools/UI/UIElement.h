@@ -23,6 +23,8 @@ protected:
 	bool bCanHaveMultiple;
 	bool bIsClosable;
 	bool bIsOpen;
+	bool HasOpened;
+
 	ImGuiWindowFlags WindowFlags;
 
 	virtual void Tick();

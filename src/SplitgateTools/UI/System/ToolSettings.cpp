@@ -21,6 +21,7 @@ void ToolSettings::Render()
 
             if (ImGui::Selectable(SettingEntry->EntryName, &TabOpenMap[SettingEntry->EntryName]))
             {
+                DeselectAllSettings(SettingEntry->EntryName);
                 CurrentlyRenderingTab = SettingEntry; // Render my settings content
             }
         }
@@ -45,20 +46,46 @@ void ToolSettings::Render()
 
 void ToolSettings::OnOpen()
 {
-    SettingsEntries.clear();
-    TabOpenMap.clear();
-
     if (Game)
     {
-        UE_LOG(LogImGui, Warning, "Major Gyatt Game");
-
         Game->GatherSettingsEntries();
     }
 
     for (auto& SettingEntry : SettingsEntries)
     {
-        UE_LOG(LogImGui, Warning, "ADDING A SETTING");
+        if (CurrentlyRenderingTab == nullptr)
+        {
+            CurrentlyRenderingTab = SettingEntry;
+        }
 
         TabOpenMap.emplace(SettingEntry->EntryName, false);
+    }
+
+    // Set default tab
+    if (CurrentlyRenderingTab)
+    {
+        if (TabOpenMap.contains(CurrentlyRenderingTab->EntryName))
+        {
+            TabOpenMap[CurrentlyRenderingTab->EntryName] = true;
+        }
+    }
+}
+
+void ToolSettings::OnClose()
+{
+    TabOpenMap.clear();
+    SettingsEntries.clear();
+
+    CurrentlyRenderingTab = nullptr;
+}
+
+void ToolSettings::DeselectAllSettings(const char* TabToExclude)
+{
+    for (auto& OpenTabs : TabOpenMap)
+    {
+        if (OpenTabs.first == TabToExclude)
+            continue;
+
+        OpenTabs.second = false;
     }
 }

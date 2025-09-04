@@ -2,6 +2,8 @@
 #include "Memory.h"
 #include <string>
 
+#pragma warning( disable : 5056 )
+
 #define SPDLOG_ACTIVE_LEVEL SPDLOG_LEVEL_DEBUG
 #include "spdlog/spdlog.h"
 #include "spdlog/sinks/basic_file_sink.h"
@@ -24,33 +26,35 @@
 #define LogCustomRace
 
 // Defines to shorten the typing rather than inputting the namespace and enum, hijack the debug level to make it a success since we wont use debug really
-#define Display spdlog::level::info
-#define Warning spdlog::level::warn
-#define Error spdlog::level::err
-#define Success spdlog::level::debug
+//#define Display spdlog::level::info
+//#define Warning spdlog::level::warn
+//#define Error spdlog::level::err
+//#define Success spdlog::level::debug
+
+// TODO: Make this better...
 
 #define SPDLOG_LOGGER(Logger, Category, Level, ...) \
 { \
-	if (Level == spdlog::level::warn) \
+	if (Level == "Warning") \
 	{ \
-		SPDLOG_LOGGER_CALL(Logger, Level, ##Category": " "Warning: " __VA_ARGS__); \
+		SPDLOG_LOGGER_CALL(Logger, spdlog::level::warn, ##Category": " "Warning: " __VA_ARGS__); \
 	} \
-	else if (Level == spdlog::level::err) \
+	else if (Level == "Error") \
 	{ \
-		SPDLOG_LOGGER_CALL(Logger, Level, ##Category": " "Error: " __VA_ARGS__); \
+		SPDLOG_LOGGER_CALL(Logger, spdlog::level::err, ##Category": " "Error: " __VA_ARGS__); \
 	} \
-	else if (Level == spdlog::level::critical) \
+	else if (Level == "Critical") \
 	{ \
-		SPDLOG_LOGGER_CALL(Logger, Level, ##Category": " "Fatal: " __VA_ARGS__); \
+		SPDLOG_LOGGER_CALL(Logger, spdlog::level::critical, ##Category": " "Fatal: " __VA_ARGS__); \
 	} \
 	else \
 	{ \
-		SPDLOG_LOGGER_CALL(Logger, Level, ##Category": " __VA_ARGS__); \
+		SPDLOG_LOGGER_CALL(Logger, spdlog::level::info, ##Category": " __VA_ARGS__); \
 	} \
 }
 
 #define SPDLOG(Category, Level, ...) SPDLOG_LOGGER(spdlog::default_logger_raw(), Category, Level, __VA_ARGS__)
-#define UE_LOG(Category, Level, Msg, ...) SPDLOG(#Category, Level, ##Msg, __VA_ARGS__)
+#define UE_LOG(Category, Level, Msg, ...) SPDLOG(#Category, #Level, ##Msg, __VA_ARGS__)
 
 // TODO: maybe rename these
 #define LOG_ADDRESS(Addr, DisplayName) \

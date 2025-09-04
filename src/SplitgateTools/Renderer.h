@@ -21,6 +21,7 @@ public:
 	static inline bool bUseFade = true;
 	static inline bool bShowDemo = false;
 
+	static inline float Opacity = 1.f;
 	static inline float OpacityFadeSpeed = 8.f; // Original Value: 3
 	static inline float VisibleAlpha = 0.95f;
 	static inline float HiddenAlpha = 0.0f;

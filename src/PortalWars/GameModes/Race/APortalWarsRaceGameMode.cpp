@@ -11,6 +11,8 @@
 #include "Strings/Strings.h"
 #include "Steam/SteamUtilities.h"
 
+#include "ImGuiNotify/ImGuiNotify.hpp"
+
 static void (*HandleMatchHasEnded)(APortalWarsRaceGameMode*);
 static void (*InitGame)(APortalWarsRaceGameMode*, const FString&, const FString&, FString&);
 static bool (*LoadSubLevel)(APortalWarsRaceGameMode*);
@@ -120,9 +122,17 @@ void APortalWarsRaceGameMode::SendRaceStatUpdate()
 	RaceReq.headers.insert({ "Authorization", AuthenticationHeader });
 	RaceReq.body = RaceJson.dump();
 
-	HttpJob(&HttpSystem::RaceBase, RaceReq, [](httplib::Response Resp, std::string Err)
+	ImGui::InsertNotification({ ImGuiToastType::Info, 4000, "Attempting to upload race stats!" });
+	HttpJob(&HttpSystem::RaceBase, RaceReq, [RaceEntry](httplib::Response Resp, httplib::Error Err)
 		{
-			// TODO: Show imgui popup bottom right to say stats uploaded successfully or why if not
+			if (Err == httplib::Error::Success)
+			{
+				ImGui::InsertNotification({ ImGuiToastType::Success, 5000, "Uploaded new record, %s for %s %s!", std::to_string(RaceEntry.TimeMs / 1000), RaceEntry.Map, RaceEntry.Difficulty });
+			}
+			else
+			{
+				ImGui::InsertNotification({ ImGuiToastType::Error, 5000, "Uploading stats failed. %s - %s", httplib::to_string(Err), Resp.body });
+			}
 		});
 }
 
@@ -135,9 +145,13 @@ void APortalWarsRaceGameMode::HandleMatchHasEnded()
 	{
 		SendRaceStatUpdate();
 	}
-	else // TODO: Offline notification - ruby
+	else if (!bNewHighScore())
 	{
-
+		ImGui::InsertNotification({ ImGuiToastType::Success, 3000, "Not a new record not uploading." });
+	}
+	else if (!Steam::IsReady())
+	{
+		ImGui::InsertNotification({ ImGuiToastType::Warning, 3000, "Currently running offline, no stats will be uploaded!" });
 	}
 }
 

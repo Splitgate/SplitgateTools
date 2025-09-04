@@ -26,6 +26,13 @@
 #include "backends/imgui_impl_win32.h"
 #include "imgui_internal.h"
 
+// Third Party ImGui
+#include "ImGuiNotify/ImGuiNotify.hpp"
+
+// Font Includes
+#include "FontsAwesome/IconsFontAwesome6.h"
+#include "FontsAwesome/fa-solid-900.h"
+
 // DirectX libraries
 #pragma comment(lib, "dxgi.lib") // this made the dll chunky but we need it
 #pragma comment(lib, "d3d11.lib")
@@ -369,6 +376,21 @@ void Renderer::ImGui_Setup()
 	IO.ConfigFlags |= ImGuiConfigFlags_DockingEnable; // | ImGuiConfigFlags_NoMouseCursorChange; // | ImGuiConfigFlags_ViewportsEnable;
 	// For context, ImGuiConfigFlags_NoMouseCursorChange will fix the mouse flickering in-game but means there will be no mouse in-game unless we set the unreal mouse visible
 	// possible fix could be calling ResetToDefaultPointerInputSettings when the ui opens to make the cursor visible, resetting it however to be invisible i am unsure of
+
+	IO.Fonts->AddFontDefault();
+
+	float BaseFontSize = 16.0f;
+	float FontSize = BaseFontSize * 2.0f / 3.0f; // FontAwesome fonts need to have their sizes reduced by 2.0f/3.0f in order to align correctly
+
+	static constexpr ImWchar IconRanges[] = { ICON_MIN_FA, ICON_MAX_16_FA, 0 };
+	ImFontConfig IconConfig;
+	IconConfig.MergeMode = true;
+	IconConfig.PixelSnapH = true;
+	IconConfig.GlyphMinAdvanceX = FontSize;
+
+	// Add fontsawesome
+	IO.Fonts->AddFontFromMemoryCompressedTTF(fa_solid_900_compressed_data, fa_solid_900_compressed_size, FontSize, &IconConfig, IconRanges);
+
 }
 
 static inline int HACK_InitialHide = 0;
@@ -383,93 +405,128 @@ void Renderer::ImGui_DrawAll()
 		return;
 	}
 
-	if (ImGui::BeginMainMenuBar())
+	// Opacity on normal open windows, to allow for notifications
+	ImGui::PushStyleVar(ImGuiStyleVar_Alpha, Opacity);
 	{
-		if (ImGui::BeginMenu("[Splitgate]"))
+		if (ImGui::BeginMainMenuBar())
 		{
-			if (ImGui::MenuItem("Game Info"))
+			if (ImGui::BeginMenu("[Splitgate]"))
 			{
-				new VersionWindow();
-			}
+				if (ImGui::MenuItem("Game Info"))
+				{
+					new VersionWindow();
+				}
 
-			if (ImGui::MenuItem("Tool Info"))
-			{
-				new SystemVersionWindow();
-			}
+				if (ImGui::MenuItem("Tool Info"))
+				{
+					new SystemVersionWindow();
+				}
 
-			if (ImGui::MenuItem("Settings"))
-			{
-				new ToolSettings();
-			}
+				if (ImGui::MenuItem("Settings"))
+				{
+					new ToolSettings();
+				}
 
-			//if (ImGui::MenuItem("ImGui Demo"))
-			//{
-			//	bShowDemo = !bShowDemo;
-			//}
+				//if (ImGui::MenuItem("ImGui Demo"))
+				//{
+				//	bShowDemo = !bShowDemo;
+				//}
 
-			ImGui::Separator();
-			ImGui::EndMenu();
-		}
-
-		for (auto TitleBarEntry : TitleBarEntries)
-		{
-			if (!TitleBarEntry) continue;
-
-			TitleBarEntry->Tick();
-
-			if (ImGui::BeginMenu(TitleBarEntry->EntryName))
-			{
-				TitleBarEntry->Render();
+				ImGui::Separator();
 				ImGui::EndMenu();
 			}
+
+			for (auto TitleBarEntry : TitleBarEntries)
+			{
+				if (!TitleBarEntry) continue;
+
+				TitleBarEntry->Tick();
+
+				if (ImGui::BeginMenu(TitleBarEntry->EntryName))
+				{
+					TitleBarEntry->Render();
+					ImGui::EndMenu();
+				}
+			}
+
+			//if (ImGui::BeginMenu("Level"))
+			//{
+			//	if (ImGui::MenuItem("Current World"))
+			//	{
+			//	}
+			//
+			//	ImGui::SeparatorText("Assets");
+			//
+			//	if (ImGui::MenuItem("All Maps"))
+			//	{
+			//	}
+			//
+			//	ImGui::EndMenu();
+			//}
+			//if (ImGui::BeginMenu("Weapons"))
+			//{
+			//	ImGui::SeparatorText("Levels");
+			//
+			//	if (ImGui::MenuItem("Weapon List"))
+			//	{
+			//	}
+			//
+			//	if (ImGui::MenuItem("Weapon Modifications"))
+			//	{
+			//	}
+			//
+			//	ImGui::EndMenu();
+			//}
+			ImGui::EndMainMenuBar();
 		}
 
-		//if (ImGui::BeginMenu("Level"))
-		//{
-		//	if (ImGui::MenuItem("Current World"))
-		//	{
-		//	}
-		//
-		//	ImGui::SeparatorText("Assets");
-		//
-		//	if (ImGui::MenuItem("All Maps"))
-		//	{
-		//	}
-		//
-		//	ImGui::EndMenu();
-		//}
-		//if (ImGui::BeginMenu("Weapons"))
-		//{
-		//	ImGui::SeparatorText("Levels");
-		//
-		//	if (ImGui::MenuItem("Weapon List"))
-		//	{
-		//	}
-		//
-		//	if (ImGui::MenuItem("Weapon Modifications"))
-		//	{
-		//	}
-		//
-		//	ImGui::EndMenu();
-		//}
-		ImGui::EndMainMenuBar();
+
+		for (auto UIElement : UIElements)
+		{
+			if (!UIElement) continue;
+
+			UIElement->Tick();
+
+			ImGui::Begin(UIElement->WindowName,
+				(UIElement->bIsClosable ? &UIElement->bIsOpen : nullptr), UIElement->WindowFlags | ImGuiWindowFlags_NoCollapse);
+
+			UIElement->Render();
+
+			ImGui::End();
+		}
 	}
+	ImGui::PopStyleVar();
 
-	for (auto UIElement : UIElements)
+	ImGui::RenderNotifications();
+}
+
+void Renderer::ImGui_VisbilityAlpha()
+{
+	if (bUseFade)
 	{
-		if (!UIElement) continue;
-
-		UIElement->Tick();
-
-		ImGui::Begin(UIElement->WindowName,
-			(UIElement->bIsClosable ? &UIElement->bIsOpen : nullptr), UIElement->WindowFlags | ImGuiWindowFlags_NoCollapse);
-		
-		UIElement->Render();
-
-		ImGui::End();
+		if (ShowUI && Opacity < VisibleAlpha)
+		{
+			Opacity += ImGui::GetIO().DeltaTime * OpacityFadeSpeed;
+		}
+		else if (!ShowUI && Opacity > HiddenAlpha)
+		{
+			Opacity -= ImGui::GetIO().DeltaTime * OpacityFadeSpeed;
+		}
+		else
+		{
+			// snap to rounded alpha values in case of floating point inprecisions
+			Opacity = ShowUI ? VisibleAlpha : HiddenAlpha;
+		}
+	}
+	else // disabled fade, snaps to and from
+	{
+		Opacity = ShowUI ? VisibleAlpha : HiddenAlpha;
 	}
 }
 
+/* 
+* Legacy alpha via global style
+* 
 void Renderer::ImGui_VisbilityAlpha()
 {
 	// Fade ui in / out (thank you very much winver...)
@@ -478,20 +535,24 @@ void Renderer::ImGui_VisbilityAlpha()
 	{
 		if (ShowUI && Style.Alpha < VisibleAlpha)
 		{
-			Style.Alpha += ImGui::GetIO().DeltaTime * OpacityFadeSpeed;
+			//Style.Alpha += ImGui::GetIO().DeltaTime * OpacityFadeSpeed;
+			Opacity += ImGui::GetIO().DeltaTime * OpacityFadeSpeed;
 		}
 		else if (!ShowUI && Style.Alpha > HiddenAlpha)
 		{
-			Style.Alpha -= ImGui::GetIO().DeltaTime * OpacityFadeSpeed;
+			//Style.Alpha -= ImGui::GetIO().DeltaTime * OpacityFadeSpeed;
+			Opacity -= ImGui::GetIO().DeltaTime * OpacityFadeSpeed;
 		}
 		else
 		{
 			// snap to rounded alpha values in case of floating point inprecisions
-			Style.Alpha = ShowUI ? VisibleAlpha : HiddenAlpha;
+			//Style.Alpha = ShowUI ? VisibleAlpha : HiddenAlpha;
+			Opacity = ShowUI ? VisibleAlpha : HiddenAlpha;
 		}
 	}
 	else // disabled fade, snaps to and from
 	{
-		Style.Alpha = ShowUI ? VisibleAlpha : HiddenAlpha;
+		//Style.Alpha = ShowUI ? VisibleAlpha : HiddenAlpha;
+		Opacity = ShowUI ? VisibleAlpha : HiddenAlpha;
 	}
-}
+}*/

@@ -9,7 +9,7 @@ public:
 
 	ToolSettings() : UIElement("Settings", false, true, true, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoDocking)
 	{
-		OnOpen();
+
 	}
 
 	std::map<const char*, bool> TabOpenMap;
@@ -19,4 +19,7 @@ public:
 
 	virtual void Render() override;
 	virtual void OnOpen() override;
+	virtual void OnClose() override;
+
+	void DeselectAllSettings(const char* TabToExclude);
 };

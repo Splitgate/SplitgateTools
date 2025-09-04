@@ -37,7 +37,7 @@ UIElement::UIElement(const char* InWindowName, bool InbCanHaveMultiple, bool Inb
 		// Add an element
 		Renderer::UIElements.push_back(this);
 
-		OnOpen();
+		// OnOpen();
 	}
 }
 
@@ -48,6 +48,12 @@ UIElement::~UIElement()
 
 void UIElement::Tick()
 {
+	if (!HasOpened)
+	{
+		HasOpened = true;
+		OnOpen();
+	}
+
 	if (!bIsOpen)
 	{
 		CloseWindow();
