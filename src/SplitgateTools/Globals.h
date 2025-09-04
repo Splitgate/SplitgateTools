@@ -1,5 +1,7 @@
 #pragma once
 #include "Memory.h"
+#include "Settings/BaseSettings.h"
+
 #include <string>
 
 #pragma warning( disable : 5056 )

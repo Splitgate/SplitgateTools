@@ -349,6 +349,8 @@ HRESULT Renderer::DX12::ResizeBuffers_Hook(IDXGISwapChain3* Instance, UINT Buffe
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 LRESULT Renderer::DXShared::WndProc_Hook(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
+	// TODO: Investigate this sometimes causing game to freeze until ui gets hidden
+
 	if ((uMsg == WM_KEYUP && wParam == VK_F1)
 		&& (Game && Game->bAllowUIOpen))
 	{

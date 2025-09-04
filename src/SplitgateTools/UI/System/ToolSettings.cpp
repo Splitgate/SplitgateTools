@@ -9,7 +9,10 @@ void ToolSettings::Render()
 {
     ImGui::SetWindowSize(ImVec2(540, 380));
 
-    ImGui::Text("[PUT TEXT HERE]");
+    if (CurrentlyRenderingTab)
+    {
+        ImGui::Text(CurrentlyRenderingTab->EntryName);
+    }
 
     ImGui::PushStyleVar(ImGuiStyleVar_ChildBorderSize, 1);
     ImGui::BeginChild("SettingList", { 150, 0, }, ImGuiChildFlags_Border | ImGuiChildFlags_AlwaysUseWindowPadding | ImGuiChildFlags_NavFlattened, ImGuiWindowFlags_NoSavedSettings);

@@ -73,6 +73,9 @@ std::unique_ptr<BaseGame> BaseGame::Create()
 BaseGame::BaseGame()
 {
 	ConstructTitleBar();
+
+	BaseSettings& Settings = BaseSettings::Get();
+	Settings.Init();
 }
 
 void BaseGame::Init_PreGame()
