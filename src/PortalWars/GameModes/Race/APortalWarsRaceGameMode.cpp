@@ -124,7 +124,7 @@ void APortalWarsRaceGameMode::SendRaceStatUpdate()
 	RaceReq.headers.insert({ "Authorization", AuthenticationHeader });
 	RaceReq.body = RaceJson.dump();
 
-	ImGui::InsertNotification({ ImGuiToastType::Info, 4000, "Attempting to upload race stats!" });
+	ImGui::InsertNotification({ ImGuiToastType::Info, 4000, "Attempting to upload race stats" });
 	HttpJob(&HttpSystem::RaceBase, RaceReq, [RaceEntry](httplib::Response Resp, httplib::Error Err)
 		{
 			if (Err == httplib::Error::Success)

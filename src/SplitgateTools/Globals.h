@@ -25,6 +25,7 @@
 #define LogInit
 #define LogRHI
 #define LogImGui
+#define LogConfig
 #define LogCustomRace
 
 // Defines to shorten the typing rather than inputting the namespace and enum, hijack the debug level to make it a success since we wont use debug really

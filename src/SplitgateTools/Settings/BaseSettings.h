@@ -40,6 +40,7 @@ public:
 		if (INIData[SectionName].has(Setting))
 		{
 			std::string Value = INIData[SectionName][Setting];
+			return StringToType<DataType>(Value);
 		}
 
 		return DefaultValue;
@@ -59,15 +60,7 @@ public:
 		return BaseSettingsTest;
 	}
 
-	void Init()
-	{
-		if (!SettingsFile.read(INIData))
-		{
-			bool bReturn = SettingsFile.generate(GatherMyDefaults(), true);
-		}
-
-		OnInit();
-	}
+	void Init();
 
 private:
 

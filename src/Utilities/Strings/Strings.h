@@ -145,3 +145,28 @@ static inline std::string BytesToHex(const uint8_t* In, int32_t Count)
 	}
 	return Result;
 }
+
+// start StringToType
+template<typename T>
+T StringToType(const std::string& InString);
+
+template<>
+inline int StringToType<int>(const std::string& InString)
+{
+	// TODO
+	return 1;
+}
+
+template<>
+inline std::string StringToType<std::string>(const std::string& InString)
+{
+	return InString;
+}
+
+template<>
+inline bool StringToType<bool>(const std::string& InString)
+{
+	// TODO
+	return true;
+}
+// end StringToType

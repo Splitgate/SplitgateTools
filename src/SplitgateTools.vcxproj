@@ -96,6 +96,7 @@
     <ClCompile Include="Games\BaseGame.cpp" />
     <ClCompile Include="Games\Splitgate\Splitgate.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="SplitgateTools\Settings\BaseSettings.cpp" />
     <ClCompile Include="SplitgateTools\SplitgateTools.cpp" />
     <ClCompile Include="SplitgateTools\UI\Settings\SettingsEntry.cpp" />
     <ClCompile Include="SplitgateTools\UI\System\SystemVersionWindow.cpp" />
@@ -187,7 +188,6 @@
     <ClInclude Include="Utilities\imgui\imstb_rectpack.h" />
     <ClInclude Include="Utilities\imgui\imstb_textedit.h" />
     <ClInclude Include="Utilities\imgui\imstb_truetype.h" />
-    <ClInclude Include="Utilities\json\json.hpp" />
     <ClInclude Include="Utilities\Memory\Hook.h" />
     <ClInclude Include="Utilities\Memory\Memory.h" />
     <ClInclude Include="Utilities\Memory\Signature.h" />
