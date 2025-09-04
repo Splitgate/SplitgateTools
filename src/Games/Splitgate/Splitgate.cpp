@@ -4,7 +4,7 @@
 #include "UI/World/MapsMenuEntry.h"
 
 // Settings Entries
-#include "UI/System/SettingsEntry.h"
+#include "UI/Settings/SettingsEntry.h"
 
 // Classes
 #include "PortalWars/GameModes/APortalWarsGameMode.h"
@@ -35,8 +35,6 @@ void Splitgate::ConstructTitleBar()
 
 void Splitgate::GatherSettingsEntries()
 {
-	UE_LOG(LogImGui, Warning, "Major Gasadsdss");
-
 	new SettingsEntry("Race Settings");
 	new SettingsEntry("Forge Settings");
 }

@@ -1,5 +1,5 @@
 #include "SettingsEntry.h"
-#include "ToolSettings.h"
+#include "UI/System/ToolSettings.h"
 
 SettingsEntry::SettingsEntry(const char* InEntryName)
 	: EntryName(InEntryName)

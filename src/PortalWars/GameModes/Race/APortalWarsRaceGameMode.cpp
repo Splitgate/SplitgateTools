@@ -115,6 +115,8 @@ void APortalWarsRaceGameMode::SendRaceStatUpdate()
 
 	if (SteamUser->GetAuthSessionTicket(TicketBuffer, sizeof(TicketBuffer), &TicketSize) == k_HAuthTicketInvalid)
 	{
+		ImGui::InsertNotification({ ImGuiToastType::Error, 5000, "Uploading stats failed. No Steam Authentication."});
+
 		return; // Failed to get encrypted ticket, do not allow request
 	}
 

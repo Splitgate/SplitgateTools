@@ -1,5 +1,5 @@
 #include "ToolSettings.h"
-#include "SettingsEntry.h"
+#include "UI/Settings/SettingsEntry.h"
 
 #include "Games/BaseGame.h"
 
