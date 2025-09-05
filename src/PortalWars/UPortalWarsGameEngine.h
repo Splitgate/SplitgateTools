@@ -1,6 +1,8 @@
 ﻿#pragma once
 #include "Engine/UGameEngine.h"
 
+#undef GEngine
+#define GEngine reinterpret_cast<UPortalWarsGameEngine*>(Game->Engine)
 class UPortalWarsGameEngine : public UGameEngine
 {
 public:
