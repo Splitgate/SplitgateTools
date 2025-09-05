@@ -9,24 +9,29 @@ void ToolSettings::Render()
 {
     ImGui::SetWindowSize(ImVec2(540, 380));
 
-    if (CurrentlyRenderingTab)
-    {
-        ImGui::Text(CurrentlyRenderingTab->EntryName);
-    }
+    // if (CurrentlyRenderingTab)
+    // {
+    //     ImGui::Text(CurrentlyRenderingTab->EntryName);
+    // }
 
     ImGui::PushStyleVar(ImGuiStyleVar_ChildBorderSize, 1);
     ImGui::BeginChild("SettingList", { 150, 0, }, ImGuiChildFlags_Border | ImGuiChildFlags_AlwaysUseWindowPadding | ImGuiChildFlags_NavFlattened, ImGuiWindowFlags_NoSavedSettings);
     {
         for (auto& SettingEntry : SettingsEntries)
         {
-            if (!TabOpenMap.contains(SettingEntry->EntryName))
+            if (!CurrentlyRenderingTab)
                 continue;
 
-            if (ImGui::Selectable(SettingEntry->EntryName, &TabOpenMap[SettingEntry->EntryName]))
+            ImGui::PushStyleVar(ImGuiStyleVar_SelectableTextAlign, ImVec2(0.5f, 0.5f));
             {
-                DeselectAllSettings(SettingEntry->EntryName);
-                CurrentlyRenderingTab = SettingEntry; // Render my settings content
+                if (ImGui::Selectable(SettingEntry->EntryName, (CurrentlyRenderingTab->EntryName == SettingEntry->EntryName), 0, {0, 20}))
+                {
+                    CurrentlyRenderingTab = SettingEntry; // Render my settings content
+                }
             }
+            ImGui::PopStyleVar();
+
+            ImGui::Dummy({ 0, 2 });
         }
 
         ImGui::EndChild();
@@ -60,35 +65,12 @@ void ToolSettings::OnOpen()
         {
             CurrentlyRenderingTab = SettingEntry;
         }
-
-        TabOpenMap.emplace(SettingEntry->EntryName, false);
-    }
-
-    // Set default tab
-    if (CurrentlyRenderingTab)
-    {
-        if (TabOpenMap.contains(CurrentlyRenderingTab->EntryName))
-        {
-            TabOpenMap[CurrentlyRenderingTab->EntryName] = true;
-        }
     }
 }
 
 void ToolSettings::OnClose()
 {
-    TabOpenMap.clear();
     SettingsEntries.clear();
 
     CurrentlyRenderingTab = nullptr;
-}
-
-void ToolSettings::DeselectAllSettings(const char* TabToExclude)
-{
-    for (auto& OpenTabs : TabOpenMap)
-    {
-        if (OpenTabs.first == TabToExclude)
-            continue;
-
-        OpenTabs.second = false;
-    }
 }

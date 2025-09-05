@@ -28,36 +28,31 @@
 #define LogConfig
 #define LogCustomRace
 
-// Defines to shorten the typing rather than inputting the namespace and enum, hijack the debug level to make it a success since we wont use debug really
-//#define Display spdlog::level::info
-//#define Warning spdlog::level::warn
-//#define Error spdlog::level::err
-//#define Success spdlog::level::debug
-
-// TODO: Make this better...
+enum class ELogLevel : int 
+{
+	Trace = SPDLOG_LEVEL_TRACE,
+	Success = SPDLOG_LEVEL_DEBUG,
+	Display = SPDLOG_LEVEL_INFO,
+	Warning = SPDLOG_LEVEL_WARN,
+	Error = SPDLOG_LEVEL_ERROR,
+	Fatal = SPDLOG_LEVEL_CRITICAL,
+	Off = SPDLOG_LEVEL_OFF
+};
 
 #define SPDLOG_LOGGER(Logger, Category, Level, ...) \
 { \
-	if (Level == "Warning") \
+	if constexpr (ELogLevel::Level == ELogLevel::Display) \
 	{ \
-		SPDLOG_LOGGER_CALL(Logger, spdlog::level::warn, ##Category": " "Warning: " __VA_ARGS__); \
-	} \
-	else if (Level == "Error") \
-	{ \
-		SPDLOG_LOGGER_CALL(Logger, spdlog::level::err, ##Category": " "Error: " __VA_ARGS__); \
-	} \
-	else if (Level == "Critical") \
-	{ \
-		SPDLOG_LOGGER_CALL(Logger, spdlog::level::critical, ##Category": " "Fatal: " __VA_ARGS__); \
+		SPDLOG_LOGGER_CALL(Logger, (spdlog::level::level_enum)ELogLevel::Level, ##Category": " __VA_ARGS__); \
 	} \
 	else \
 	{ \
-		SPDLOG_LOGGER_CALL(Logger, spdlog::level::info, ##Category": " __VA_ARGS__); \
+		SPDLOG_LOGGER_CALL(Logger, (spdlog::level::level_enum)ELogLevel::Level, ##Category": " #Level ": " __VA_ARGS__); \
 	} \
 }
 
-#define SPDLOG(Category, Level, ...) SPDLOG_LOGGER(spdlog::default_logger_raw(), Category, Level, __VA_ARGS__)
-#define UE_LOG(Category, Level, Msg, ...) SPDLOG(#Category, #Level, ##Msg, __VA_ARGS__)
+// #define UE_LOG(Category, Level, Msg, ...) SPDLOG(#Category, Level, ##Msg, __VA_ARGS__)
+#define UE_LOG(Category, Level, Msg, ...) SPDLOG_LOGGER(spdlog::default_logger_raw(), #Category, Level, ##Msg, __VA_ARGS__)
 
 // TODO: maybe rename these
 #define LOG_ADDRESS(Addr, DisplayName) \

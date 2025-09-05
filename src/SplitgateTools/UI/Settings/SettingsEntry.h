@@ -1,5 +1,13 @@
 #pragma once
 
+enum class SettingType
+{
+	String,
+	Boolean,
+	Integer,
+	Float
+};
+
 class SettingsEntry
 {
 public:

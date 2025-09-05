@@ -29,7 +29,15 @@ public:
 	template<typename DataType>
 	void WriteValue(const char* Setting, DataType Value)
 	{
-		INIData[SectionName][Setting] = Value;
+		if constexpr (std::is_same<DataType, std::string>())
+		{
+			INIData[SectionName][Setting] = Value;
+		}
+		else
+		{
+			INIData[SectionName][Setting] = std::to_string(Value);
+		}
+
 		UpdateSettings();
 	}
 
