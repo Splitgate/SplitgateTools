@@ -6,7 +6,7 @@ void SplitgateTools::Main()
 {
 	SetupLogger();
 
-	UE_LOG(LogInit, Display, "Starting up Splitgate Tools! Created by Settings Camel");
+	UE_LOG(LogInit, Display, "Starting up Splitgate Tools! Created by Adam & Ruby Rain");
 
 	Game = BaseGame::Create();
 	Game->Init_PreEngine();

@@ -22,7 +22,7 @@ void SystemVersionWindow::Render()
         ImGui::Text(TitleText);
         ImGui::PopFont();
 
-        ImGui::TextWrapped("by Adam & Ruby");
+        ImGui::TextWrapped("by Adam & Ruby Rain");
     }
 
     ImGui::Separator();
