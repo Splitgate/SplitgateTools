@@ -16,19 +16,41 @@ SettingsEntry::~SettingsEntry()
 	ToolSettings::SettingsEntries.erase(ElemIndex);
 }
 
+bool SettingsEntry::DrawInt(const char* DisplayName, int* SettingToUpdate, int Min, int Max, int Flags)
+{
+	char Label[256];
+	sprintf(Label, "###%s", DisplayName);
+
+	ImGui::AlignTextToFramePadding();
+
+	ImGui::Text(DisplayName);
+	ImGui::SameLine(0, 15);
+
+	bool bReturn = ImGui::DragInt(Label, SettingToUpdate, 1.0f, Min, Max, "%d", Flags);
+	if (bReturn)
+	{
+		GSettings.Save();
+	}
+
+	return bReturn;
+}
+
 void SettingsEntry::RenderContent()
 {
 	ImGui::Text("TODO: completely rewrite this class, this is all temporary");
 
+	DrawInt("Countdown Length", &GSettings.Race.CountdownLength, 0, INT_MAX);
+	DrawInt("Test", &GSettings.Race.CountdownLength, 0, INT_MAX);
+
 	// TODO: maybe make some imgui funcs that call original and then GSettings.Save() if they return true 
-	if (ImGui::DragFloat("Countdown Length", &GSettings.Race.CountdownLength, 0.05f))
-		GSettings.Save();
-	
-	if (ImGui::Checkbox("Uncap FPS in lobby", &GSettings.Misc.bEnableLobbyFPSPatch))
-	{
-		UPortalWarsGameEngine::UpdateLobbyFPSPatch();
-		GSettings.Save();
-	}
+	//if (ImGui::DragInt("Countdown Length", &GSettings.Race.CountdownLength, 0.05f))
+	//	GSettings.Save();
+	//
+	//if (ImGui::Checkbox("Uncap FPS in lobby", &GSettings.Misc.bEnableLobbyFPSPatch))
+	//{
+	//	UPortalWarsGameEngine::UpdateLobbyFPSPatch();
+	//	GSettings.Save();
+	//}
 
 	// TODO: THIS DOESNT HANDLE UpdateLobbyFPSPatch
 	// we could just add it but that doesn't scale very well and is quite bug prone

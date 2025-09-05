@@ -5,7 +5,7 @@
 class RaceSettings
 {
 public:
-	float CountdownLength = 3;
+	int CountdownLength = 3;
 	NLOHMANN_DEFINE_TYPE_INTRUSIVE(RaceSettings, CountdownLength);
 };
 

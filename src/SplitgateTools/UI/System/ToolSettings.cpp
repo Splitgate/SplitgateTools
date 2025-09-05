@@ -7,7 +7,7 @@
 
 void ToolSettings::Render()
 {
-    ImGui::SetWindowSize(ImVec2(540, 380));
+    ImGui::SetWindowSize(ImVec2(580, 380));
 
     // if (CurrentlyRenderingTab)
     // {
