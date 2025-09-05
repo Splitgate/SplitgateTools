@@ -15,12 +15,14 @@
 Splitgate::Splitgate()
 {
 	bShouldRenderUI = true;
+	
+	GSettings.Load();
 }
 
 void Splitgate::Init_PreEngine()
 {
-	BaseGame::Init_PreEngine();	
-
+	BaseGame::Init_PreEngine();
+	
 	// Patch for fixing low fps when not launching through Steam
 	FOnlineFactoryEOSPlus::Init_PreEngine();
 	
@@ -42,6 +44,7 @@ void Splitgate::ConstructTitleBar()
 
 void Splitgate::GatherSettingsEntries()
 {
+	// TODO: we should not be using new here
 	new SettingsEntry("Race Settings");
-	new SettingsEntry("Forge Settings");
+	new SettingsEntry("Misc Settings");
 }

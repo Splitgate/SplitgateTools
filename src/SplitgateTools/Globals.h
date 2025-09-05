@@ -1,6 +1,6 @@
 #pragma once
 #include "Memory.h"
-#include "Settings/BaseSettings.h"
+#include "Settings.h"
 
 #include <string>
 

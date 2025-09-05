@@ -1,4 +1,7 @@
 #include "SettingsEntry.h"
+
+#include "Settings.h"
+#include "PortalWars/UPortalWarsGameEngine.h"
 #include "UI/System/ToolSettings.h"
 
 SettingsEntry::SettingsEntry(const char* InEntryName)
@@ -15,5 +18,22 @@ SettingsEntry::~SettingsEntry()
 
 void SettingsEntry::RenderContent()
 {
-	ImGui::Text("Implement :3");
+	ImGui::Text("TODO: completely rewrite this class, this is all temporary");
+
+	// TODO: maybe make some imgui funcs that call original and then GSettings.Save() if they return true 
+	if (ImGui::DragFloat("Countdown Length", &GSettings.Race.CountdownLength, 0.05f))
+		GSettings.Save();
+	
+	if (ImGui::Checkbox("Uncap FPS in lobby", &GSettings.Misc.bEnableLobbyFPSPatch))
+	{
+		UPortalWarsGameEngine::UpdateLobbyFPSPatch();
+		GSettings.Save();
+	}
+
+	// TODO: THIS DOESNT HANDLE UpdateLobbyFPSPatch
+	// we could just add it but that doesn't scale very well and is quite bug prone
+	// maybe we make a function called something like Settings::Apply, where patches and hooks are applied
+	// we'd have to do it at the very end of Init_PostEngine to make sure all offsets have been found
+	//if (ImGui::Button("Reload settings from file"))
+	//	GSettings.Load();
 }

@@ -93,12 +93,12 @@
     <ClCompile Include="PortalWars\GameModes\APortalWarsGameMode.cpp" />
     <ClCompile Include="PortalWars\GameModes\Race\APortalWarsRaceGameMode.cpp" />
     <ClCompile Include="PortalWars\UPortalWarsGameEngine.cpp" />
+    <ClCompile Include="SplitgateTools\Settings.cpp" />
     <ClCompile Include="SplitgateTools\HttpSystem\HttpSystem.cpp" />
     <ClCompile Include="SplitgateTools\Renderer.cpp" />
     <ClCompile Include="Games\BaseGame.cpp" />
     <ClCompile Include="Games\Splitgate\Splitgate.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="SplitgateTools\Settings\BaseSettings.cpp" />
     <ClCompile Include="SplitgateTools\SplitgateTools.cpp" />
     <ClCompile Include="SplitgateTools\UI\Settings\SettingsEntry.cpp" />
     <ClCompile Include="SplitgateTools\UI\System\SystemVersionWindow.cpp" />
@@ -164,8 +164,8 @@
     <ClInclude Include="PortalWars\GameModes\APortalWarsGameMode.h" />
     <ClInclude Include="PortalWars\GameModes\Race\APortalWarsRaceGameMode.h" />
     <ClInclude Include="PortalWars\UPortalWarsGameEngine.h" />
+    <ClInclude Include="SplitgateTools\Settings.h" />
     <ClInclude Include="SplitgateTools\HttpSystem\HttpSystem.h" />
-    <ClInclude Include="SplitgateTools\Settings\BaseSettings.h" />
     <ClInclude Include="SplitgateTools\SplitgateTools.h" />
     <ClInclude Include="SplitgateTools\Globals.h" />
     <ClInclude Include="SplitgateTools\Renderer.h" />
@@ -195,7 +195,6 @@
     <ClInclude Include="Utilities\Memory\Hook.h" />
     <ClInclude Include="Utilities\Memory\Memory.h" />
     <ClInclude Include="Utilities\Memory\Signature.h" />
-    <ClInclude Include="Utilities\mINI\ini.h" />
     <ClInclude Include="Utilities\nlohmann\adl_serializer.hpp" />
     <ClInclude Include="Utilities\nlohmann\byte_container_with_subtype.hpp" />
     <ClInclude Include="Utilities\nlohmann\detail\abi_macros.hpp" />

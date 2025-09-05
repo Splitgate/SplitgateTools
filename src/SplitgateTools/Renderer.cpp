@@ -435,6 +435,12 @@ void Renderer::ImGui_DrawAll()
 				//}
 
 				ImGui::Separator();
+
+				if (ImGui::MenuItem("Quit"))
+				{
+					exit(0);
+				}
+				
 				ImGui::EndMenu();
 			}
 

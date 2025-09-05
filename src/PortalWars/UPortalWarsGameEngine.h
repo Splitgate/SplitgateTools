@@ -10,6 +10,9 @@ public:
 	
 	static void Init_PostEngine();
 
-	static void ApplyLobbyFPSPatch();
-	static void RevertLobbyFPSPatch();
+private:
+	static void EnableLobbyFPSPatch();
+	static void DisableLobbyFPSPatch();
+public:
+	static void UpdateLobbyFPSPatch();
 };
