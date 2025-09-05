@@ -8,6 +8,7 @@
 
 // Classes
 #include "Engine/OnlineSubsystem/FOnlineFactoryEOSPlus.h"
+#include "PortalWars/UPortalWarsGameEngine.h"
 #include "PortalWars/GameModes/APortalWarsGameMode.h"
 #include "PortalWars/GameModes/Race/APortalWarsRaceGameMode.h"
 
@@ -30,6 +31,8 @@ void Splitgate::Init_PreEngine()
 void Splitgate::Init_PostEngine()
 {
 	BaseGame::Init_PostEngine();
+	
+	UPortalWarsGameEngine::Init_PostEngine();
 }
 
 void Splitgate::ConstructTitleBar()

@@ -15,6 +15,17 @@ void UGameEngine::Init_PreEngine()
 	::Start = Memory::FindStringRef(L"Starting Game.").FuncStart();
 	LOG_ADDRESS(::Start, "UGameEngine::Start");
 	HOOK(Start);
+
+	Memory::Address GetMaxTickRatePtr = Memory::FindStringRef(L"GETMAXTICKRATE").ScanVirtualCall().Add(2);
+	if (GetMaxTickRatePtr)
+	{
+		VTableOffsets::GetMaxTickRate = GetMaxTickRatePtr.Deref<int>();
+		LOG_OFFSET(VTableOffsets::GetMaxTickRate, "UGameEngine::GetMaxTickRate");
+	}
+	else
+	{
+		UE_LOG(LogInit, Warning, "Failed to find {}", "UGameEngine::GetMaxTickRate");
+	}
 }
 
 void UGameEngine::Init(IEngineLoop* InEngineLoop)
@@ -29,9 +40,8 @@ void UGameEngine::Init(IEngineLoop* InEngineLoop)
 	if (Viewport)
 		Viewport->ViewportConsole() = NewObject<UConsole>(Viewport, ConsoleClass());
 
-	// logs are disabled so we might as well
-	UE_LOG(LogInit, Display, "Game Engine Initialized.");
-	UE_LOG(LogInit, Display, "Engine Version: {}", FApp::GetBuildVersion());
+//	UE_LOG(LogInit, Display, "Game Engine Initialized.");
+//	UE_LOG(LogInit, Display, "Engine Version: {}", FApp::GetBuildVersion());
 }
 
 void UGameEngine::Start()

@@ -13,5 +13,9 @@ public:
 	
 	static void Init_PreEngine();
 
+	struct VTableOffsets
+	{
+		static inline int GetMaxTickRate;
+	};
 };
 

@@ -92,6 +92,7 @@
     <ClCompile Include="Engine\UWorld.cpp" />
     <ClCompile Include="PortalWars\GameModes\APortalWarsGameMode.cpp" />
     <ClCompile Include="PortalWars\GameModes\Race\APortalWarsRaceGameMode.cpp" />
+    <ClCompile Include="PortalWars\UPortalWarsGameEngine.cpp" />
     <ClCompile Include="SplitgateTools\HttpSystem\HttpSystem.cpp" />
     <ClCompile Include="SplitgateTools\Renderer.cpp" />
     <ClCompile Include="Games\BaseGame.cpp" />
@@ -162,6 +163,7 @@
     <ClInclude Include="Engine\UWorld.h" />
     <ClInclude Include="PortalWars\GameModes\APortalWarsGameMode.h" />
     <ClInclude Include="PortalWars\GameModes\Race\APortalWarsRaceGameMode.h" />
+    <ClInclude Include="PortalWars\UPortalWarsGameEngine.h" />
     <ClInclude Include="SplitgateTools\HttpSystem\HttpSystem.h" />
     <ClInclude Include="SplitgateTools\Settings\BaseSettings.h" />
     <ClInclude Include="SplitgateTools\SplitgateTools.h" />

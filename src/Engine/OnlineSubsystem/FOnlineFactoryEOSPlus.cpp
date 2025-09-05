@@ -2,11 +2,11 @@
 
 #include "Memory/Hook.h"
 
-void* (*CreateSubsystem)(FOnlineFactoryEOSPlus*, void**, FName);
-
+static void* (*CreateSubsystem)(FOnlineFactoryEOSPlus*, void**, FName);
 void FOnlineFactoryEOSPlus::Init_PreEngine()
 {
 	::CreateSubsystem = Memory::FindStringRef(L"EOSPlus failed to initialize!").FuncStart();
+	LOG_ADDRESS(::CreateSubsystem, "FOnlineFactoryEOSPlus::CreateSubsystem");
 	HOOK(CreateSubsystem);
 }
 
