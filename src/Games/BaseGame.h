@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "Memory/Hook.h"
 #include "Engine/UWorld.h"
-#include "UI/TitleBar/UITitleBarEntry.h"
+#include "UI/TitleBar/UITitleBarEntryBase.h"
 #include "UI/Settings/SettingsTab.h"
 
 class BaseGame
@@ -19,7 +19,7 @@ public:
 	virtual void Init_PreEngine();
 	virtual void Init_PostEngine();
 
-	virtual void PopulateTitleBarEntries(std::vector<std::unique_ptr<UITitleBarEntry>>& Entries) {}
+	virtual void PopulateTitleBarEntries(std::vector<std::unique_ptr<UITitleBarEntryBase>>& Entries) {}
 	virtual void PopulateSettingsTabs(std::vector<std::unique_ptr<SettingsTab>>& Tabs) {}
 
 	virtual void OnUIVisibilityChange(bool bVisible);

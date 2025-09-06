@@ -1,10 +1,10 @@
 ﻿#pragma once
-#include "UI/TitleBar/UITitleBarEntry.h"
+#include "UI/TitleBar/UITitleBarEntryBase.h"
 
-class MainTitleBarEntry : public UITitleBarEntry
+class MainTitleBarEntry : public UITitleBarEntryBase
 {
 public:
-	MainTitleBarEntry() : UITitleBarEntry("[SplitgateTools]"){}
+	MainTitleBarEntry() : UITitleBarEntryBase("[SplitgateTools]"){}
 
 protected:
 	virtual void Render() override;

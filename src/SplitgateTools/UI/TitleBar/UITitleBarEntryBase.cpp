@@ -1,21 +1,21 @@
-#include "UITitleBarEntry.h"
+#include "UITitleBarEntryBase.h"
 #include "Renderer.h"
 
-UITitleBarEntry::UITitleBarEntry(const char* InName, ImGuiWindowFlags InFlags)
+UITitleBarEntryBase::UITitleBarEntryBase(const char* InName, ImGuiWindowFlags InFlags)
 	: Name(InName), Flags(InFlags)
 {
 }
 
-UITitleBarEntry::~UITitleBarEntry()
+UITitleBarEntryBase::~UITitleBarEntryBase()
 {
 }
 
-void UITitleBarEntry::Tick()
+void UITitleBarEntryBase::Tick()
 {
 
 }
 
-void UITitleBarEntry::Render()
+void UITitleBarEntryBase::Render()
 {
 	if (ImGui::MenuItem("Generic")) {}
 

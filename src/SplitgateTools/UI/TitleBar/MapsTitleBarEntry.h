@@ -2,7 +2,7 @@
 #include <string>
 #include <vector>
 
-#include "UI/TitleBar/UITitleBarEntry.h"
+#include "UI/TitleBar/UITitleBarEntryBase.h"
 
 // Switch case for imgui entries
 namespace MapSelectability
@@ -53,7 +53,7 @@ public:
 	void OnPressed(const std::wstring& RaceType = L"");
 };
 
-class MapsTitleBarEntry : public UITitleBarEntry
+class MapsTitleBarEntry : public UITitleBarEntryBase
 {
 public:
 

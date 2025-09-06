@@ -1,12 +1,12 @@
 #pragma once
 #include <memory>
 
-#include "UI/UIElement.h"
+#include "UIWindowBase.h"
 #include <vector>
 
 #include "UI/Settings/SettingsTab.h"
 
-class ToolSettings : public UIElement
+class ToolSettings : public UIWindowBase
 {
 public:
 

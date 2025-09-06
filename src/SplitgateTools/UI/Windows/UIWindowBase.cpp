@@ -1,25 +1,27 @@
-#include "UIElement.h"
+#include "UIWindowBase.h"
 #include "Renderer.h"
 
-UIElement::UIElement(const char* InWindowName, bool InbCanHaveMultiple, bool InbIsClosable, ImGuiWindowFlags InWindowFlags)
-	: WindowName(InWindowName),
+UIWindowBase::UIWindowBase(const char* InName, bool InbCanHaveMultiple, bool InbIsClosable, ImGuiWindowFlags InWindowFlags)
+	: Name(InName),
 	bCanHaveMultiple(InbCanHaveMultiple),
 	bIsClosable(InbIsClosable),
 	WindowFlags(InWindowFlags)
 {
+	// TODO: rewrite, move to renderer
+	
 	bool bFoundWindow = false;
 
 	int FoundCounter = 0;
-	for (auto& UIElement : Renderer::UIElements)
+	for (auto& Window : Renderer::UIWindows)
 	{
-		if (UIElement->WindowName == WindowName)
+		if (Window->Name == Name)
 		{
 			bFoundWindow = true;
 			++FoundCounter;
 		}
 	}
 
-	sprintf(WindowId, "%s", InWindowName);
+	sprintf(Id, "%s", InName);
 
 	if (bCanHaveMultiple
 		|| (!bCanHaveMultiple && !bFoundWindow))
@@ -27,15 +29,15 @@ UIElement::UIElement(const char* InWindowName, bool InbCanHaveMultiple, bool Inb
 		if (bFoundWindow)
 		{
 			char Buf[256];
-			sprintf(Buf, "%s###%d", WindowName, FoundCounter);
-			WindowName = Buf;
+			sprintf(Buf, "%s###%d", Name, FoundCounter);
+			Name = Buf;
 
 			// UE_LOG(LogInit, Warning, "Adding another window {}", std::string(WindowName));
 		}
 	}
 }
 
-void UIElement::Render()
+void UIWindowBase::Render()
 {
 	ImGui::Text("Hello! Override me please :)");
 }

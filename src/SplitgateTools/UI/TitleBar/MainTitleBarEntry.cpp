@@ -3,9 +3,9 @@
 #include <memory>
 
 #include "Renderer.h"
-#include "UI/System/SystemVersionWindow.h"
-#include "UI/System/ToolSettings.h"
-#include "UI/System/VersionWindow.h"
+#include "UI/Windows/SystemVersionWindow.h"
+#include "UI/Windows/ToolSettings.h"
+#include "UI/Windows/VersionWindow.h"
 
 void MainTitleBarEntry::Render()
 {
@@ -13,17 +13,17 @@ void MainTitleBarEntry::Render()
 				
 	if (ImGui::MenuItem("Game Info"))
 	{
-		Renderer::UIElements.push_back(std::make_unique<VersionWindow>());
+		Renderer::UIWindows.push_back(std::make_unique<VersionWindow>());
 	}
 
 	if (ImGui::MenuItem("Tool Info"))
 	{
-		Renderer::UIElements.push_back(std::make_unique<SystemVersionWindow>());
+		Renderer::UIWindows.push_back(std::make_unique<SystemVersionWindow>());
 	}
 
 	if (ImGui::MenuItem("Settings"))
 	{
-		Renderer::UIElements.push_back(std::make_unique<ToolSettings>());
+		Renderer::UIWindows.push_back(std::make_unique<ToolSettings>());
 	}
 
 	ImGui::Separator();

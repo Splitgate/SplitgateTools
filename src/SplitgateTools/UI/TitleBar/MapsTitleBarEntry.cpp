@@ -36,7 +36,7 @@ void GameMapEntry::OnPressed(const std::wstring& RaceType)
 }
 
 MapsTitleBarEntry::MapsTitleBarEntry()
-	: UITitleBarEntry("Maps")
+	: UITitleBarEntryBase("Maps")
 {
 	// todo: do this dynamically
 

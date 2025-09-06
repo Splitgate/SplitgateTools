@@ -7,14 +7,14 @@
 #include "backends/imgui_impl_dx12.h"
 #include "backends/imgui_impl_win32.h"
 
-class UITitleBarEntry
+class UITitleBarEntryBase
 {
 	friend class Renderer;
 
 public:
 
-	UITitleBarEntry(const char* InName = "Default Entry", ImGuiWindowFlags InFlags = 0);
-	virtual ~UITitleBarEntry();
+	UITitleBarEntryBase(const char* InName = "Default Entry", ImGuiWindowFlags InFlags = 0);
+	virtual ~UITitleBarEntryBase();
 
 protected:
 

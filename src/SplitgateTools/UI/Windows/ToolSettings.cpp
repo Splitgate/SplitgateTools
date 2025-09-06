@@ -6,7 +6,7 @@
 #include "Globals.h"
 
 ToolSettings::ToolSettings()
-    : UIElement("Settings", false, true,
+    : UIWindowBase("Settings", false, true,
         ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoDocking)
 {
     if (Game)

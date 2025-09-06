@@ -8,19 +8,19 @@
 #include "backends/imgui_impl_win32.h"
 
 // Base class for all ImGui windows that we will render
-class UIElement
+class UIWindowBase
 {
 	friend class Renderer;
 
 public:
 
-	UIElement(const char* InWindowName, bool InbCanHaveMultiple = false, bool InbIsClosable = true, ImGuiWindowFlags InWindowFlags = 0);
-	virtual ~UIElement() {}
+	UIWindowBase(const char* InName, bool InbCanHaveMultiple = false, bool InbIsClosable = true, ImGuiWindowFlags InWindowFlags = 0);
+	virtual ~UIWindowBase() {}
 
 protected:
 
-	const char* WindowName;
-	char WindowId[256];
+	const char* Name;
+	char Id[256];
 
 	bool bCanHaveMultiple;
 	bool bIsClosable;

@@ -1,6 +1,6 @@
 #include "Renderer.h"
-#include "UI/UIElement.h"
-#include "UI/TitleBar/UITitleBarEntry.h"
+#include "UI/Windows/UIWindowBase.h"
+#include "UI/TitleBar/UITitleBarEntryBase.h"
 #include "Memory/Hook.h"
 #include "Memory/Memory.h"
 
@@ -450,17 +450,17 @@ void Renderer::ImGui_DrawAll()
 			ImGui::EndMainMenuBar();
 		}
 
-		for (auto It = UIElements.begin(); It != UIElements.end();)
+		for (auto It = UIWindows.begin(); It != UIWindows.end();)
 		{
-			auto& UIElement = *It;
-			UIElement->Tick();
+			auto& Window = *It;
+			Window->Tick();
 
 			bool bIsOpen = true;
-			ImGui::Begin(UIElement->WindowName,
-				(UIElement->bIsClosable ? &bIsOpen : nullptr),
-				UIElement->WindowFlags | ImGuiWindowFlags_NoCollapse);
+			ImGui::Begin(Window->Name,
+				(Window->bIsClosable ? &bIsOpen : nullptr),
+				Window->WindowFlags | ImGuiWindowFlags_NoCollapse);
 
-			UIElement->Render();
+			Window->Render();
 
 			ImGui::End();
 
@@ -470,8 +470,8 @@ void Renderer::ImGui_DrawAll()
 			}
 			else
 			{
-			// if window was closed, remove it from UIElements. destructor will be called
-				UIElements.erase(It);
+				// if window was closed, remove it from UIWindows. destructor will be called
+				UIWindows.erase(It);
 			}
 		}
 	}
