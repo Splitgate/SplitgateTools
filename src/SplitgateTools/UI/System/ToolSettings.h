@@ -11,8 +11,8 @@ public:
 
 	}
 
-	class SettingsEntry* CurrentlyRenderingTab;
-	static inline std::vector<class SettingsEntry*> SettingsEntries;
+	class SettingsTabContent* CurrentlyRenderingTab;
+	static inline std::vector<class SettingsTabContent*> SettingsEntries;
 
 	virtual void Render() override;
 	virtual void OnOpen() override;

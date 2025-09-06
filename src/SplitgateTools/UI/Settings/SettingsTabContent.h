@@ -1,11 +1,11 @@
 #pragma once
 
-class SettingsEntry
+class SettingsTabContent
 {
 public:
 
-	SettingsEntry(const char* InEntryName);
-	virtual ~SettingsEntry();
+	SettingsTabContent(const char* InEntryName);
+	virtual ~SettingsTabContent();
 
 	// Tab Name
 	const char* EntryName;

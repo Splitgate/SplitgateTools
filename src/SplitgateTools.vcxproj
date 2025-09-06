@@ -101,7 +101,7 @@
     <ClCompile Include="Games\Splitgate\Splitgate.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="SplitgateTools\SplitgateTools.cpp" />
-    <ClCompile Include="SplitgateTools\UI\Settings\SettingsEntry.cpp" />
+    <ClCompile Include="SplitgateTools\UI\Settings\SettingsTabContent.cpp" />
     <ClCompile Include="SplitgateTools\UI\System\SystemVersionWindow.cpp" />
     <ClCompile Include="SplitgateTools\UI\System\ToolSettings.cpp" />
     <ClCompile Include="SplitgateTools\UI\System\VersionWindow.cpp" />
@@ -170,7 +170,7 @@
     <ClInclude Include="SplitgateTools\SplitgateTools.h" />
     <ClInclude Include="SplitgateTools\Globals.h" />
     <ClInclude Include="SplitgateTools\Renderer.h" />
-    <ClInclude Include="SplitgateTools\UI\Settings\SettingsEntry.h" />
+    <ClInclude Include="SplitgateTools\UI\Settings\SettingsTabContent.h" />
     <ClInclude Include="SplitgateTools\UI\System\SystemVersionWindow.h" />
     <ClInclude Include="SplitgateTools\UI\System\ToolSettings.h" />
     <ClInclude Include="SplitgateTools\UI\System\VersionWindow.h" />

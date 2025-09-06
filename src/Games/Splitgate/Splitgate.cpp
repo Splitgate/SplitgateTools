@@ -4,7 +4,7 @@
 #include "UI/World/MapsMenuEntry.h"
 
 // Settings Entries
-#include "UI/Settings/SettingsEntry.h"
+#include "UI/Settings/SettingsTabContent.h"
 
 // Classes
 #include "Engine/OnlineSubsystem/FOnlineFactoryEOSPlus.h"
@@ -45,6 +45,6 @@ void Splitgate::ConstructTitleBar()
 void Splitgate::GatherSettingsEntries()
 {
 	// TODO: we should not be using new here
-	new SettingsEntry("Race Settings");
-	new SettingsEntry("Misc Settings");
+	new SettingsTabContent("Race Settings");
+	new SettingsTabContent("Misc Settings");
 }
