@@ -1,4 +1,4 @@
-#include "VersionWindow.h"
+#include "GameInfoWindow.h"
 #include "Renderer.h"
 
 #include <string>
@@ -7,14 +7,14 @@
 #include "Engine/Core/Misc/FEngineVersion.h"
 #include "Engine/Core/Misc/FApp.h"
 
-void VersionWindow::Render()
+void GameInfoWindow::Render()
 {
     ImGui::SetWindowSize(ImVec2(240, 360));
 
     ImVec2 Center = ImGui::GetMainViewport()->GetCenter();
     ImGui::SetWindowPos(Center, ImGuiCond_Appearing);
 
-    ImGui::PushFont(NULL, 26.f);
+    ImGui::PushFont(nullptr, 26.f);
     {
         std::string GameString = std::format("Splitgate {}", FNetworkVersion::GetProjectVersion());
 
@@ -33,7 +33,6 @@ void VersionWindow::Render()
     FEngineVersion* Current = FEngineVersion::Current();
     ImGui::TextWrapped("Unreal %d.%d.%d.%d", Current->Major, Current->Minor, Current->Patch, Current->Changelist);
 
-    ImGui::SeparatorText("Render");
-
+    ImGui::SeparatorText("Renderer");
     ImGui::TextWrapped(FApp::RendererName.c_str());
 }

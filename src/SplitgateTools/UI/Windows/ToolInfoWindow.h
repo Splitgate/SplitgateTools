@@ -1,11 +1,11 @@
 #pragma once
 #include "UIWindowBase.h"
 
-class SystemVersionWindow : public UIWindowBase
+class ToolInfoWindow : public UIWindowBase
 {
 public:
 
-	SystemVersionWindow() : UIWindowBase("Tool Information", false, true,
+	ToolInfoWindow() : UIWindowBase("Tool Information", false, true,
 		ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoDocking)
 	{
 

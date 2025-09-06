@@ -1,8 +1,8 @@
-#include "SystemVersionWindow.h"
+#include "ToolInfoWindow.h"
 #include "Globals.h"
 #include <Games/BaseGame.h>
 
-void SystemVersionWindow::Render()
+void ToolInfoWindow::Render()
 {
     ImGui::SetWindowSize(ImVec2(240, 140));
 

@@ -29,6 +29,7 @@
 #include "Engine/Kismet/UKismetSystemLibrary.h"
 #include "FontsAwesome/IconsFontAwesome6.h"
 #include "FontsAwesome/fa-solid-900.h"
+#include "UI/WindowManager.h"
 
 // DirectX libraries
 #pragma comment(lib, "dxgi.lib") // this made the dll chunky but we need it
@@ -450,30 +451,8 @@ void Renderer::ImGui_DrawAll()
 			ImGui::EndMainMenuBar();
 		}
 
-		for (auto It = UIWindows.begin(); It != UIWindows.end();)
-		{
-			auto& Window = *It;
-			Window->Tick();
-
-			bool bIsOpen = true;
-			ImGui::Begin(Window->Name,
-				(Window->bIsClosable ? &bIsOpen : nullptr),
-				Window->WindowFlags | ImGuiWindowFlags_NoCollapse);
-
-			Window->Render();
-
-			ImGui::End();
-
-			if (bIsOpen)
-			{
-				++It;
-			}
-			else
-			{
-				// if window was closed, remove it from UIWindows. destructor will be called
-				UIWindows.erase(It);
-			}
-		}
+		WindowManager::Render();
+		WindowManager::FlushPendingWindows();
 	}
 	ImGui::PopStyleVar();
 

@@ -3,22 +3,27 @@
 #include <memory>
 
 #include "Renderer.h"
-#include "UI/Windows/SystemVersionWindow.h"
-#include "UI/Windows/ToolSettings.h"
-#include "UI/Windows/VersionWindow.h"
+#include "UI/WindowManager.h"
+#include "UI/Windows/ToolInfoWindow.h"
+#include "UI/Windows/SettingsWindow.h"
+#include "UI/Windows/GameInfoWindow.h"
+#include "UI/Windows/HydraWindow.h"
 
 void MainTitleBarEntry::Render()
 {
 	// todo rename all thse classes to make them clearer what they are
 				
+	if (ImGui::MenuItem("Settings"))
+		WindowManager::Add<SettingsWindow>();
+	
 	if (ImGui::MenuItem("Game Info"))
-		Renderer::AddWindow<VersionWindow>();
+		WindowManager::Add<GameInfoWindow>();
 
 	if (ImGui::MenuItem("Tool Info"))
-		Renderer::AddWindow<SystemVersionWindow>();
+		WindowManager::Add<ToolInfoWindow>();
 
-	if (ImGui::MenuItem("Settings"))
-		Renderer::AddWindow<ToolSettings>();
+	if (ImGui::MenuItem("hydra"))
+		WindowManager::Add<HydraWindow>();
 
 	ImGui::Separator();
 

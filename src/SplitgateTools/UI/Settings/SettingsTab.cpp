@@ -2,7 +2,7 @@
 
 #include "Settings.h"
 #include "PortalWars/UPortalWarsGameEngine.h"
-#include "UI/Windows/ToolSettings.h"
+#include "UI/Windows/SettingsWindow.h"
 
 SettingsTab::SettingsTab(const char* InName)
 	: Name(InName)

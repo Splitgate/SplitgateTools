@@ -6,15 +6,20 @@
 
 #include "UI/Settings/SettingsTab.h"
 
-class ToolSettings : public UIWindowBase
+class SettingsWindow : public UIWindowBase
 {
 public:
 
-	ToolSettings();
-	virtual ~ToolSettings() override;
+	SettingsWindow() : UIWindowBase("Settings", false, true,
+		ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoDocking)
+	{
+	}
 
 	std::vector<std::unique_ptr<SettingsTab>> Tabs;
 	int SelectedTabIndex = 0;
 
 	virtual void Render() override;
+
+	virtual void OnOpen() override;
+	virtual void OnClose() override;
 };

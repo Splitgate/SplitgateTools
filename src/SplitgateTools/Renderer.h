@@ -11,42 +11,8 @@
 
 class Renderer
 {
-protected:
-	static inline std::vector<std::unique_ptr<UIWindowBase>> UIWindows;
-
 public:
 	static inline std::vector<std::unique_ptr<UITitleBarEntryBase>> TitleBarEntries;
-
-	// Helper template to add UIWindows while respecting bCanHaveMultiple 
-	template<typename T, typename... Args>
-	static void AddWindow(Args&&... args)
-	{
-		auto& Window = UIWindows.emplace_back(std::make_unique<T>(std::forward<Args>(args)...));
-
-		int FoundCounter = 0;
-		if (!Window->bCanHaveMultiple)
-		{
-			for (auto& ItWindow : UIWindows)
-				if (Window->Name == ItWindow->Name)
-					++FoundCounter;
-		}
-		
-		if (FoundCounter > 1)
-		{
-			if (Window->bCanHaveMultiple)
-			{
-				char Buf[256];
-				sprintf(Buf, "%s###%d", Window->Name, FoundCounter);
-				Window->Name = Buf;
-			// UE_LOG(LogInit, Warning, "Adding another window {}", std::string(WindowName));
-			}
-			else
-			{
-				// not allowed multiple windows of this type
-				UIWindows.pop_back();
-			}
-		}
-	}
 	
 	// Shared between all renderers
 	static inline HWND Window;
