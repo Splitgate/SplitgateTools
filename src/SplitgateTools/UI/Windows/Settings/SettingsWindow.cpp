@@ -1,5 +1,5 @@
 #include "SettingsWindow.h"
-#include "UI/Settings/SettingsTab.h"
+#include "UI/Windows/Settings/Tabs/SettingsTabBase.h"
 
 #include "Games/BaseGame.h"
 
@@ -8,11 +8,6 @@
 void SettingsWindow::Render()
 {
     ImGui::SetWindowSize(ImVec2(580, 380));
-
-    // if (CurrentlyRenderingTab)
-    // {
-    //     ImGui::Text(CurrentlyRenderingTab->EntryName);
-    // }
 
     ImGui::PushStyleVar(ImGuiStyleVar_ChildBorderSize, 1);
     ImGui::BeginChild("SettingList", { 150, 0, }, ImGuiChildFlags_Border | ImGuiChildFlags_AlwaysUseWindowPadding | ImGuiChildFlags_NavFlattened, ImGuiWindowFlags_NoSavedSettings);
@@ -31,7 +26,6 @@ void SettingsWindow::Render()
 
             ImGui::Dummy({ 0, 2 });
         }
-
         ImGui::EndChild();
     }
     ImGui::PopStyleVar();

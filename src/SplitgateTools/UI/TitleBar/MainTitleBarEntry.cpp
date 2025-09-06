@@ -1,11 +1,9 @@
 ﻿#include "MainTitleBarEntry.h"
 
-#include <memory>
-
 #include "Renderer.h"
 #include "UI/WindowManager.h"
 #include "UI/Windows/ToolInfoWindow.h"
-#include "UI/Windows/SettingsWindow.h"
+#include "UI/Windows/Settings/SettingsWindow.h"
 #include "UI/Windows/GameInfoWindow.h"
 #include "UI/Windows/HydraWindow.h"
 

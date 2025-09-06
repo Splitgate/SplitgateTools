@@ -2,7 +2,7 @@
 #include "Memory/Hook.h"
 #include "Engine/UWorld.h"
 #include "UI/TitleBar/UITitleBarEntryBase.h"
-#include "UI/Settings/SettingsTab.h"
+#include "UI/Windows/Settings/Tabs/SettingsTabBase.h"
 
 class BaseGame
 {
@@ -20,7 +20,7 @@ public:
 	virtual void Init_PostEngine();
 
 	virtual void PopulateTitleBarEntries(std::vector<std::unique_ptr<UITitleBarEntryBase>>& Entries) {}
-	virtual void PopulateSettingsTabs(std::vector<std::unique_ptr<SettingsTab>>& Tabs) {}
+	virtual void PopulateSettingsTabs(std::vector<std::unique_ptr<SettingsTabBase>>& Tabs) {}
 
 	virtual void OnUIVisibilityChange(bool bVisible);
 };

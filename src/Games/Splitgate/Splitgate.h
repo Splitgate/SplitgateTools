@@ -12,5 +12,5 @@ public:
 	virtual void Init_PostEngine() override;
 
 	virtual void PopulateTitleBarEntries(std::vector<std::unique_ptr<UITitleBarEntryBase>>& Entries) override;
-	virtual void PopulateSettingsTabs(std::vector<std::unique_ptr<SettingsTab>>& Tabs) override;
+	virtual void PopulateSettingsTabs(std::vector<std::unique_ptr<SettingsTabBase>>& Tabs) override;
 };

@@ -4,8 +4,9 @@
 #include "UI/TitleBar/MainTitleBarEntry.h"
 #include "UI/TitleBar/MapsTitleBarEntry.h"
 
-// Settings Entries
-#include "UI/Settings/SettingsTab.h"
+// Settings Tabs
+#include "UI/Windows/Settings/Tabs/MiscSettingsTab.h"
+#include "UI/Windows/Settings/Tabs/RaceSettingsTab.h"
 
 // Classes
 #include "Engine/OnlineSubsystem/FOnlineFactoryEOSPlus.h"
@@ -44,9 +45,9 @@ void Splitgate::PopulateTitleBarEntries(std::vector<std::unique_ptr<UITitleBarEn
 	Entries.emplace_back(std::make_unique<MapsTitleBarEntry>());
 }
 
-void Splitgate::PopulateSettingsTabs(std::vector<std::unique_ptr<SettingsTab>>& Tabs)
+void Splitgate::PopulateSettingsTabs(std::vector<std::unique_ptr<SettingsTabBase>>& Tabs)
 {
 	// todo: seperate classes for each tab instead of using base class
-	Tabs.emplace_back(std::make_unique<SettingsTab>("Race Settings"));
-	Tabs.emplace_back(std::make_unique<SettingsTab>("Misc Settings"));
+	Tabs.emplace_back(std::make_unique<RaceSettingsTab>());
+	Tabs.emplace_back(std::make_unique<MiscSettingsTab>());
 }
