@@ -1,13 +1,8 @@
 #include "Renderer.h"
 #include "UI/UIElement.h"
-#include "UI/UITitleBarEntry.h"
+#include "UI/TitleBar/UITitleBarEntry.h"
 #include "Memory/Hook.h"
 #include "Memory/Memory.h"
-
-// UI Elements
-#include "UI/System/VersionWindow.h"
-#include "UI/System/ToolSettings.h"
-#include "UI/System/SystemVersionWindow.h"
 
 // Games
 #include "Games/BaseGame.h"
@@ -414,35 +409,6 @@ void Renderer::ImGui_DrawAll()
 	{
 		if (ImGui::BeginMainMenuBar())
 		{
-			if (ImGui::BeginMenu("[Splitgate]"))
-			{
-				// todo rename all thse classes to make them clearer what they are
-				
-				if (ImGui::MenuItem("Game Info"))
-				{
-					UIElements.push_back(std::make_unique<VersionWindow>());
-				}
-
-				if (ImGui::MenuItem("Tool Info"))
-				{
-					UIElements.push_back(std::make_unique<SystemVersionWindow>());
-				}
-
-				if (ImGui::MenuItem("Settings"))
-				{
-					UIElements.push_back(std::make_unique<ToolSettings>());
-				}
-
-				ImGui::Separator();
-
-				if (ImGui::MenuItem("Quit"))
-				{
-					UKismetSystemLibrary::ExecuteConsoleCommand(TEXT("quit"));
-				}
-				
-				ImGui::EndMenu();
-			}
-
 			for (auto& TitleBarEntry : TitleBarEntries)
 			{
 				TitleBarEntry->Tick();

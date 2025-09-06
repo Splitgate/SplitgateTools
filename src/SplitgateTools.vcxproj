@@ -105,9 +105,10 @@
     <ClCompile Include="SplitgateTools\UI\System\SystemVersionWindow.cpp" />
     <ClCompile Include="SplitgateTools\UI\System\ToolSettings.cpp" />
     <ClCompile Include="SplitgateTools\UI\System\VersionWindow.cpp" />
+    <ClCompile Include="SplitgateTools\UI\TitleBar\MapsTitleBarEntry.cpp" />
+    <ClCompile Include="SplitgateTools\UI\TitleBar\MainTitleBarEntry.cpp" />
+    <ClCompile Include="SplitgateTools\UI\TitleBar\UITitleBarEntry.cpp" />
     <ClCompile Include="SplitgateTools\UI\UIElement.cpp" />
-    <ClCompile Include="SplitgateTools\UI\UITitleBarEntry.cpp" />
-    <ClCompile Include="SplitgateTools\UI\World\MapsMenuEntry.cpp" />
     <ClCompile Include="Utilities\imgui\backends\imgui_impl_dx11.cpp" />
     <ClCompile Include="Utilities\imgui\backends\imgui_impl_dx12.cpp" />
     <ClCompile Include="Utilities\imgui\backends\imgui_impl_win32.cpp" />
@@ -174,11 +175,12 @@
     <ClInclude Include="SplitgateTools\UI\System\SystemVersionWindow.h" />
     <ClInclude Include="SplitgateTools\UI\System\ToolSettings.h" />
     <ClInclude Include="SplitgateTools\UI\System\VersionWindow.h" />
-    <ClInclude Include="SplitgateTools\UI\UITitleBarEntry.h" />
+    <ClInclude Include="SplitgateTools\UI\TitleBar\MapsTitleBarEntry.h" />
+    <ClInclude Include="SplitgateTools\UI\TitleBar\MainTitleBarEntry.h" />
+    <ClInclude Include="SplitgateTools\UI\TitleBar\UITitleBarEntry.h" />
     <ClInclude Include="SplitgateTools\UI\UIElement.h" />
     <ClInclude Include="Games\BaseGame.h" />
     <ClInclude Include="Games\Splitgate\Splitgate.h" />
-    <ClInclude Include="SplitgateTools\UI\World\MapsMenuEntry.h" />
     <ClInclude Include="Utilities\FontsAwesome\fa-regular-400.h" />
     <ClInclude Include="Utilities\FontsAwesome\fa-solid-900.h" />
     <ClInclude Include="Utilities\FontsAwesome\IconsFontAwesome6.h" />

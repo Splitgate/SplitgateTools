@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "Memory/Hook.h"
 #include "Engine/UWorld.h"
-#include "UI/UITitleBarEntry.h"
+#include "UI/TitleBar/UITitleBarEntry.h"
 #include "UI/Settings/SettingsTab.h"
 
 class BaseGame

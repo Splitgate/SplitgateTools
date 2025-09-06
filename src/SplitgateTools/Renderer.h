@@ -7,7 +7,7 @@
 #include "dxgi1_4.h"
 
 #include "UI/UIElement.h"
-#include "UI/UITitleBarEntry.h"
+#include "UI/TitleBar/UITitleBarEntry.h"
 
 class Renderer
 {

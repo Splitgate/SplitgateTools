@@ -1,4 +1,4 @@
-#include "MapsMenuEntry.h"
+#include "MapsTitleBarEntry.h"
 
 #include "Engine/UWorld.h"
 #include "Engine/Core/UObject/UClass.h"
@@ -35,7 +35,8 @@ void GameMapEntry::OnPressed(const std::wstring& RaceType)
 	GWorld->ServerTravel(TravelURL.c_str());
 }
 
-MapsMenuEntry::MapsMenuEntry() : UITitleBarEntry("Maps")
+MapsTitleBarEntry::MapsTitleBarEntry()
+	: UITitleBarEntry("Maps")
 {
 	// todo: do this dynamically
 
@@ -93,7 +94,7 @@ MapsMenuEntry::MapsMenuEntry() : UITitleBarEntry("Maps")
 #undef ADD_GUI_MAP
 }
 
-void MapsMenuEntry::Render()
+void MapsTitleBarEntry::Render()
 {
 	if (ImGui::BeginMenu("Playable"))
 	{

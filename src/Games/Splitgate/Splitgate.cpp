@@ -1,7 +1,8 @@
 ﻿#include "Splitgate.h"
 
 // Title Bar Entries
-#include "UI/World/MapsMenuEntry.h"
+#include "UI/TitleBar/MainTitleBarEntry.h"
+#include "UI/TitleBar/MapsTitleBarEntry.h"
 
 // Settings Entries
 #include "UI/Settings/SettingsTab.h"
@@ -39,7 +40,8 @@ void Splitgate::Init_PostEngine()
 
 void Splitgate::PopulateTitleBarEntries(std::vector<std::unique_ptr<UITitleBarEntry>>& Entries)
 {
-	Entries.push_back(std::make_unique<MapsMenuEntry>());
+	Entries.push_back(std::make_unique<MainTitleBarEntry>());
+	Entries.push_back(std::make_unique<MapsTitleBarEntry>());
 }
 
 void Splitgate::PopulateSettingsTabs(std::vector<std::unique_ptr<SettingsTab>>& Tabs)

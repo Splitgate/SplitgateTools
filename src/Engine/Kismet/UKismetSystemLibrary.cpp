@@ -31,17 +31,3 @@ UObject* UKismetSystemLibrary::GetObjectFromPrimaryAssetId(FPrimaryAssetId Prima
 
 	return p.ReturnValue;
 }
-
-void UKismetSystemLibrary::ExecuteConsoleCommand(const FString& Command, APlayerController* SpecificPlayer)
-{
-	struct {
-		const UObject* WorldContextObject;  
-		const FString& Command;
-		APlayerController* SpecificPlayer;
-	} p = {
-		GWorld, Command, SpecificPlayer
-	};
-
-	UFunction* Func = StaticClass()->FindFunction(L"ExecuteConsoleCommand");
-	DefaultObject()->ProcessEvent(Func, &p);
-}

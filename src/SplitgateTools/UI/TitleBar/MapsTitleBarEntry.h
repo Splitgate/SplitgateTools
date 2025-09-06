@@ -1,7 +1,8 @@
 #pragma once
-#include "UI/UITitleBarEntry.h"
 #include <string>
 #include <vector>
+
+#include "UI/TitleBar/UITitleBarEntry.h"
 
 // Switch case for imgui entries
 namespace MapSelectability
@@ -52,11 +53,11 @@ public:
 	void OnPressed(const std::wstring& RaceType = L"");
 };
 
-class MapsMenuEntry : public UITitleBarEntry
+class MapsTitleBarEntry : public UITitleBarEntry
 {
 public:
 
-	MapsMenuEntry();
+	MapsTitleBarEntry();
 
 protected:
 
@@ -64,5 +65,5 @@ protected:
 
 private:
 
-	static inline std::vector<GameMapEntry> AllMaps;
+	std::vector<GameMapEntry> AllMaps;
 };

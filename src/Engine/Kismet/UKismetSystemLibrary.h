@@ -9,6 +9,4 @@ public:
 
 	static void GetPrimaryAssetIdList(FPrimaryAssetType PrimaryAssetType, TArray<FPrimaryAssetId>& OutPrimaryAssetIdList);
 	static UObject* GetObjectFromPrimaryAssetId(FPrimaryAssetId PrimaryAssetId);
-
-	static void ExecuteConsoleCommand(const FString& Command, class APlayerController* SpecificPlayer = nullptr);
 };
