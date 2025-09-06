@@ -37,10 +37,9 @@ void Splitgate::Init_PostEngine()
 	UPortalWarsGameEngine::Init_PostEngine();
 }
 
-void Splitgate::ConstructTitleBar()
+void Splitgate::PopulateTitleBarEntries(std::vector<std::unique_ptr<UITitleBarEntry>>& Entries)
 {
-	// todo
-	new MapsMenuEntry();
+	Entries.push_back(std::make_unique<MapsMenuEntry>());
 }
 
 void Splitgate::PopulateSettingsTabs(std::vector<std::unique_ptr<SettingsTab>>& Tabs)

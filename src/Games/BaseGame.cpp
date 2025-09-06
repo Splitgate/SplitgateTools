@@ -70,11 +70,6 @@ std::unique_ptr<BaseGame> BaseGame::Create()
 	return std::make_unique<BaseGame>(); 
 }
 
-BaseGame::BaseGame()
-{
-	ConstructTitleBar();
-}
-
 void BaseGame::Init_PreGame()
 {
 	FApp::Init_PreGame();
@@ -110,14 +105,6 @@ void BaseGame::Init_PostEngine()
 	UFunction::Init_PostEngine();
 
 	APlayerController::Init_PostEngine();
-}
-
-void BaseGame::ConstructTitleBar()
-{
-}
-
-void BaseGame::PopulateSettingsTabs(std::vector<std::unique_ptr<SettingsTab>>& Tabs)
-{
 }
 
 void BaseGame::OnUIVisibilityChange(bool bVisible)

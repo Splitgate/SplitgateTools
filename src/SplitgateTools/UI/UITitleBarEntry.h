@@ -13,20 +13,17 @@ class UITitleBarEntry
 
 public:
 
-	UITitleBarEntry(const char* InEntryName = "Default Entry", ImGuiWindowFlags InEntryFlags = 0);
+	UITitleBarEntry(const char* InName = "Default Entry", ImGuiWindowFlags InFlags = 0);
 	virtual ~UITitleBarEntry();
 
 protected:
 
-	const char* EntryName;
-	ImGuiWindowFlags EntryFlags;
+	const char* Name;
+	ImGuiWindowFlags Flags;
 
 	// Called every frame
 	virtual void Tick();
 
 	// Called when the menu is currently open, no other times.
 	virtual void Render();
-
-	// Called when the title bar entry is constructed
-	virtual void OnCreate();
 };

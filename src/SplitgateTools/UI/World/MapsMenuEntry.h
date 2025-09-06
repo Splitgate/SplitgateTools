@@ -56,15 +56,11 @@ class MapsMenuEntry : public UITitleBarEntry
 {
 public:
 
-	MapsMenuEntry() : UITitleBarEntry("Maps")
-	{
-		OnCreate();
-	}
+	MapsMenuEntry();
 
 protected:
 
 	virtual void Render() override;
-	virtual void OnCreate() override;
 
 private:
 

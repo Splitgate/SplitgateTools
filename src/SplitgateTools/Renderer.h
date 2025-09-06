@@ -6,12 +6,15 @@
 #include "d3d12.h"
 #include "dxgi1_4.h"
 
+#include "UI/UITitleBarEntry.h"
+
 class Renderer
 {
 public:
 
 	static inline std::vector<class UIElement*> UIElements;
-	static inline std::vector<class UITitleBarEntry*> TitleBarEntries;
+	static inline std::vector<std::unique_ptr<UITitleBarEntry>> TitleBarEntries;
+	
 
 	// Shared between all renderers
 	static inline HWND Window;

@@ -1,4 +1,6 @@
 ﻿#include "UGameEngine.h"
+
+#include "Renderer.h"
 #include "Games/BaseGame.h"
 
 #include "Core/Misc/FApp.h"
@@ -49,5 +51,5 @@ void UGameEngine::Start()
 	::Start(this);
 
 	Game->bAllowUIOpen = true;
-	Game->ConstructTitleBar();
+	Game->PopulateTitleBarEntries(Renderer::TitleBarEntries);
 }

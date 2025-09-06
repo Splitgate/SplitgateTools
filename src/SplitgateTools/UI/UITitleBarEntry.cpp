@@ -1,18 +1,13 @@
 #include "UITitleBarEntry.h"
 #include "Renderer.h"
 
-UITitleBarEntry::UITitleBarEntry(const char* InEntryName, ImGuiWindowFlags InEntryFlags)
-	: EntryName(InEntryName),
-	EntryFlags(InEntryFlags)
+UITitleBarEntry::UITitleBarEntry(const char* InName, ImGuiWindowFlags InFlags)
+	: Name(InName), Flags(InFlags)
 {
-	Renderer::TitleBarEntries.push_back(this);
-	OnCreate();
 }
 
 UITitleBarEntry::~UITitleBarEntry()
 {
-	auto ElemIndex = std::find(Renderer::TitleBarEntries.begin(), Renderer::TitleBarEntries.end(), this);
-	Renderer::TitleBarEntries.erase(ElemIndex);
 }
 
 void UITitleBarEntry::Tick()
@@ -41,8 +36,4 @@ void UITitleBarEntry::Render()
 
 		ImGui::EndMenu();
 	}
-}
-
-void UITitleBarEntry::OnCreate()
-{
 }

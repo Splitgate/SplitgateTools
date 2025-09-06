@@ -444,13 +444,10 @@ void Renderer::ImGui_DrawAll()
 				ImGui::EndMenu();
 			}
 
-			for (auto TitleBarEntry : TitleBarEntries)
+			for (auto& TitleBarEntry : TitleBarEntries)
 			{
-				if (!TitleBarEntry) continue;
-
 				TitleBarEntry->Tick();
-
-				if (ImGui::BeginMenu(TitleBarEntry->EntryName))
+				if (ImGui::BeginMenu(TitleBarEntry->Name))
 				{
 					TitleBarEntry->Render();
 					ImGui::EndMenu();
@@ -489,10 +486,8 @@ void Renderer::ImGui_DrawAll()
 		}
 
 
-		for (auto UIElement : UIElements)
+		for (auto& UIElement : UIElements)
 		{
-			if (!UIElement) continue;
-
 			UIElement->Tick();
 
 			ImGui::Begin(UIElement->WindowName,
