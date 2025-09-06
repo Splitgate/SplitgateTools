@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "Memory/Hook.h"
 #include "Engine/UWorld.h"
+#include "UI/Settings/SettingsTab.h"
 
 class BaseGame
 {
@@ -20,7 +21,7 @@ public:
 	virtual void Init_PostEngine();
 
 	virtual void ConstructTitleBar();
-	virtual void GatherSettingsEntries();
+	virtual void PopulateSettingsTabs(std::vector<std::unique_ptr<SettingsTab>>& Tabs);
 
 	virtual void OnUIVisibilityChange(bool bVisible);
 };

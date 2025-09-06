@@ -1,17 +1,15 @@
 #pragma once
 
-class SettingsTabContent
+class SettingsTab
 {
 public:
 
-	SettingsTabContent(const char* InEntryName);
-	virtual ~SettingsTabContent();
+	SettingsTab(const char* InName);
+	virtual ~SettingsTab();
 
-	// Tab Name
-	const char* EntryName;
+	const char* Name;
 
 	bool DrawInt(const char* DisplayName, int* SettingToUpdate, int Min = 0, int Max = 0, int Flags = 0);
 
-	// Tab Content
 	virtual void RenderContent();
 };

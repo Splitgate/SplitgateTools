@@ -116,7 +116,7 @@ void BaseGame::ConstructTitleBar()
 {
 }
 
-void BaseGame::GatherSettingsEntries()
+void BaseGame::PopulateSettingsTabs(std::vector<std::unique_ptr<SettingsTab>>& Tabs)
 {
 }
 

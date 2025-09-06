@@ -4,7 +4,7 @@
 #include "UI/World/MapsMenuEntry.h"
 
 // Settings Entries
-#include "UI/Settings/SettingsTabContent.h"
+#include "UI/Settings/SettingsTab.h"
 
 // Classes
 #include "Engine/OnlineSubsystem/FOnlineFactoryEOSPlus.h"
@@ -39,12 +39,13 @@ void Splitgate::Init_PostEngine()
 
 void Splitgate::ConstructTitleBar()
 {
+	// todo
 	new MapsMenuEntry();
 }
 
-void Splitgate::GatherSettingsEntries()
+void Splitgate::PopulateSettingsTabs(std::vector<std::unique_ptr<SettingsTab>>& Tabs)
 {
-	// TODO: we should not be using new here
-	new SettingsTabContent("Race Settings");
-	new SettingsTabContent("Misc Settings");
+	// todo: seperate classes for each tab instead of using base class
+	Tabs.push_back(std::make_unique<SettingsTab>("Race Settings"));
+	Tabs.push_back(std::make_unique<SettingsTab>("Misc Settings"));
 }

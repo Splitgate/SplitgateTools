@@ -1,22 +1,21 @@
-#include "SettingsTabContent.h"
+#include "SettingsTab.h"
 
 #include "Settings.h"
 #include "PortalWars/UPortalWarsGameEngine.h"
 #include "UI/System/ToolSettings.h"
 
-SettingsTabContent::SettingsTabContent(const char* InEntryName)
-	: EntryName(InEntryName)
+SettingsTab::SettingsTab(const char* InName)
+	: Name(InName)
 {
-	ToolSettings::SettingsEntries.push_back(this);
+
 }
 
-SettingsTabContent::~SettingsTabContent()
+SettingsTab::~SettingsTab()
 {
-	auto ElemIndex = std::find(ToolSettings::SettingsEntries.begin(), ToolSettings::SettingsEntries.end(), this);
-	ToolSettings::SettingsEntries.erase(ElemIndex);
+
 }
 
-bool SettingsTabContent::DrawInt(const char* DisplayName, int* SettingToUpdate, int Min, int Max, int Flags)
+bool SettingsTab::DrawInt(const char* DisplayName, int* SettingToUpdate, int Min, int Max, int Flags)
 {
 	char Label[256];
 	sprintf(Label, "###%s", DisplayName);
@@ -35,7 +34,7 @@ bool SettingsTabContent::DrawInt(const char* DisplayName, int* SettingToUpdate, 
 	return bReturn;
 }
 
-void SettingsTabContent::RenderContent()
+void SettingsTab::RenderContent()
 {
 	ImGui::Text("TODO: completely rewrite this class, this is all temporary");
 

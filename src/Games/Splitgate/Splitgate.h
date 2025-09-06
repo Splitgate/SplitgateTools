@@ -12,5 +12,5 @@ public:
 	virtual void Init_PostEngine() override;
 
 	virtual void ConstructTitleBar() override;
-	virtual void GatherSettingsEntries() override;
+	virtual void PopulateSettingsTabs(std::vector<std::unique_ptr<SettingsTab>>& Tabs) override;
 };

@@ -1,5 +1,5 @@
 #include "ToolSettings.h"
-#include "UI/Settings/SettingsTabContent.h"
+#include "UI/Settings/SettingsTab.h"
 
 #include "Games/BaseGame.h"
 
@@ -17,16 +17,14 @@ void ToolSettings::Render()
     ImGui::PushStyleVar(ImGuiStyleVar_ChildBorderSize, 1);
     ImGui::BeginChild("SettingList", { 150, 0, }, ImGuiChildFlags_Border | ImGuiChildFlags_AlwaysUseWindowPadding | ImGuiChildFlags_NavFlattened, ImGuiWindowFlags_NoSavedSettings);
     {
-        for (auto& SettingEntry : SettingsEntries)
+        for (int i = 0; i < Tabs.size(); i++)
         {
-            if (!CurrentlyRenderingTab)
-                continue;
-
+            auto& Tab = Tabs[i];
             ImGui::PushStyleVar(ImGuiStyleVar_SelectableTextAlign, ImVec2(0.5f, 0.5f));
             {
-                if (ImGui::Selectable(SettingEntry->EntryName, (CurrentlyRenderingTab->EntryName == SettingEntry->EntryName), 0, {0, 20}))
+                if (ImGui::Selectable(Tab->Name, (SelectedTabIndex == i), 0, {0, 20}))
                 {
-                    CurrentlyRenderingTab = SettingEntry; // Render my settings content
+                    SelectedTabIndex = i; // Render my settings content
                 }
             }
             ImGui::PopStyleVar();
@@ -42,9 +40,9 @@ void ToolSettings::Render()
     ImGui::SameLine(0, 1 * ImGui::GetStyle().ItemSpacing.x);
     ImGui::BeginChild("SettingsContent", { 0, 0, }, ImGuiChildFlags_Border | ImGuiChildFlags_AlwaysUseWindowPadding | ImGuiChildFlags_NavFlattened, ImGuiWindowFlags_NoSavedSettings);
     {
-        if (CurrentlyRenderingTab)
+        if (SelectedTabIndex >= 0 && SelectedTabIndex < Tabs.size())
         {
-            CurrentlyRenderingTab->RenderContent();
+            Tabs[SelectedTabIndex]->RenderContent();
         }
 
         ImGui::EndChild();
@@ -56,21 +54,11 @@ void ToolSettings::OnOpen()
 {
     if (Game)
     {
-        Game->GatherSettingsEntries();
-    }
-
-    for (auto& SettingEntry : SettingsEntries)
-    {
-        if (CurrentlyRenderingTab == nullptr)
-        {
-            CurrentlyRenderingTab = SettingEntry;
-        }
+        Game->PopulateSettingsTabs(Tabs);
     }
 }
 
 void ToolSettings::OnClose()
 {
-    SettingsEntries.clear();
-
-    CurrentlyRenderingTab = nullptr;
+    Tabs.clear();
 }

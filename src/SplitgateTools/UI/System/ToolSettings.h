@@ -1,6 +1,10 @@
 #pragma once
+#include <memory>
+
 #include "UI/UIElement.h"
 #include <vector>
+
+#include "UI/Settings/SettingsTab.h"
 
 class ToolSettings : public UIElement
 {
@@ -11,8 +15,8 @@ public:
 
 	}
 
-	class SettingsTabContent* CurrentlyRenderingTab;
-	static inline std::vector<class SettingsTabContent*> SettingsEntries;
+	std::vector<std::unique_ptr<SettingsTab>> Tabs;
+	int SelectedTabIndex = 0;
 
 	virtual void Render() override;
 	virtual void OnOpen() override;
