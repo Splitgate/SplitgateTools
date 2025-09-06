@@ -10,15 +10,11 @@ class ToolSettings : public UIElement
 {
 public:
 
-	ToolSettings() : UIElement("Settings", false, true, true, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoDocking)
-	{
-
-	}
+	ToolSettings();
+	virtual ~ToolSettings() override;
 
 	std::vector<std::unique_ptr<SettingsTab>> Tabs;
 	int SelectedTabIndex = 0;
 
 	virtual void Render() override;
-	virtual void OnOpen() override;
-	virtual void OnClose() override;
 };

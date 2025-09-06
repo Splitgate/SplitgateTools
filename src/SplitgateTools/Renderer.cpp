@@ -450,17 +450,29 @@ void Renderer::ImGui_DrawAll()
 			ImGui::EndMainMenuBar();
 		}
 
-
-		for (auto& UIElement : UIElements)
+		for (auto It = UIElements.begin(); It != UIElements.end();)
 		{
+			auto& UIElement = *It;
 			UIElement->Tick();
 
+			bool bIsOpen = true;
 			ImGui::Begin(UIElement->WindowName,
-				(UIElement->bIsClosable ? &UIElement->bIsOpen : nullptr), UIElement->WindowFlags | ImGuiWindowFlags_NoCollapse);
+				(UIElement->bIsClosable ? &bIsOpen : nullptr),
+				UIElement->WindowFlags | ImGuiWindowFlags_NoCollapse);
 
 			UIElement->Render();
 
 			ImGui::End();
+
+			if (bIsOpen)
+			{
+				++It;
+			}
+			else
+			{
+			// if window was closed, remove it from UIElements. destructor will be called
+				UIElements.erase(It);
+			}
 		}
 	}
 	ImGui::PopStyleVar();

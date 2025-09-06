@@ -14,8 +14,8 @@ class UIElement
 
 public:
 
-	UIElement(const char* InWindowName, bool InbCanHaveMultiple = false, bool InbIsClosable = true, bool InbIsOpen = true, ImGuiWindowFlags InWindowFlags = 0);
-	virtual ~UIElement();
+	UIElement(const char* InWindowName, bool InbCanHaveMultiple = false, bool InbIsClosable = true, ImGuiWindowFlags InWindowFlags = 0);
+	virtual ~UIElement() {}
 
 protected:
 
@@ -24,19 +24,9 @@ protected:
 
 	bool bCanHaveMultiple;
 	bool bIsClosable;
-	bool bIsOpen;
-	bool HasOpened;
 
 	ImGuiWindowFlags WindowFlags;
 
-	virtual void Tick();
+	virtual void Tick() {}
 	virtual void Render();
-	void CloseWindow();
-
-	virtual void OnClose() {};
-	virtual void OnOpen() {};
-
-private:
-
-	void CloseInternal();
 };

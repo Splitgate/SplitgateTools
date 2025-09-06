@@ -5,7 +5,8 @@ class SystemVersionWindow : public UIElement
 {
 public:
 
-	SystemVersionWindow() : UIElement("Tool Information", false, true, true, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoDocking)
+	SystemVersionWindow() : UIElement("Tool Information", false, true,
+		ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoDocking)
 	{
 
 	}

@@ -5,6 +5,21 @@
 
 #include "Globals.h"
 
+ToolSettings::ToolSettings()
+    : UIElement("Settings", false, true,
+        ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoDocking)
+{
+    if (Game)
+    {
+        Game->PopulateSettingsTabs(Tabs);
+    }
+}
+
+ToolSettings::~ToolSettings()
+{
+    Tabs.clear();
+}
+
 void ToolSettings::Render()
 {
     ImGui::SetWindowSize(ImVec2(580, 380));
@@ -48,17 +63,4 @@ void ToolSettings::Render()
         ImGui::EndChild();
     }
     ImGui::PopStyleVar();
-}
-
-void ToolSettings::OnOpen()
-{
-    if (Game)
-    {
-        Game->PopulateSettingsTabs(Tabs);
-    }
-}
-
-void ToolSettings::OnClose()
-{
-    Tabs.clear();
 }

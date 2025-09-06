@@ -1,11 +1,10 @@
 #include "UIElement.h"
 #include "Renderer.h"
 
-UIElement::UIElement(const char* InWindowName, bool InbCanHaveMultiple, bool InbIsClosable, bool InbIsOpen, ImGuiWindowFlags InWindowFlags)
+UIElement::UIElement(const char* InWindowName, bool InbCanHaveMultiple, bool InbIsClosable, ImGuiWindowFlags InWindowFlags)
 	: WindowName(InWindowName),
 	bCanHaveMultiple(InbCanHaveMultiple),
 	bIsClosable(InbIsClosable),
-	bIsOpen(InbIsOpen),
 	WindowFlags(InWindowFlags)
 {
 	bool bFoundWindow = false;
@@ -36,42 +35,7 @@ UIElement::UIElement(const char* InWindowName, bool InbCanHaveMultiple, bool Inb
 	}
 }
 
-UIElement::~UIElement()
-{
-	CloseInternal();
-}
-
-void UIElement::Tick()
-{
-	if (!HasOpened)
-	{
-		HasOpened = true;
-		OnOpen();
-	}
-
-	if (!bIsOpen)
-	{
-		CloseWindow();
-	}
-}
-
 void UIElement::Render()
 {
 	ImGui::Text("Hello! Override me please :)");
-}
-
-void UIElement::CloseWindow()
-{
-	if (!bIsClosable)
-		return;
-
-	CloseInternal();
-}
-
-void UIElement::CloseInternal()
-{
-	bIsOpen = false;
-
-	// Fire closure event
-	OnClose();
 }
