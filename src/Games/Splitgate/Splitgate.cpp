@@ -40,13 +40,13 @@ void Splitgate::Init_PostEngine()
 
 void Splitgate::PopulateTitleBarEntries(std::vector<std::unique_ptr<UITitleBarEntryBase>>& Entries)
 {
-	Entries.push_back(std::make_unique<MainTitleBarEntry>());
-	Entries.push_back(std::make_unique<MapsTitleBarEntry>());
+	Entries.emplace_back(std::make_unique<MainTitleBarEntry>());
+	Entries.emplace_back(std::make_unique<MapsTitleBarEntry>());
 }
 
 void Splitgate::PopulateSettingsTabs(std::vector<std::unique_ptr<SettingsTab>>& Tabs)
 {
 	// todo: seperate classes for each tab instead of using base class
-	Tabs.push_back(std::make_unique<SettingsTab>("Race Settings"));
-	Tabs.push_back(std::make_unique<SettingsTab>("Misc Settings"));
+	Tabs.emplace_back(std::make_unique<SettingsTab>("Race Settings"));
+	Tabs.emplace_back(std::make_unique<SettingsTab>("Misc Settings"));
 }

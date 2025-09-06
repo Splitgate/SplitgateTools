@@ -20,7 +20,6 @@ public:
 protected:
 
 	const char* Name;
-	char Id[256];
 
 	bool bCanHaveMultiple;
 	bool bIsClosable;

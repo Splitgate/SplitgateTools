@@ -12,19 +12,13 @@ void MainTitleBarEntry::Render()
 	// todo rename all thse classes to make them clearer what they are
 				
 	if (ImGui::MenuItem("Game Info"))
-	{
-		Renderer::UIWindows.push_back(std::make_unique<VersionWindow>());
-	}
+		Renderer::AddWindow<VersionWindow>();
 
 	if (ImGui::MenuItem("Tool Info"))
-	{
-		Renderer::UIWindows.push_back(std::make_unique<SystemVersionWindow>());
-	}
+		Renderer::AddWindow<SystemVersionWindow>();
 
 	if (ImGui::MenuItem("Settings"))
-	{
-		Renderer::UIWindows.push_back(std::make_unique<ToolSettings>());
-	}
+		Renderer::AddWindow<ToolSettings>();
 
 	ImGui::Separator();
 
