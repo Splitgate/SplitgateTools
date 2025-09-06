@@ -12,10 +12,12 @@ class UIElement
 {
 	friend class Renderer;
 
-protected:
+public:
 
 	UIElement(const char* InWindowName, bool InbCanHaveMultiple = false, bool InbIsClosable = true, bool InbIsOpen = true, ImGuiWindowFlags InWindowFlags = 0);
 	virtual ~UIElement();
+
+protected:
 
 	const char* WindowName;
 	char WindowId[256];

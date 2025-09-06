@@ -30,6 +30,8 @@
 #include "ImGuiNotify/ImGuiNotify.hpp"
 
 // Font Includes
+#include "Engine/Kismet/UGameplayStatics.h"
+#include "Engine/Kismet/UKismetSystemLibrary.h"
 #include "FontsAwesome/IconsFontAwesome6.h"
 #include "FontsAwesome/fa-solid-900.h"
 
@@ -414,31 +416,28 @@ void Renderer::ImGui_DrawAll()
 		{
 			if (ImGui::BeginMenu("[Splitgate]"))
 			{
+				// todo rename all thse classes to make them clearer what they are
+				
 				if (ImGui::MenuItem("Game Info"))
 				{
-					new VersionWindow();
+					UIElements.push_back(std::make_unique<VersionWindow>());
 				}
 
 				if (ImGui::MenuItem("Tool Info"))
 				{
-					new SystemVersionWindow();
+					UIElements.push_back(std::make_unique<SystemVersionWindow>());
 				}
 
 				if (ImGui::MenuItem("Settings"))
 				{
-					new ToolSettings();
+					UIElements.push_back(std::make_unique<ToolSettings>());
 				}
-
-				//if (ImGui::MenuItem("ImGui Demo"))
-				//{
-				//	bShowDemo = !bShowDemo;
-				//}
 
 				ImGui::Separator();
 
 				if (ImGui::MenuItem("Quit"))
 				{
-					exit(0);
+					UKismetSystemLibrary::ExecuteConsoleCommand(TEXT("quit"));
 				}
 				
 				ImGui::EndMenu();

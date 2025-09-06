@@ -2,6 +2,8 @@
 #include "Engine/Core/UObject/UClass.h"
 #include <Globals.h>
 
+#include "Engine/UWorld.h"
+
 void UKismetSystemLibrary::GetPrimaryAssetIdList(FPrimaryAssetType PrimaryAssetType, TArray<FPrimaryAssetId>& OutPrimaryAssetIdList)
 {
 	struct {
@@ -28,4 +30,18 @@ UObject* UKismetSystemLibrary::GetObjectFromPrimaryAssetId(FPrimaryAssetId Prima
 	DefaultObject()->ProcessEvent(Func, &p);
 
 	return p.ReturnValue;
+}
+
+void UKismetSystemLibrary::ExecuteConsoleCommand(const FString& Command, APlayerController* SpecificPlayer)
+{
+	struct {
+		const UObject* WorldContextObject;  
+		const FString& Command;
+		APlayerController* SpecificPlayer;
+	} p = {
+		GWorld, Command, SpecificPlayer
+	};
+
+	UFunction* Func = StaticClass()->FindFunction(L"ExecuteConsoleCommand");
+	DefaultObject()->ProcessEvent(Func, &p);
 }

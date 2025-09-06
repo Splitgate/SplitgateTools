@@ -33,11 +33,6 @@ UIElement::UIElement(const char* InWindowName, bool InbCanHaveMultiple, bool Inb
 
 			// UE_LOG(LogInit, Warning, "Adding another window {}", std::string(WindowName));
 		}
-
-		// Add an element
-		Renderer::UIElements.push_back(this);
-
-		// OnOpen();
 	}
 }
 
@@ -75,8 +70,6 @@ void UIElement::CloseWindow()
 
 void UIElement::CloseInternal()
 {
-	auto ElemIndex = std::find(Renderer::UIElements.begin(), Renderer::UIElements.end(), this);
-	Renderer::UIElements.erase(ElemIndex);
 	bIsOpen = false;
 
 	// Fire closure event
