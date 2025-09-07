@@ -18,18 +18,14 @@ static std::map<std::wstring, std::wstring> GameModeOverride = {
 	{ L"/Game/Maps/Lobby", L"LOBBY" }
 };
 
-void GameMapEntry::OnPressed(EDifficulty::Type RaceType)
+void GameMapEntry::OnPressed(ERaceDifficulty::Type RaceType)
 {
 	std::wstring TravelURL = InternalName;
 
-	if (RaceType != EDifficulty::None && HasSelectability(MapSelectability::Race))
+	if (RaceType != ERaceDifficulty::None && HasSelectability(MapSelectability::Race))
 	{
-		TravelURL += L"?Game=RACE";
-
-		// doesn't work
-		//FGameConfig& Config = GEngine->GameInstance<UPortalWarsGameInstance*>()->GameSettings();
-		//FGameModeConfig& ModeConfig = Config.GameModeConfig();
-		//ModeConfig.RaceDifficulty() = RaceType;
+		TravelURL += L"?Game=RACE?Difficulty=";
+		TravelURL += ERaceDifficulty::ToWString(RaceType);
 	}
 	else if (GameModeOverride.contains(InternalName))
 	{
@@ -127,17 +123,17 @@ void MapsTitleBarEntry::Render()
 			{
 				if (ImGui::MenuItem("Easy"))
 				{
-					Map.OnPressed(EDifficulty::Easy);
+					Map.OnPressed(ERaceDifficulty::Easy);
 				}
 
 				if (ImGui::MenuItem("Medium"))
 				{
-					Map.OnPressed(EDifficulty::Medium);
+					Map.OnPressed(ERaceDifficulty::Medium);
 				}
 
 				if (ImGui::MenuItem("Hard"))
 				{
-					Map.OnPressed(EDifficulty::Hard);
+					Map.OnPressed(ERaceDifficulty::Hard);
 				}
 
 				ImGui::EndMenu();

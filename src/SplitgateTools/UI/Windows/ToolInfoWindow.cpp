@@ -22,7 +22,7 @@ void ToolInfoWindow::Render()
         ImGui::Text(TitleText);
         ImGui::PopFont();
 
-        ImGui::TextWrapped("by Adam & Ruby Rain");
+        ImGui::TextWrapped("by Adam & ruby rain");
     }
 
     ImGui::Separator();

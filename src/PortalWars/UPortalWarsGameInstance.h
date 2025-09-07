@@ -4,7 +4,7 @@
 
 struct FGameModeConfig
 {
-	PROPERTY(EDifficulty::Type, RaceDifficulty);
+	PROPERTY(ERaceDifficulty::Type, RaceDifficulty);
 	static void Init_PostEngine();
 };
 

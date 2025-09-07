@@ -39,54 +39,23 @@ void APortalWarsRaceGameMode::Init_PreEngine()
 
 	if (HandleMatchHasEndedStart)
 	{
-		auto WorldTimeOffset = HandleMatchHasEndedStart.Scan("F2").Add(4);
-		if (WorldTimeOffset)
-		{
-			RaceOffsets::WorldTime = WorldTimeOffset.Deref();
-		}
+		auto WorldTimeOffsetPtr = HandleMatchHasEndedStart.Scan("F2").Add(4);
+		if (WorldTimeOffsetPtr)
+			WorldTime_Offset = WorldTimeOffsetPtr.Deref();
 
-		auto FinalTimeOffset = WorldTimeOffset.Scan("F2").Add(4);
-		if (FinalTimeOffset)
-		{
-			RaceOffsets::FinalTime = FinalTimeOffset.Deref();
-		}
+		if (auto Ptr = WorldTimeOffsetPtr.Scan("F2").Add(4))
+			FinalTime_Offset = Ptr.Deref();
 
-		auto bNewHighScoreOffset = WorldTimeOffset.Scan("80 BB").Add(2);
-		if (bNewHighScoreOffset)
-		{
-			RaceOffsets::bNewHighScore = bNewHighScoreOffset.Deref();
-		}
+		if (auto Ptr = WorldTimeOffsetPtr.Scan("80 BB").Add(2))
+			bNewHighScore_Offset = Ptr.Deref();
 	}
 
 	Memory::Address InitRace = Memory::FindStringRef("InitRace");
 	if (InitRace)
 	{
-		Memory::Address DifficultyOffset = InitRace.ReverseScan("45 0F B6").Add(5);
-		if (DifficultyOffset)
-		{
-			RaceOffsets::Difficulty = DifficultyOffset.Deref();
-		}
+		if (auto Ptr = InitRace.ReverseScan("45 0F B6").Add(5))
+			Difficulty_Offset = Ptr.Deref();
 	}
-}
-
-EDifficulty::Type& APortalWarsRaceGameMode::Difficulty()
-{
-	return Get<EDifficulty::Type>(RaceOffsets::Difficulty);
-}
-
-double& APortalWarsRaceGameMode::FinalTime()
-{
-	return Get<double>(RaceOffsets::FinalTime);
-}
-
-double& APortalWarsRaceGameMode::WorldTime()
-{
-	return Get<double>(RaceOffsets::WorldTime);
-}
-
-bool& APortalWarsRaceGameMode::bNewHighScore()
-{
-	return Get<bool>(RaceOffsets::bNewHighScore);
 }
 
 void APortalWarsRaceGameMode::SendRaceStatUpdate()
@@ -103,7 +72,7 @@ void APortalWarsRaceGameMode::SendRaceStatUpdate()
 
 	RaceEntry.PlatformUserId = std::to_string(SteamUser->GetSteamID().ConvertToUint64());
 	RaceEntry.Map = GWorld->Name.ToStdString();
-	RaceEntry.Difficulty = EDifficulty::ToString(Difficulty());
+	RaceEntry.Difficulty = ERaceDifficulty::ToString(Difficulty());
 
 	json RaceJson;
 	to_json(RaceJson, RaceEntry);
@@ -165,23 +134,28 @@ void APortalWarsRaceGameMode::HandleMatchHasEnded()
 
 void APortalWarsRaceGameMode::InitGame(const FString& MapName, const FString& Options, FString& ErrorMessage)
 {
-	//FString NewDifficulty;
-	//if (FParse::Value(*Options, TEXT("Difficulty="), NewDifficulty))
-	//{
-	//	OverrideDifficulty = EDifficulty::FromString(NewDifficulty.ToString());
-	//}
+	FString NewDifficulty;
+	if (FParse::Value(*Options, TEXT("Difficulty="), NewDifficulty))
+	{
+		OverrideDifficulty = ERaceDifficulty::FromString(NewDifficulty.ToString());
+	}
+	else
+	{
+		OverrideDifficulty = ERaceDifficulty::None;
+	}
 
-	// CountdownTime() = 250;
+	// todo: find better time to do this
+	CountdownTime() = GSettings.Race.CountdownLength;
 	::InitGame(this, MapName, Options, ErrorMessage);
 }
 
 bool APortalWarsRaceGameMode::LoadSubLevel()
 {
-	//if (OverrideDifficulty != EDifficulty::None)
-	//{
-	//	Difficulty() = OverrideDifficulty;
-	//	UE_LOG(LogRace, Warning, "Overriding difficulty with {}!", EDifficulty::ToString(OverrideDifficulty));
-	//}
+	if (OverrideDifficulty != ERaceDifficulty::None)
+	{
+		Difficulty() = OverrideDifficulty;
+		UE_LOG(LogRace, Warning, "Overriding difficulty with {}!", ERaceDifficulty::ToString(OverrideDifficulty));
+	}
 
 	return ::LoadSubLevel(this);
 }

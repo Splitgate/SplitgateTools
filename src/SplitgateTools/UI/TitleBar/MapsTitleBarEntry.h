@@ -51,7 +51,7 @@ public:
 		return Types & Type;
 	}
 	
-	void OnPressed(EDifficulty::Type RaceType = EDifficulty::None);
+	void OnPressed(ERaceDifficulty::Type RaceType = ERaceDifficulty::None);
 };
 
 class MapsTitleBarEntry : public UITitleBarEntryBase

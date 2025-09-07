@@ -22,7 +22,7 @@ struct FUserRaceCourseTime
 		Difficulty);
 };
 
-namespace EDifficulty
+namespace ERaceDifficulty
 {
 	enum Type : int
 	{
@@ -48,10 +48,25 @@ namespace EDifficulty
 		default:
 			return "None";
 		}
-		
-		return "None";
 	}
 
+	std::wstring inline ToWString(Type InDifficulty)
+	{
+		switch (InDifficulty)
+		{
+		case Type::Easy:
+			return L"Easy";
+
+		case Type::Medium:
+			return L"Medium";
+
+		case Type::Hard:
+			return L"Hard";
+
+		default:
+			return L"None";
+		}
+	}
 	Type inline FromString(std::string InDifficulty)
 	{
 		if (InDifficulty == "Easy")
@@ -69,7 +84,7 @@ namespace EDifficulty
 			return Type::Hard;
 		}
 
-		return Type::Easy;
+		return Type::None;
 	}
 }
 
@@ -81,10 +96,10 @@ public:
 
 	static void Init_PreEngine();
 
-	EDifficulty::Type& Difficulty();
-	double& FinalTime();
-	double& WorldTime();
-	bool& bNewHighScore();
+	PROPERTY(ERaceDifficulty::Type, Difficulty);
+	PROPERTY(double, FinalTime);
+	PROPERTY(double, WorldTime);
+	PROPERTY(bool, bNewHighScore);
 
 private:
 
@@ -94,11 +109,5 @@ private:
 	void InitGame(const FString& MapName, const FString& Options, FString& ErrorMessage);
 	bool LoadSubLevel();
 
-	struct RaceOffsets
-	{
-		static inline int Difficulty;
-		static inline int WorldTime;
-		static inline int FinalTime;
-		static inline int bNewHighScore;
-	};
+	static inline ERaceDifficulty::Type OverrideDifficulty;
 };
