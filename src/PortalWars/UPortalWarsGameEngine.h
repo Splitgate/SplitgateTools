@@ -10,9 +10,8 @@ public:
 	
 	static void Init_PostEngine();
 
-private:
+protected:
+	friend class MiscSettings;
 	static void EnableLobbyFPSPatch();
 	static void DisableLobbyFPSPatch();
-public:
-	static void UpdateLobbyFPSPatch();
 };

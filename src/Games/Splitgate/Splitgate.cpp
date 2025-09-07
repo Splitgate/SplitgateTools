@@ -17,8 +17,6 @@
 Splitgate::Splitgate()
 {
 	bShouldRenderUI = true;
-	
-	GSettings.Load();
 }
 
 void Splitgate::Init_PreEngine()
@@ -37,6 +35,8 @@ void Splitgate::Init_PostEngine()
 	BaseGame::Init_PostEngine();
 	
 	UPortalWarsGameEngine::Init_PostEngine();
+	
+	GSettings.Load();
 }
 
 void Splitgate::PopulateTitleBarEntries(std::vector<std::unique_ptr<UITitleBarEntryBase>>& Entries)

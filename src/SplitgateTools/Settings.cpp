@@ -1,6 +1,24 @@
 #include "Settings.h"
 #include <fstream>
 
+#include "PortalWars/UPortalWarsGameEngine.h"
+
+void RaceSettings::Apply()
+{
+}
+
+void MiscSettings::Apply()
+{
+	if (GSettings.Misc.bEnableLobbyFPSPatch)
+	{
+		UPortalWarsGameEngine::EnableLobbyFPSPatch();
+	}
+	else
+	{
+		UPortalWarsGameEngine::DisableLobbyFPSPatch();
+	}
+}
+
 void Settings::Save()
 {
 	nlohmann::json j;
@@ -16,4 +34,6 @@ void Settings::Load()
 		nlohmann::json j = nlohmann::json::parse(Stream);
 		from_json(j, *this);
 	}
+
+	Apply();
 }

@@ -4,6 +4,8 @@
 
 class RaceSettings
 {
+	friend class Settings;
+	void Apply();
 public:
 	int CountdownLength = 3;
 	NLOHMANN_DEFINE_TYPE_INTRUSIVE(RaceSettings, CountdownLength);
@@ -11,6 +13,8 @@ public:
 
 class MiscSettings
 {
+	friend class Settings;
+	void Apply();
 public:
 	bool bEnableLobbyFPSPatch = true;
 	NLOHMANN_DEFINE_TYPE_INTRUSIVE(MiscSettings, bEnableLobbyFPSPatch);
@@ -18,12 +22,24 @@ public:
 
 class Settings
 {
-public:
 	void Save();
+public:
+	void ApplyAndSave()
+	{
+		Apply();
+		Save();
+	}
 	void Load();
 
 	RaceSettings Race;
 	MiscSettings Misc;
+
+private:
+	void Apply()
+	{
+		Race.Apply();
+		Misc.Apply();
+	}
 	NLOHMANN_DEFINE_TYPE_INTRUSIVE(Settings, Race, Misc)
 };
 

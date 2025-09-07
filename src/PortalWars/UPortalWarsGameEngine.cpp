@@ -10,7 +10,6 @@ void UPortalWarsGameEngine::Init_PostEngine()
 		GetMaxTickRatePatch = GetMaxTickRatePtr.Deref().Scan("48 85 ?? 74").Add(3);
 		LOG_ADDRESS(GetMaxTickRatePatch, "UPortalWarsGameEngine::GetMaxTickRate patch address");
 	}
-	UpdateLobbyFPSPatch();
 }
 
 void UPortalWarsGameEngine::EnableLobbyFPSPatch()
@@ -23,16 +22,4 @@ void UPortalWarsGameEngine::DisableLobbyFPSPatch()
 {
 	if (GetMaxTickRatePatch)
 		GetMaxTickRatePatch.Write(0x74);
-}
-
-void UPortalWarsGameEngine::UpdateLobbyFPSPatch()
-{
-	if (GSettings.Misc.bEnableLobbyFPSPatch)
-	{
-		EnableLobbyFPSPatch();
-	}
-	else
-	{
-		DisableLobbyFPSPatch();
-	}
 }

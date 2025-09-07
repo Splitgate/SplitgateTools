@@ -165,11 +165,11 @@ void APortalWarsRaceGameMode::HandleMatchHasEnded()
 
 void APortalWarsRaceGameMode::InitGame(const FString& MapName, const FString& Options, FString& ErrorMessage)
 {
-	FString NewDifficulty;
-	if (FParse::Value(*Options, TEXT("Difficulty="), NewDifficulty))
-	{
-		OverrideDifficulty = EDifficulty::FromString(NewDifficulty.ToString());
-	}
+	//FString NewDifficulty;
+	//if (FParse::Value(*Options, TEXT("Difficulty="), NewDifficulty))
+	//{
+	//	OverrideDifficulty = EDifficulty::FromString(NewDifficulty.ToString());
+	//}
 
 	// CountdownTime() = 250;
 	::InitGame(this, MapName, Options, ErrorMessage);
@@ -177,11 +177,11 @@ void APortalWarsRaceGameMode::InitGame(const FString& MapName, const FString& Op
 
 bool APortalWarsRaceGameMode::LoadSubLevel()
 {
-	if (OverrideDifficulty != EDifficulty::Type::None)
-	{
-		Difficulty() = OverrideDifficulty;
-		UE_LOG(LogRace, Warning, "Overriding difficulty with {}!", EDifficulty::ToString(OverrideDifficulty));
-	}
+	//if (OverrideDifficulty != EDifficulty::None)
+	//{
+	//	Difficulty() = OverrideDifficulty;
+	//	UE_LOG(LogRace, Warning, "Overriding difficulty with {}!", EDifficulty::ToString(OverrideDifficulty));
+	//}
 
 	return ::LoadSubLevel(this);
 }

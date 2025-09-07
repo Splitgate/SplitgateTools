@@ -24,7 +24,7 @@ struct FUserRaceCourseTime
 
 namespace EDifficulty
 {
-	enum class Type : int
+	enum Type : int
 	{
 		None = 0,
 		Easy = 1,

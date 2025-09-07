@@ -10,6 +10,6 @@ void RaceSettingsTab::RenderContent()
 	if (ImGui::InputInt("Countdown Length", &NewCountdownLength))
 	{
 		GSettings.Race.CountdownLength = std::max(0, NewCountdownLength);
-		GSettings.Save();
+		GSettings.ApplyAndSave();
 	}
 }
