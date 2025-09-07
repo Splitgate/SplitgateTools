@@ -94,8 +94,6 @@ private:
 	void InitGame(const FString& MapName, const FString& Options, FString& ErrorMessage);
 	bool LoadSubLevel();
 
-	static inline EDifficulty::Type OverrideDifficulty;
-
 	struct RaceOffsets
 	{
 		static inline int Difficulty;

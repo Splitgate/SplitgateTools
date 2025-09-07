@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 
+#include "PortalWars/GameModes/Race/APortalWarsRaceGameMode.h"
 #include "UI/TitleBar/UITitleBarEntryBase.h"
 
 // Switch case for imgui entries
@@ -50,7 +51,7 @@ public:
 		return Types & Type;
 	}
 	
-	void OnPressed(const std::wstring& RaceType = L"");
+	void OnPressed(EDifficulty::Type RaceType = EDifficulty::None);
 };
 
 class MapsTitleBarEntry : public UITitleBarEntryBase

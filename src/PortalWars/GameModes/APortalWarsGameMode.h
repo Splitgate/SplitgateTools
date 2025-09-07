@@ -8,10 +8,5 @@ public:
 
 	static void Init_PreEngine();
 
-	int& CountdownTime();
-
-	struct ModeOffsets
-	{
-		static inline int CountdownTime;
-	};
+	PROPERTY(int, CountdownTime);
 };

@@ -8,6 +8,8 @@
 
 #include "Strings/Strings.h"
 #include "Globals.h"
+#include "Engine/UGameEngine.h"
+#include "PortalWars/UPortalWarsGameInstance.h"
 
 // Maps that should have a default mode but are just TDM instead
 static std::map<std::wstring, std::wstring> GameModeOverride = {
@@ -16,14 +18,18 @@ static std::map<std::wstring, std::wstring> GameModeOverride = {
 	{ L"/Game/Maps/Lobby", L"LOBBY" }
 };
 
-void GameMapEntry::OnPressed(const std::wstring& RaceType)
+void GameMapEntry::OnPressed(EDifficulty::Type RaceType)
 {
 	std::wstring TravelURL = InternalName;
 
-	if (RaceType != L"" && HasSelectability(MapSelectability::Race))
+	if (RaceType != EDifficulty::None && HasSelectability(MapSelectability::Race))
 	{
-		TravelURL += L"?Game=RACE?Difficulty=";
-		TravelURL += RaceType;
+		TravelURL += L"?Game=RACE";
+
+		// doesn't work
+		//FGameConfig& Config = GEngine->GameInstance<UPortalWarsGameInstance*>()->GameSettings();
+		//FGameModeConfig& ModeConfig = Config.GameModeConfig();
+		//ModeConfig.RaceDifficulty() = RaceType;
 	}
 	else if (GameModeOverride.contains(InternalName))
 	{
@@ -121,17 +127,17 @@ void MapsTitleBarEntry::Render()
 			{
 				if (ImGui::MenuItem("Easy"))
 				{
-					Map.OnPressed(L"Easy");
+					Map.OnPressed(EDifficulty::Easy);
 				}
 
 				if (ImGui::MenuItem("Medium"))
 				{
-					Map.OnPressed(L"Medium");
+					Map.OnPressed(EDifficulty::Medium);
 				}
 
 				if (ImGui::MenuItem("Hard"))
 				{
-					Map.OnPressed(L"Hard");
+					Map.OnPressed(EDifficulty::Hard);
 				}
 
 				ImGui::EndMenu();

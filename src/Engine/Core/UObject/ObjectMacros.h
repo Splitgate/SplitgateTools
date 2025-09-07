@@ -27,6 +27,13 @@ inline T& Name() { \
 	return Get<T>(Offset); \
 } 
 
+#define UPROPERTY_STRUCT(Type, Name) \
+template<typename T = Type> \
+inline T& Name() { \
+	static int Offset = StaticStruct()->FindOffset(#Name); \
+	return *reinterpret_cast<T*>(__int64(this)+Offset); \
+} 
+
 enum EObjectFlags
 {
 	// Do not add new flags unless they truly belong here. There are alternatives.

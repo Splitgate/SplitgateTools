@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "UEngine.h"
+#include "GameFramework/UGameInstance.h"
 #include "Games/BaseGame.h"
 
 #define GEngine Game->Engine
@@ -10,6 +11,8 @@ class UGameEngine : public UEngine
 	
 public:
 	GENERATED_BODY(UGameEngine, UEngine, "GameEngine", "/Script/Engine")
+	
+	UPROPERTY(UGameInstance*, GameInstance);
 	
 	static void Init_PreEngine();
 

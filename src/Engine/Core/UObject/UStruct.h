@@ -21,4 +21,19 @@ public:
 			Most = Most->Super();
 		return Most;
 	}
+	
+	XProperty* FindProperty(FName InName)
+	{
+		for (UStruct* Class = this; Class; Class = Class->Super())
+			for (XProperty* P = Class->ChildProperties(); P; P = P->Next())
+				if (P->Name() == InName)
+					return P;
+		return 0;
+	}
+	
+	int FindOffset(FName InName)
+	{
+		XProperty* Prop = FindProperty(InName);
+		return Prop ? Prop->Offset() : -1;
+	}
 };
