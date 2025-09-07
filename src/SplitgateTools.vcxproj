@@ -102,6 +102,7 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="SplitgateTools\Settings.cpp" />
     <ClCompile Include="SplitgateTools\SplitgateTools.cpp" />
+    <ClCompile Include="SplitgateTools\UI\Helpers\ImHelpers.cpp" />
     <ClCompile Include="SplitgateTools\UI\WindowManager.cpp" />
     <ClCompile Include="SplitgateTools\UI\Windows\HydraWindow.cpp" />
     <ClCompile Include="SplitgateTools\UI\Windows\Settings\SettingsWindow.cpp" />
@@ -134,12 +135,16 @@
     <ClInclude Include="Engine\ApplicationCore\FWindowsWindow.h" />
     <ClInclude Include="Engine\Core\Containers\FString.h" />
     <ClInclude Include="Engine\Core\Containers\TArray.h" />
+    <ClInclude Include="Engine\Core\CoreTypes.h" />
     <ClInclude Include="Engine\Core\FMemory.h" />
     <ClInclude Include="Engine\Core\Math\FVector.h" />
     <ClInclude Include="Engine\Core\Misc\FApp.h" />
     <ClInclude Include="Engine\Core\Misc\FEngineVersion.h" />
     <ClInclude Include="Engine\Core\Misc\FGuid.h" />
     <ClInclude Include="Engine\Core\Parse\FParse.h" />
+    <ClInclude Include="Engine\Core\Templates\EnableIf.h" />
+    <ClInclude Include="Engine\Core\Templates\IsFloatingPoint.h" />
+    <ClInclude Include="Engine\Core\Templates\IsIntegral.h" />
     <ClInclude Include="Engine\Core\UObject\FName.h" />
     <ClInclude Include="Engine\Core\UObject\FPrimaryAssetId.h" />
     <ClInclude Include="Engine\Core\UObject\FWeakObjectPtr.h" />
@@ -149,6 +154,8 @@
     <ClInclude Include="Engine\Core\UObject\UObject.h" />
     <ClInclude Include="Engine\Core\UObject\UStruct.h" />
     <ClInclude Include="Engine\Core\UObject\XProperty.h" />
+    <ClInclude Include="Engine\Engine\ULocalPlayer.h" />
+    <ClInclude Include="Engine\Engine\UPlayer.h" />
     <ClInclude Include="Engine\GameFramework\AActor.h" />
     <ClInclude Include="Engine\GameFramework\AController.h" />
     <ClInclude Include="Engine\GameFramework\AGameStateBase.h" />
@@ -160,6 +167,7 @@
     <ClInclude Include="Engine\Kismet\UKismetSystemLibrary.h" />
     <ClInclude Include="Engine\Kismet\UGameplayStatics.h" />
     <ClInclude Include="Engine\Core\Misc\FNetworkVersion.h" />
+    <ClInclude Include="Engine\Math\UnrealMathUtility.h" />
     <ClInclude Include="Engine\OnlineSubsystem\FOnlineFactoryEOSPlus.h" />
     <ClInclude Include="Engine\RHI\FWindowsDynamicRHI.h" />
     <ClInclude Include="Engine\Engine\UConsole.h" />
@@ -177,6 +185,7 @@
     <ClInclude Include="SplitgateTools\SplitgateTools.h" />
     <ClInclude Include="SplitgateTools\Globals.h" />
     <ClInclude Include="SplitgateTools\Renderer.h" />
+    <ClInclude Include="SplitgateTools\UI\Helpers\ImHelpers.h" />
     <ClInclude Include="SplitgateTools\UI\WindowManager.h" />
     <ClInclude Include="SplitgateTools\UI\Windows\HydraWindow.h" />
     <ClInclude Include="SplitgateTools\UI\Windows\Settings\SettingsWindow.h" />

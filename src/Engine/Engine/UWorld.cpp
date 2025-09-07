@@ -1,6 +1,8 @@
 ﻿#include "UWorld.h"
 #include "Memory/Memory.h"
 
+#include "Engine/UGameInstance.h"
+
 static bool (*ServerTravel)(UWorld*, const FString&, bool, bool);
 static ENetMode(*InternalGetNetMode)(UWorld*);
 
@@ -25,4 +27,14 @@ bool UWorld::ServerTravel(const FString& InURL, bool bAbsolute, bool bShouldSkip
 ENetMode UWorld::GetNetMode()
 {
 	return ::InternalGetNetMode(this);
+}
+
+APlayerController* UWorld::GetFirstLocalPlayerController()
+{
+	if (UGameInstance* GameInstance = OwningGameInstance())
+	{
+		return GameInstance->GetFirstLocalPlayerController(this);
+	}
+
+	return nullptr;
 }

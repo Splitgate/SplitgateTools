@@ -1,5 +1,7 @@
 ﻿#pragma once
 #include "UObject/UObject.h"
+#include "UObject/UClass.h"
+
 #include "Games/BaseGame.h"
 
 #define GWorld reinterpret_cast<UWorld*>(*Game->World)
@@ -20,6 +22,10 @@ class UWorld : public UObject, public FNetworkNotify
 public:
 	static void Init_PreEngine();
 
+	UPROPERTY(class UGameInstance*, OwningGameInstance);
+
 	bool ServerTravel(const FString& InURL, bool bAbsolute = false, bool bShouldSkipGameNotify = false);
 	ENetMode GetNetMode();
+
+	class APlayerController* GetFirstLocalPlayerController();
 };

@@ -166,7 +166,46 @@ inline std::string StringToType<std::string>(const std::string& InString)
 template<>
 inline bool StringToType<bool>(const std::string& InString)
 {
-	// TODO
+	std::string Copy = InString;
+	std::transform(Copy.begin(), Copy.end(), Copy.begin(), ::toupper);
+
+	if (InString == "TRUE" || InString == "YES" || InString == "ON" || InString == "1")
+		return true;
+	else if (InString == "FALSE" || InString == "NO" || InString == "OFF" || InString == "0")
+		return false;
+
 	return true;
 }
+
+template<>
+inline double StringToType<double>(const std::string& InString)
+{
+	const char* Value = InString.c_str();
+	char* EndPtr;
+
+	double Number = strtod(Value, &EndPtr);
+	return EndPtr > Value ? Number : 0.0f;
+}
+
+template<>
+inline float StringToType<float>(const std::string& InString)
+{
+	const char* Value = InString.c_str();
+	char* EndPtr;
+
+	float Number = strtof(Value, &EndPtr);
+	return EndPtr > Value ? Number : 0.0f;
+}
+
 // end StringToType
+
+
+inline std::string Longest(std::vector<std::string> Vector)
+{
+	auto Idx = std::max_element(Vector.begin(), Vector.end(), [](const std::string& A, const std::string& B)
+		{
+			return A.size() < B.size();
+		});
+
+	return *Idx;
+}

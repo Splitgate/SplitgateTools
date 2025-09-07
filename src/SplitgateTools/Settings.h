@@ -1,13 +1,14 @@
 #pragma once
 
 #include "Utilities/nlohmann/json.hpp"
+#include "UI/Helpers/ImHelpers.h"
 
 class RaceSettings
 {
 	friend class Settings;
 	void Apply();
 public:
-	int CountdownLength = 3;
+	int CountdownLength = 1;
 	NLOHMANN_DEFINE_TYPE_INTRUSIVE(RaceSettings, CountdownLength);
 };
 

@@ -419,35 +419,6 @@ void Renderer::ImGui_DrawAll()
 					ImGui::EndMenu();
 				}
 			}
-
-			//if (ImGui::BeginMenu("Level"))
-			//{
-			//	if (ImGui::MenuItem("Current World"))
-			//	{
-			//	}
-			//
-			//	ImGui::SeparatorText("Assets");
-			//
-			//	if (ImGui::MenuItem("All Maps"))
-			//	{
-			//	}
-			//
-			//	ImGui::EndMenu();
-			//}
-			//if (ImGui::BeginMenu("Weapons"))
-			//{
-			//	ImGui::SeparatorText("Levels");
-			//
-			//	if (ImGui::MenuItem("Weapon List"))
-			//	{
-			//	}
-			//
-			//	if (ImGui::MenuItem("Weapon Modifications"))
-			//	{
-			//	}
-			//
-			//	ImGui::EndMenu();
-			//}
 			ImGui::EndMainMenuBar();
 		}
 

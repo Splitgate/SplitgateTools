@@ -1,7 +1,9 @@
 ﻿#pragma once
 
 #include "FName.h"
+#include "Containers/TArray.h"
 #include "ObjectMacros.h"
+#include "CoreTypes.h"
 
 UObject* StaticLoadObject(UClass* InClass, const wchar_t* InName);
 template<typename T = UObject>
