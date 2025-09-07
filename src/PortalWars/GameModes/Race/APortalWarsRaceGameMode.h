@@ -37,15 +37,12 @@ namespace ERaceDifficulty
 	{
 		switch (InDifficulty)
 		{
-		case Type::Easy:
+		case Easy:
 			return "Easy";
-
-		case Type::Medium:
+		case Medium:
 			return "Medium";
-
-		case Type::Hard:
+		case Hard:
 			return "Hard";
-
 		default:
 			return "None";
 		}
@@ -55,15 +52,12 @@ namespace ERaceDifficulty
 	{
 		switch (InDifficulty)
 		{
-		case Type::Easy:
+		case Easy:
 			return L"Easy";
-
-		case Type::Medium:
+		case Medium:
 			return L"Medium";
-
-		case Type::Hard:
+		case Hard:
 			return L"Hard";
-
 		default:
 			return L"None";
 		}
@@ -71,12 +65,12 @@ namespace ERaceDifficulty
 	Type inline FromString(std::string InDifficulty)
 	{
 		if (Lowercase(InDifficulty) == "easy")
-			return Type::Easy;
+			return Easy;
 		if (Lowercase(InDifficulty) == "medium")
-			return Type::Medium;
+			return Medium;
 		if (Lowercase(InDifficulty) == "hard")
-			return Type::Hard;
-		return Type::None;
+			return Hard;
+		return None;
 	}
 }
 
