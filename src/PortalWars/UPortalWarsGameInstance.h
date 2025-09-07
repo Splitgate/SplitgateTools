@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "Engine/GameFramework/UGameInstance.h"
+#include "Engine/UGameInstance.h"
 #include "GameModes/Race/APortalWarsRaceGameMode.h"
 
 struct FGameModeConfig

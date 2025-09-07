@@ -50,7 +50,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>$(ProjectDir)Utilities/imgui;$(ProjectDir);$(ProjectDir)Engine/Core;$(ProjectDir)Utilities;$(ProjectDir)SplitgateTools</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Utilities/imgui;$(ProjectDir);$(ProjectDir)PortalWars;$(ProjectDir)Engine;$(ProjectDir)Engine/Core;$(ProjectDir)Utilities;$(ProjectDir)SplitgateTools</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>5103;26495;</DisableSpecificWarnings>
       <LanguageStandard_C>stdclatest</LanguageStandard_C>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
@@ -81,17 +81,16 @@
     <ClCompile Include="Engine\GameFramework\AController.cpp" />
     <ClCompile Include="Engine\GameFramework\AGameStateBase.cpp" />
     <ClCompile Include="Engine\GameFramework\APlayerController.cpp" />
-    <ClCompile Include="Engine\GameFramework\UGameInstance.cpp" />
-    <ClCompile Include="Engine\IPlatformFilePak.cpp" />
+    <ClCompile Include="Engine\Engine\UGameInstance.cpp" />
     <ClCompile Include="Engine\Kismet\UGameplayStatics.cpp" />
     <ClCompile Include="Engine\Core\Misc\FNetworkVersion.cpp" />
     <ClCompile Include="Engine\Kismet\UKismetSystemLibrary.cpp" />
     <ClCompile Include="Engine\OnlineSubsystem\FOnlineFactoryEOSPlus.cpp" />
     <ClCompile Include="Engine\RHI\FWindowsDynamicRHI.cpp" />
-    <ClCompile Include="Engine\UEngine.cpp" />
-    <ClCompile Include="Engine\UGameEngine.cpp" />
+    <ClCompile Include="Engine\Engine\UEngine.cpp" />
+    <ClCompile Include="Engine\Engine\UGameEngine.cpp" />
     <ClCompile Include="Engine\UMG\UWidgetBlueprintLibrary.cpp" />
-    <ClCompile Include="Engine\UWorld.cpp" />
+    <ClCompile Include="Engine\Engine\UWorld.cpp" />
     <ClCompile Include="PortalWars\GameModes\APortalWarsGameMode.cpp" />
     <ClCompile Include="PortalWars\GameModes\Race\APortalWarsRaceGameMode.cpp" />
     <ClCompile Include="PortalWars\UPortalWarsGameEngine.cpp" />
@@ -157,19 +156,18 @@
     <ClInclude Include="Engine\GameFramework\APlayerState.h" />
     <ClInclude Include="Engine\GameFramework\Game\AGameMode.h" />
     <ClInclude Include="Engine\GameFramework\Game\AGameModeBase.h" />
-    <ClInclude Include="Engine\GameFramework\UGameInstance.h" />
-    <ClInclude Include="Engine\IPlatformFilePak.h" />
+    <ClInclude Include="Engine\Engine\UGameInstance.h" />
     <ClInclude Include="Engine\Kismet\UKismetSystemLibrary.h" />
     <ClInclude Include="Engine\Kismet\UGameplayStatics.h" />
     <ClInclude Include="Engine\Core\Misc\FNetworkVersion.h" />
     <ClInclude Include="Engine\OnlineSubsystem\FOnlineFactoryEOSPlus.h" />
     <ClInclude Include="Engine\RHI\FWindowsDynamicRHI.h" />
-    <ClInclude Include="Engine\UConsole.h" />
-    <ClInclude Include="Engine\UEngine.h" />
-    <ClInclude Include="Engine\UGameEngine.h" />
-    <ClInclude Include="Engine\UGameViewportClient.h" />
+    <ClInclude Include="Engine\Engine\UConsole.h" />
+    <ClInclude Include="Engine\Engine\UEngine.h" />
+    <ClInclude Include="Engine\Engine\UGameEngine.h" />
+    <ClInclude Include="Engine\Engine\UGameViewportClient.h" />
     <ClInclude Include="Engine\UMG\UWidgetBlueprintLibrary.h" />
-    <ClInclude Include="Engine\UWorld.h" />
+    <ClInclude Include="Engine\Engine\UWorld.h" />
     <ClInclude Include="PortalWars\GameModes\APortalWarsGameMode.h" />
     <ClInclude Include="PortalWars\GameModes\Race\APortalWarsRaceGameMode.h" />
     <ClInclude Include="PortalWars\UPortalWarsGameEngine.h" />

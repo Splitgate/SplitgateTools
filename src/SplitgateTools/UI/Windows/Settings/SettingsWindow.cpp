@@ -7,41 +7,59 @@
 
 void SettingsWindow::Render()
 {
-    ImGui::SetWindowSize(ImVec2(580, 380));
+    ImGui::SetWindowSize(ImVec2(580, 400));
 
-    ImGui::PushStyleVar(ImGuiStyleVar_ChildBorderSize, 1);
-    ImGui::BeginChild("SettingList", { 150, 0, }, ImGuiChildFlags_Border | ImGuiChildFlags_AlwaysUseWindowPadding | ImGuiChildFlags_NavFlattened, ImGuiWindowFlags_NoSavedSettings);
+    ImGui::BeginGroup();
     {
-        for (int i = 0; i < Tabs.size(); i++)
+        ImGui::BeginChild("Settings Content", ImVec2(0, -ImGui::GetFrameHeightWithSpacing()));
         {
-            auto& Tab = Tabs[i];
-            ImGui::PushStyleVar(ImGuiStyleVar_SelectableTextAlign, ImVec2(0.5f, 0.5f));
+            ImGui::PushStyleVar(ImGuiStyleVar_ChildBorderSize, 1);
+            ImGui::BeginChild("SettingList", { 150, 0, }, ImGuiChildFlags_Border | ImGuiChildFlags_AlwaysUseWindowPadding | ImGuiChildFlags_NavFlattened, ImGuiWindowFlags_NoSavedSettings);
             {
-                if (ImGui::Selectable(Tab->Name, (SelectedTabIndex == i), 0, {0, 20}))
+                for (int i = 0; i < Tabs.size(); i++)
                 {
-                    SelectedTabIndex = i; // Render my settings content
+                    auto& Tab = Tabs[i];
+                    ImGui::PushStyleVar(ImGuiStyleVar_SelectableTextAlign, ImVec2(0.5f, 0.5f));
+                    {
+                        if (ImGui::Selectable(Tab->Name, (SelectedTabIndex == i), 0, { 0, 20 }))
+                        {
+                            SelectedTabIndex = i; // Render my settings content
+                        }
+                    }
+                    ImGui::PopStyleVar();
+
+                    ImGui::Dummy({ 0, 2 });
                 }
+                ImGui::EndChild();
             }
             ImGui::PopStyleVar();
 
-            ImGui::Dummy({ 0, 2 });
+            ImGui::PushStyleVar(ImGuiStyleVar_ChildBorderSize, 1);
+            ImGui::SameLine(0, 1 * ImGui::GetStyle().ItemSpacing.x);
+            ImGui::BeginChild("SettingsContent", { 0, 0, }, ImGuiChildFlags_Border | ImGuiChildFlags_AlwaysUseWindowPadding | ImGuiChildFlags_NavFlattened, ImGuiWindowFlags_NoSavedSettings);
+            {
+                if (SelectedTabIndex >= 0 && SelectedTabIndex < Tabs.size())
+                {
+                    Tabs[SelectedTabIndex]->RenderContent();
+                }
+
+                ImGui::EndChild();
+            }
+            ImGui::PopStyleVar();
         }
         ImGui::EndChild();
-    }
-    ImGui::PopStyleVar();
 
-    ImGui::PushStyleVar(ImGuiStyleVar_ChildBorderSize, 1);
-    ImGui::SameLine(0, 1 * ImGui::GetStyle().ItemSpacing.x);
-    ImGui::BeginChild("SettingsContent", { 0, 0, }, ImGuiChildFlags_Border | ImGuiChildFlags_AlwaysUseWindowPadding | ImGuiChildFlags_NavFlattened, ImGuiWindowFlags_NoSavedSettings);
-    {
-        if (SelectedTabIndex >= 0 && SelectedTabIndex < Tabs.size())
+        if (ImGui::Button("Reload from Save")) 
         {
-            Tabs[SelectedTabIndex]->RenderContent();
         }
 
-        ImGui::EndChild();
+        ImGui::SameLine();
+
+        if (ImGui::Button("Apply")) 
+        {
+        }
     }
-    ImGui::PopStyleVar();
+    ImGui::EndGroup();
 }
 
 void SettingsWindow::OnOpen()

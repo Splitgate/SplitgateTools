@@ -1,6 +1,6 @@
 ﻿#pragma once
 #include "UEngine.h"
-#include "GameFramework/UGameInstance.h"
+#include "Engine/UGameInstance.h"
 #include "Games/BaseGame.h"
 
 #define GEngine Game->Engine

@@ -15,7 +15,6 @@
 #include "UObject/UClass.h"
 #include "UObject/UFunction.h"
 #include "UObject/UStruct.h"
-#include "Engine/IPlatformFilePak.h"
 
 #include "Engine/GameFramework/APlayerController.h"
 #include "Engine/UMG/UWidgetBlueprintLibrary.h"
@@ -89,7 +88,6 @@ void BaseGame::Init_PreEngine()
 	FParse::Init_PreEngine();
 
 	UObject::Init_PreEngine();
-	IPlatformFilePak::Init_PreEngine();
 	UGameEngine::Init_PreEngine();
 	UWorld::Init_PreEngine();
 }
