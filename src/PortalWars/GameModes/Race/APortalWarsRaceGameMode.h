@@ -1,5 +1,6 @@
 #pragma once
 #include "PortalWars/GameModes/APortalWarsGameMode.h"
+#include "Strings/Strings.h"
 
 struct FUserRaceCourseTime
 {
@@ -69,21 +70,12 @@ namespace ERaceDifficulty
 	}
 	Type inline FromString(std::string InDifficulty)
 	{
-		if (InDifficulty == "Easy")
-		{
+		if (Lowercase(InDifficulty) == "easy")
 			return Type::Easy;
-		}
-
-		if (InDifficulty == "Medium")
-		{
+		if (Lowercase(InDifficulty) == "medium")
 			return Type::Medium;
-		}
-
-		if (InDifficulty == "Hard")
-		{
+		if (Lowercase(InDifficulty) == "hard")
 			return Type::Hard;
-		}
-
 		return Type::None;
 	}
 }
