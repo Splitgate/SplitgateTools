@@ -118,7 +118,7 @@ void APortalWarsRaceGameMode::HandleMatchHasEnded()
 	// Ignore sending if offline or running locally, we only want to send if its a new highscore
 	if (Steam::IsReady())
 	{
-		//if (bNewHighScore())
+		if (bNewHighScore())
 		{
 			SendRaceStatUpdate();
 		}
