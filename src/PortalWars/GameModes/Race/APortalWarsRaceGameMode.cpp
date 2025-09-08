@@ -16,6 +16,7 @@
 static void (*HandleMatchHasEnded)(APortalWarsRaceGameMode*);
 static void (*InitGame)(APortalWarsRaceGameMode*, const FString&, const FString&, FString&);
 static bool (*LoadSubLevel)(APortalWarsRaceGameMode*);
+static void (*InitRace)(APortalWarsRaceGameMode*);
 
 void APortalWarsRaceGameMode::Init_PreEngine()
 {
@@ -37,6 +38,11 @@ void APortalWarsRaceGameMode::Init_PreEngine()
 	LOG_ADDRESS(::LoadSubLevel, "APortalWarsRaceGameMode::LoadSubLevel");
 	HOOK(LoadSubLevel);
 
+	::InitRace = InitGameStart.Scan("5B E9").Add(2).Rel32();
+	
+	LOG_ADDRESS(::InitRace, "APortalWarsRaceGameMode::InitRace");
+	HOOK(InitRace);
+	
 	if (HandleMatchHasEndedStart)
 	{
 		auto WorldTimeOffsetPtr = HandleMatchHasEndedStart.Scan("F2").Add(4);
@@ -50,10 +56,9 @@ void APortalWarsRaceGameMode::Init_PreEngine()
 			bNewHighScore_Offset = Ptr.Deref();
 	}
 
-	Memory::Address InitRace = Memory::FindStringRef("InitRace");
-	if (InitRace)
+	if (auto InitRaceStr = Memory::FindStringRef("InitRace"))
 	{
-		if (auto Ptr = InitRace.ReverseScan("45 0F B6").Add(5))
+		if (auto Ptr = InitRaceStr.ReverseScan("45 0F B6").Add(5))
 			Difficulty_Offset = Ptr.Deref();
 	}
 }
@@ -99,16 +104,22 @@ void APortalWarsRaceGameMode::SendRaceStatUpdate()
 
 	ImGui::InsertNotification({ ImGuiToastType::Info, 4000, "Attempting to upload race stats" });
 	HttpJob(&HttpSystem::RaceBase, RaceReq, [RaceEntry](httplib::Response Resp, httplib::Error Err)
+	{
+		if (Err == httplib::Error::Success)
 		{
-			if (Err == httplib::Error::Success)
-			{
-				ImGui::InsertNotification({ ImGuiToastType::Success, 5000, "Uploaded new record, %s on %s (%s)", std::to_string(RaceEntry.TimeMs / 1000), RaceEntry.Map.c_str(), RaceEntry.Difficulty});
-			}
-			else
-			{
-				ImGui::InsertNotification({ ImGuiToastType::Error, 5000, "Uploading stats failed. %s - %s", httplib::to_string(Err), Resp.body });
-			}
-		});
+			ImGui::InsertNotification({
+				ImGuiToastType::Success, 5000, "Uploaded new record, %s on %s (%s)",
+				std::to_string(RaceEntry.TimeMs / 1000), RaceEntry.Map.c_str(), RaceEntry.Difficulty
+			});
+		}
+		else
+		{
+			ImGui::InsertNotification({
+				ImGuiToastType::Error, 5000, "Uploading stats failed. %s - %s",
+				httplib::to_string(Err).c_str(), Resp.body.c_str()
+			});
+		}
+	});
 }
 
 void APortalWarsRaceGameMode::HandleMatchHasEnded()
@@ -145,8 +156,6 @@ void APortalWarsRaceGameMode::InitGame(const FString& MapName, const FString& Op
 		OverrideDifficulty = ERaceDifficulty::None;
 	}
 
-	// todo: find better time to do this
-	CountdownTime() = GSettings.Race.CountdownLength;
 	::InitGame(this, MapName, Options, ErrorMessage);
 }
 
@@ -159,4 +168,11 @@ bool APortalWarsRaceGameMode::LoadSubLevel()
 	}
 
 	return ::LoadSubLevel(this);
+}
+
+void APortalWarsRaceGameMode::InitRace()
+{
+	CountdownTime() = GSettings.Race.CountdownLength;
+	::InitRace(this);
+	//*reinterpret_cast<int*>(__int64(this) + 0x884) = 0;
 }

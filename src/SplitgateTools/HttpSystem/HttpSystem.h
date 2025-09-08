@@ -35,7 +35,13 @@ public:
 
 				httplib::Response Resp;
 				httplib::Error Error;
-				Job.CallingClient->send(Job.Request, Resp, Error);
+				if (Job.CallingClient->is_valid())
+					Job.CallingClient->send(Job.Request, Resp, Error);
+				else
+				{
+					Resp.body = "Job.CallingClient was invalid";
+					Error = httplib::Error::Canceled;
+				}
 
 				// Some might not have a callback
 				if (Job.CompletedCallback)

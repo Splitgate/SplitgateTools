@@ -94,6 +94,7 @@ private:
 
 	void InitGame(const FString& MapName, const FString& Options, FString& ErrorMessage);
 	bool LoadSubLevel();
+	void InitRace();
 
 	static inline ERaceDifficulty::Type OverrideDifficulty;
 };
