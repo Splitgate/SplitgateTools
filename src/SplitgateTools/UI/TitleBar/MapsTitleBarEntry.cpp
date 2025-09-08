@@ -32,6 +32,10 @@ void GameMapEntry::OnPressed(ERaceDifficulty::Type RaceType)
 		TravelURL += L"?Game=";
 		TravelURL += GameModeOverride[InternalName];
 	}
+	else
+	{
+		TravelURL += L"?Game=TDM";
+	}
 	TravelURL += L"?Default";
 
 	GWorld->ServerTravel(TravelURL.c_str());

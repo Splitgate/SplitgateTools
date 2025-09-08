@@ -72,6 +72,7 @@ void APortalWarsRaceGameMode::SendRaceStatUpdate()
 
 	RaceEntry.PlatformUserId = std::to_string(SteamUser->GetSteamID().ConvertToUint64());
 	RaceEntry.Map = GWorld->Name.ToStdString();
+
 	RaceEntry.Difficulty = ERaceDifficulty::ToString(Difficulty());
 
 	json RaceJson;
@@ -101,7 +102,7 @@ void APortalWarsRaceGameMode::SendRaceStatUpdate()
 		{
 			if (Err == httplib::Error::Success)
 			{
-				ImGui::InsertNotification({ ImGuiToastType::Success, 5000, "Uploaded new record, %s on %s (%s)", std::to_string(RaceEntry.TimeMs / 1000), RaceEntry.Map, RaceEntry.Difficulty });
+				ImGui::InsertNotification({ ImGuiToastType::Success, 5000, "Uploaded new record, %s on %s (%s)", std::to_string(RaceEntry.TimeMs / 1000), RaceEntry.Map.c_str(), RaceEntry.Difficulty});
 			}
 			else
 			{
@@ -117,7 +118,7 @@ void APortalWarsRaceGameMode::HandleMatchHasEnded()
 	// Ignore sending if offline or running locally, we only want to send if its a new highscore
 	if (Steam::IsReady())
 	{
-		if (bNewHighScore())
+		//if (bNewHighScore())
 		{
 			SendRaceStatUpdate();
 		}
