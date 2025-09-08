@@ -49,15 +49,9 @@ void SettingsWindow::Render()
         }
         ImGui::EndChild();
 
-        if (ImGui::Button("Reload from Save")) 
-        {
-        }
-
-        ImGui::SameLine();
-
-        if (ImGui::Button("Apply")) 
-        {
-        }
+        //if (ImGui::Button("Reload from Save")){}
+        //ImGui::SameLine();
+        //if (ImGui::Button("Apply")){}
     }
     ImGui::EndGroup();
 }
