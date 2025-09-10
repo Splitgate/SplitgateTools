@@ -7,8 +7,9 @@
 void MiscSettingsTab::RenderContent()
 {
 	// todo: wrapper funcs for rendering these
-	if (ImGui::Checkbox("Uncap FPS in lobby", &GSettings.Misc.bEnableLobbyFPSPatch))
-		GSettings.ApplyAndSave();
+	RenderBoolSetting("Uncap lobby FPS", 
+		"Uncaps lobby framerate from 60 to current framerate", 
+		&GSettings.Misc.bEnableLobbyFPSPatch);
 	
 	// TODO: THIS DOESNT HANDLE UpdateLobbyFPSPatch
 	// we could just add it but that doesn't scale very well and is quite bug prone

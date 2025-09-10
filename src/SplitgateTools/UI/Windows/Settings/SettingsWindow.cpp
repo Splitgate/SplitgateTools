@@ -11,7 +11,7 @@ void SettingsWindow::Render()
 
     ImGui::BeginGroup();
     {
-        ImGui::BeginChild("Settings Content", ImVec2(0, -ImGui::GetFrameHeightWithSpacing()));
+        ImGui::BeginChild("Settings Content"); // ImVec2(0, -ImGui::GetFrameHeightWithSpacing())); Old bottom button padding
         {
             ImGui::PushStyleVar(ImGuiStyleVar_ChildBorderSize, 1);
             ImGui::BeginChild("SettingList", { 150, 0, }, ImGuiChildFlags_Border | ImGuiChildFlags_AlwaysUseWindowPadding | ImGuiChildFlags_NavFlattened, ImGuiWindowFlags_NoSavedSettings);

@@ -4,6 +4,7 @@
 #include "Engine/Kismet/UGameplayStatics.h"
 #include "Engine/GameFramework/APlayerController.h"
 #include "Engine/GameFramework/APlayerState.h"
+#include "UPortalWarsGameEngine.h"
 
 #include "Parse/FParse.h"
 
@@ -173,6 +174,12 @@ bool APortalWarsRaceGameMode::LoadSubLevel()
 void APortalWarsRaceGameMode::InitRace()
 {
 	CountdownTime() = GSettings.Race.CountdownLength;
+
+	// if (GEngine->GameViewport() && !GSettings.Race.AllowConsole)
+	// {
+	// 	GEngine->GameViewport()->ViewportConsole() = nullptr;
+	// }
+
 	::InitRace(this);
 	//*reinterpret_cast<int*>(__int64(this) + 0x884) = 0;
 }

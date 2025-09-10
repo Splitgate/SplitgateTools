@@ -9,7 +9,8 @@ class RaceSettings
 	void Apply();
 public:
 	int CountdownLength = 1;
-	NLOHMANN_DEFINE_TYPE_INTRUSIVE(RaceSettings, CountdownLength);
+	bool AllowConsole = false;
+	NLOHMANN_DEFINE_TYPE_INTRUSIVE(RaceSettings, CountdownLength, AllowConsole);
 };
 
 class MiscSettings

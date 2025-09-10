@@ -26,13 +26,12 @@ void RaceSettingsTab::RenderContent()
 	//}
 	//ImGui::PopItemWidth();
 
-	int NewCountdownLength = GSettings.Race.CountdownLength;
-	if (RenderIntSetting(
-		"Countdown Length", "Sets the race initial countdown limited between 0 and 2147483647", 
-		&NewCountdownLength,
-		0, INT_MAX))
-	{
-		GSettings.Race.CountdownLength = std::max(0, NewCountdownLength);
-		GSettings.ApplyAndSave();
-	}
+	RenderIntSetting(
+		"Countdown Length", "Sets the amount of seconds the race countdown timer will wait before starting",
+		&GSettings.Race.CountdownLength,
+		0, INT_MAX);
+
+	RenderBoolSetting(
+		"Enable Console", "This will enable the usage of the unreal console during races but will disable uploading stats.",
+		&GSettings.Race.AllowConsole);
 }
