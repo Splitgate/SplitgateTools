@@ -38,3 +38,15 @@ APlayerController* UWorld::GetFirstLocalPlayerController()
 
 	return nullptr;
 }
+
+AWorldSettings* UWorld::GetWorldSettings()
+{
+	struct {
+		AWorldSettings* ReturnValue;
+	} p;
+
+	UFunction* Func = StaticClass()->FindFunction(L"K2_GetWorldSettings");
+	ProcessEvent(Func, &p);
+
+	return p.ReturnValue;
+}

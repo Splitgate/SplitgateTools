@@ -20,6 +20,8 @@ class FNetworkNotify {};
 class UWorld : public UObject, public FNetworkNotify
 {
 public:
+	GENERATED_BODY(UWorld, UObject, "World", "/Script/Engine")
+
 	static void Init_PreEngine();
 
 	UPROPERTY(class UGameInstance*, OwningGameInstance);
@@ -28,4 +30,6 @@ public:
 	ENetMode GetNetMode();
 
 	class APlayerController* GetFirstLocalPlayerController();
+
+	class AWorldSettings* GetWorldSettings();
 };

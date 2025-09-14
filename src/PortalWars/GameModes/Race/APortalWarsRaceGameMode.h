@@ -89,6 +89,8 @@ public:
 
 private:
 
+	bool HasTamperedPlay();
+
 	void SendRaceStatUpdate();
 	void HandleMatchHasEnded();
 

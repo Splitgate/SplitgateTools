@@ -19,7 +19,6 @@ UObject* UGameplayStatics::SpawnObject(UClass* ObjectClass, UObject* Outer)
 
 APlayerController* UGameplayStatics::GetPlayerController(UObject* WorldContextObject, int32_t LocalPlayerIndex)
 {
-	// todo rewrite in cpp
 	struct {
 		UObject* WorldContextObject;
 		int32_t LocalPlayerIndex;

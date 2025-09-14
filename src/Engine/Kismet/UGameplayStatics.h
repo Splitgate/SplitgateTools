@@ -8,5 +8,6 @@ public:
 	
 	static UObject* SpawnObject(UClass* ObjectClass, UObject* Outer);
 
+	// DEPRECATED -- Use UWorld::GetFirstLocalPlayerController
 	static class APlayerController* GetPlayerController(UObject* WorldContextObject, int32_t LocalPlayerIndex);
 };

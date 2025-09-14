@@ -1,9 +1,12 @@
 #include "HttpSystem/HttpSystem.h"
 
+#include "Math/UnrealMathUtility.h"
+
 #include "APortalWarsRaceGameMode.h"
-#include "Engine/Kismet/UGameplayStatics.h"
-#include "Engine/GameFramework/APlayerController.h"
-#include "Engine/GameFramework/APlayerState.h"
+#include "Kismet/UGameplayStatics.h"
+#include "GameFramework/APlayerController.h"
+#include "GameFramework/APlayerState.h"
+#include "GameFramework/AWorldSettings.h"
 #include "UPortalWarsGameEngine.h"
 
 #include "Parse/FParse.h"
@@ -62,6 +65,27 @@ void APortalWarsRaceGameMode::Init_PreEngine()
 		if (auto Ptr = InitRaceStr.ReverseScan("45 0F B6").Add(5))
 			Difficulty_Offset = Ptr.Deref();
 	}
+}
+
+bool APortalWarsRaceGameMode::HasTamperedPlay()
+{
+	if (GSettings.Race.AllowConsole)
+		return true;
+
+	// Console is disallowed during race play
+	if (GEngine->GameViewport() && GEngine->GameViewport()->ViewportConsole())
+	{
+		return true;
+	}
+
+	if (AWorldSettings* WorldSettings = GWorld->GetWorldSettings())
+	{
+		if (!FMath::IsNearlyEqual(WorldSettings->TimeDilation(), 1.f) || !FMath::IsNearlyEqual(WorldSettings->DemoPlayTimeDilation(), 1.f))
+			return true;
+	}
+
+	// Nothing has changed
+	return false;
 }
 
 void APortalWarsRaceGameMode::SendRaceStatUpdate()
@@ -130,7 +154,7 @@ void APortalWarsRaceGameMode::HandleMatchHasEnded()
 	// Ignore sending if offline or running locally, we only want to send if its a new highscore
 	if (Steam::IsReady())
 	{
-		if (bNewHighScore())
+		if (bNewHighScore() && !HasTamperedPlay())
 		{
 			SendRaceStatUpdate();
 		}
@@ -175,10 +199,10 @@ void APortalWarsRaceGameMode::InitRace()
 {
 	CountdownTime() = GSettings.Race.CountdownLength;
 
-	// if (GEngine->GameViewport() && !GSettings.Race.AllowConsole)
-	// {
-	// 	GEngine->GameViewport()->ViewportConsole() = nullptr;
-	// }
+	if (GEngine->GameViewport() && !GSettings.Race.AllowConsole)
+	{
+		GEngine->GameViewport()->ViewportConsole() = nullptr;
+	}
 
 	::InitRace(this);
 	//*reinterpret_cast<int*>(__int64(this) + 0x884) = 0;

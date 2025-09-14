@@ -82,6 +82,7 @@
     <ClCompile Include="Engine\GameFramework\AGameStateBase.cpp" />
     <ClCompile Include="Engine\GameFramework\APlayerController.cpp" />
     <ClCompile Include="Engine\Engine\UGameInstance.cpp" />
+    <ClCompile Include="Engine\GameFramework\AWorldSettings.cpp" />
     <ClCompile Include="Engine\Kismet\UGameplayStatics.cpp" />
     <ClCompile Include="Engine\Core\Misc\FNetworkVersion.cpp" />
     <ClCompile Include="Engine\Kismet\UKismetSystemLibrary.cpp" />
@@ -161,6 +162,7 @@
     <ClInclude Include="Engine\GameFramework\AGameStateBase.h" />
     <ClInclude Include="Engine\GameFramework\APlayerController.h" />
     <ClInclude Include="Engine\GameFramework\APlayerState.h" />
+    <ClInclude Include="Engine\GameFramework\AWorldSettings.h" />
     <ClInclude Include="Engine\GameFramework\Game\AGameMode.h" />
     <ClInclude Include="Engine\GameFramework\Game\AGameModeBase.h" />
     <ClInclude Include="Engine\Engine\UGameInstance.h" />
