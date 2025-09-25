@@ -5,6 +5,10 @@ An experimental mod tool for improving the end of life experience for Splitgate 
 ### Compiling
 Requires visual studio 2022 build tools (v143) to be compiled.
 
+### Usage
+Simply drag the compiled or downloaded `dsound.dll` into the splitgate executable folder.  
+Example: `C:\Program Files (x86)\Steam\steamapps\common\Splitgate\PortalWars\Binaries\Win64\`
+
 ### Current Features
 - Uploading Race stats to `https://sgracers.vercel.app/` with server side validation so others can't modify your times
 - Modifying Race countdown length from 5 to any non-negative number
@@ -16,4 +20,5 @@ Requires visual studio 2022 build tools (v143) to be compiled.
 - Forge map uploading
 
 ### Early State
-As I (Adam) the main developer am back at university I will not be able to focus any time on this so it is open source as it was left off in a working state of course, feel free to make pull requests with any fixes for bugs and new features I will attempt to read those.
+As I (Adam) the main developer am back at university I will not be able to focus any time on this so it is open source as it was left off in a working state of course.  
+Feel free to make pull requests with any fixes for bugs and new features I will attempt to read those.
