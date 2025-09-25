@@ -145,6 +145,12 @@ void APortalWarsRaceGameMode::SendRaceStatUpdate()
 			});
 		}
 	});
+
+	UGameViewportClient* Viewport = GEngine->GameViewport();
+	if (Viewport)
+	{
+		Viewport->ViewportConsole() = NewObject<UConsole>(Viewport, GEngine->ConsoleClass());
+	}
 }
 
 void APortalWarsRaceGameMode::HandleMatchHasEnded()
@@ -158,10 +164,6 @@ void APortalWarsRaceGameMode::HandleMatchHasEnded()
 		{
 			SendRaceStatUpdate();
 		}
-		//else
-		//{
-		//	ImGui::InsertNotification({ ImGuiToastType::Success, 3000, "Ah you're well shit mate won't even bother uploading that one" });
-		//}
 	}
 	else
 	{
