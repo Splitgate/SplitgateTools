@@ -6,7 +6,7 @@
 
 void SettingsTabBase::RenderContent()
 {
-	ImGui::Text("sir this is a base class");
+	ImGui::Text("Empty... :(");
 }
 
 void SettingsTabBase::RenderSettingsText(const char* Name, const char* Description)

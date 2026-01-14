@@ -29,7 +29,10 @@ public:
 	{
 		for (;;)
 		{
-			for (size_t i = JobList.size(); i--;)
+#pragma warning( push )
+#pragma warning( disable : 4267 )
+			for (int i = JobList.size() - 1; i >= 0; --i) // Disable warning as a hack, size_t causes crash whereas int does not
+#pragma warning( pop )
 			{
 				auto& Job = JobList[i];
 
@@ -47,7 +50,7 @@ public:
 				if (Job.CompletedCallback)
 					Job.CompletedCallback(Resp, Error);
 
-				JobList.erase(JobList.begin(), JobList.end()--);
+				JobList.erase(JobList.begin() + i);
 			}
 		}
 

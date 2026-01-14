@@ -4,4 +4,8 @@
 struct FVector
 {
 	GENERATED_USTRUCT_BODY("Vector", "/Script/CoreUObject")
+
+	float X;
+	float Y;
+	float Z;
 };

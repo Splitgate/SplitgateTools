@@ -479,7 +479,7 @@ namespace ImGui
      * 
      * @param index The index of the notification to remove.
      */
-    inline void RemoveNotification(int index)
+    inline void RemoveNotification(size_t index)
     {
         notifications.erase(notifications.begin() + index);
     }
@@ -495,7 +495,7 @@ namespace ImGui
 
         float height = 0.f;
 
-        for (int i = notifications.size(); i--;)
+        for (size_t i = notifications.size(); i--;)
         {
             ImGuiToast* currentToast = &notifications[i];
 

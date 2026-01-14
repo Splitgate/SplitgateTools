@@ -50,7 +50,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>$(ProjectDir)Utilities/imgui;$(ProjectDir);$(ProjectDir)PortalWars;$(ProjectDir)Engine;$(ProjectDir)Engine/Core;$(ProjectDir)Utilities;$(ProjectDir)SplitgateTools</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Utilities/imgui;$(ProjectDir);$(ProjectDir)PortalWars;$(ProjectDir)Engine;$(ProjectDir)Engine/Core;$(ProjectDir)Utilities;$(ProjectDir)SplitgateTools;$(ProjectDir)SplitgateTools/UI/Windows;$(ProjectDir)SplitgateTools/UI</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>5103;26495;</DisableSpecificWarnings>
       <LanguageStandard_C>stdclatest</LanguageStandard_C>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
@@ -68,6 +68,7 @@
     <ClCompile Include="Engine\ApplicationCore\FWindowsWindow.cpp" />
     <ClCompile Include="Engine\Core\FMemory.cpp" />
     <ClCompile Include="Engine\Core\Misc\FApp.cpp" />
+    <ClCompile Include="Engine\Core\Misc\FDateTime.cpp" />
     <ClCompile Include="Engine\Core\Misc\FEngineVersion.cpp" />
     <ClCompile Include="Engine\Core\Parse\FParse.cpp" />
     <ClCompile Include="Engine\Core\UObject\FName.cpp" />
@@ -94,6 +95,8 @@
     <ClCompile Include="Engine\Engine\UWorld.cpp" />
     <ClCompile Include="PortalWars\GameModes\APortalWarsGameMode.cpp" />
     <ClCompile Include="PortalWars\GameModes\Race\APortalWarsRaceGameMode.cpp" />
+    <ClCompile Include="PortalWars\Kismet\UPortalWarsGameplayStatics.cpp" />
+    <ClCompile Include="PortalWars\Save\UPortalWarsSaveGame.cpp" />
     <ClCompile Include="PortalWars\UPortalWarsGameEngine.cpp" />
     <ClCompile Include="PortalWars\UPortalWarsGameInstance.cpp" />
     <ClCompile Include="SplitgateTools\HttpSystem\HttpSystem.cpp" />
@@ -104,15 +107,18 @@
     <ClCompile Include="SplitgateTools\Settings.cpp" />
     <ClCompile Include="SplitgateTools\SplitgateTools.cpp" />
     <ClCompile Include="SplitgateTools\UI\Helpers\ImHelpers.cpp" />
+    <ClCompile Include="SplitgateTools\UI\TitleBar\RaceTitleBarEntry.cpp" />
     <ClCompile Include="SplitgateTools\UI\WindowManager.cpp" />
-    <ClCompile Include="SplitgateTools\UI\Windows\HydraWindow.cpp" />
+    <ClCompile Include="SplitgateTools\UI\Windows\Test\HydraWindow.cpp" />
+    <ClCompile Include="SplitgateTools\UI\Windows\Race\RaceLeaderboardWindow.cpp" />
+    <ClCompile Include="SplitgateTools\UI\Windows\Race\LeaderboardTab.cpp" />
     <ClCompile Include="SplitgateTools\UI\Windows\Settings\SettingsWindow.cpp" />
     <ClCompile Include="SplitgateTools\UI\Windows\Settings\Tabs\MiscSettingsTab.cpp" />
     <ClCompile Include="SplitgateTools\UI\Windows\Settings\Tabs\RaceSettingsTab.cpp" />
     <ClCompile Include="SplitgateTools\UI\Windows\Settings\Tabs\SettingsTabBase.cpp" />
-    <ClCompile Include="SplitgateTools\UI\Windows\ToolInfoWindow.cpp" />
+    <ClCompile Include="SplitgateTools\UI\Windows\Generic\ToolInfoWindow.cpp" />
     <ClCompile Include="SplitgateTools\UI\Windows\UIWindowBase.cpp" />
-    <ClCompile Include="SplitgateTools\UI\Windows\GameInfoWindow.cpp" />
+    <ClCompile Include="SplitgateTools\UI\Windows\Generic\GameInfoWindow.cpp" />
     <ClCompile Include="SplitgateTools\UI\TitleBar\MapsTitleBarEntry.cpp" />
     <ClCompile Include="SplitgateTools\UI\TitleBar\MainTitleBarEntry.cpp" />
     <ClCompile Include="SplitgateTools\UI\TitleBar\UITitleBarEntryBase.cpp" />
@@ -135,11 +141,22 @@
   <ItemGroup>
     <ClInclude Include="Engine\ApplicationCore\FWindowsWindow.h" />
     <ClInclude Include="Engine\Core\Containers\FString.h" />
+    <ClInclude Include="Engine\Core\Containers\FText.h" />
     <ClInclude Include="Engine\Core\Containers\TArray.h" />
+    <ClInclude Include="Engine\Core\Containers\TBitArray.h" />
+    <ClInclude Include="Engine\Core\Containers\TInlineAllocater.h" />
+    <ClInclude Include="Engine\Core\Containers\TMap.h" />
+    <ClInclude Include="Engine\Core\Containers\TPair.h" />
+    <ClInclude Include="Engine\Core\Containers\TSet.h" />
+    <ClInclude Include="Engine\Core\Containers\TSparseArray.h" />
     <ClInclude Include="Engine\Core\CoreTypes.h" />
     <ClInclude Include="Engine\Core\FMemory.h" />
+    <ClInclude Include="Engine\Core\Math\FQuat.h" />
+    <ClInclude Include="Engine\Core\Math\FRotator.h" />
+    <ClInclude Include="Engine\Core\Math\FTransform.h" />
     <ClInclude Include="Engine\Core\Math\FVector.h" />
     <ClInclude Include="Engine\Core\Misc\FApp.h" />
+    <ClInclude Include="Engine\Core\Misc\FDateTime.h" />
     <ClInclude Include="Engine\Core\Misc\FEngineVersion.h" />
     <ClInclude Include="Engine\Core\Misc\FGuid.h" />
     <ClInclude Include="Engine\Core\Parse\FParse.h" />
@@ -169,6 +186,8 @@
     <ClInclude Include="Engine\Kismet\UKismetSystemLibrary.h" />
     <ClInclude Include="Engine\Kismet\UGameplayStatics.h" />
     <ClInclude Include="Engine\Core\Misc\FNetworkVersion.h" />
+    <ClInclude Include="Engine\Math\sse_mathfun.h" />
+    <ClInclude Include="Engine\Math\UnrealMathSSE.h" />
     <ClInclude Include="Engine\Math\UnrealMathUtility.h" />
     <ClInclude Include="Engine\OnlineSubsystem\FOnlineFactoryEOSPlus.h" />
     <ClInclude Include="Engine\RHI\FWindowsDynamicRHI.h" />
@@ -180,6 +199,9 @@
     <ClInclude Include="Engine\Engine\UWorld.h" />
     <ClInclude Include="PortalWars\GameModes\APortalWarsGameMode.h" />
     <ClInclude Include="PortalWars\GameModes\Race\APortalWarsRaceGameMode.h" />
+    <ClInclude Include="PortalWars\Globals\FForgeMap.h" />
+    <ClInclude Include="PortalWars\Kismet\UPortalWarsGameplayStatics.h" />
+    <ClInclude Include="PortalWars\Save\UPortalWarsSaveGame.h" />
     <ClInclude Include="PortalWars\UPortalWarsGameEngine.h" />
     <ClInclude Include="PortalWars\UPortalWarsGameInstance.h" />
     <ClInclude Include="SplitgateTools\HttpSystem\HttpSystem.h" />
@@ -188,15 +210,18 @@
     <ClInclude Include="SplitgateTools\Globals.h" />
     <ClInclude Include="SplitgateTools\Renderer.h" />
     <ClInclude Include="SplitgateTools\UI\Helpers\ImHelpers.h" />
+    <ClInclude Include="SplitgateTools\UI\TitleBar\RaceTitleBarEntry.h" />
     <ClInclude Include="SplitgateTools\UI\WindowManager.h" />
-    <ClInclude Include="SplitgateTools\UI\Windows\HydraWindow.h" />
+    <ClInclude Include="SplitgateTools\UI\Windows\Test\HydraWindow.h" />
+    <ClInclude Include="SplitgateTools\UI\Windows\Race\RaceLeaderboardWindow.h" />
+    <ClInclude Include="SplitgateTools\UI\Windows\Race\LeaderboardTab.h" />
     <ClInclude Include="SplitgateTools\UI\Windows\Settings\SettingsWindow.h" />
     <ClInclude Include="SplitgateTools\UI\Windows\Settings\Tabs\MiscSettingsTab.h" />
     <ClInclude Include="SplitgateTools\UI\Windows\Settings\Tabs\RaceSettingsTab.h" />
     <ClInclude Include="SplitgateTools\UI\Windows\Settings\Tabs\SettingsTabBase.h" />
-    <ClInclude Include="SplitgateTools\UI\Windows\ToolInfoWindow.h" />
+    <ClInclude Include="SplitgateTools\UI\Windows\Generic\ToolInfoWindow.h" />
     <ClInclude Include="SplitgateTools\UI\Windows\UIWindowBase.h" />
-    <ClInclude Include="SplitgateTools\UI\Windows\GameInfoWindow.h" />
+    <ClInclude Include="SplitgateTools\UI\Windows\Generic\GameInfoWindow.h" />
     <ClInclude Include="SplitgateTools\UI\TitleBar\MapsTitleBarEntry.h" />
     <ClInclude Include="SplitgateTools\UI\TitleBar\MainTitleBarEntry.h" />
     <ClInclude Include="SplitgateTools\UI\TitleBar\UITitleBarEntryBase.h" />

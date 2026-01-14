@@ -43,6 +43,22 @@
 	#define RESTRICT __restrict						/* no alias hint */
 #endif
 
+#if defined(__clang__)
+	#define GCC_PACK(n) __attribute__((packed,aligned(n)))
+	#define GCC_ALIGN(n) __attribute__((aligned(n)))
+	#if defined(_MSC_VER)
+		#define MS_ALIGN(n) __declspec(align(n)) // With -fms-extensions, Clang will accept either alignment attribute
+	#endif
+#else
+	#define MS_ALIGN(n) __declspec(align(n))
+#endif
+
+// These defines are used to mark a difference between two pointers as expected to fit into the specified range
+// while still leaving something searchable if the surrounding code is updated to work with a 64 bit count/range
+// in the future
+#define UE_PTRDIFF_TO_INT32(argument) static_cast<int32>(argument)
+#define UE_PTRDIFF_TO_UINT32(argument) static_cast<uint32>(argument)
+
 enum { INDEX_NONE = -1 };
 enum { UNICODE_BOM = 0xfeff };
 
@@ -198,3 +214,17 @@ typedef FPlatformTypes::SSIZE_T SSIZE_T;
 typedef FPlatformTypes::TYPE_OF_NULL	TYPE_OF_NULL;
 /// The type of the C++ nullptr keyword.
 typedef FPlatformTypes::TYPE_OF_NULLPTR	TYPE_OF_NULLPTR;
+
+template <typename T> struct TLiteral
+{
+	static const ANSICHAR  Select(const ANSICHAR  ansi, const WIDECHAR) { return ansi; }
+	static const ANSICHAR* Select(const ANSICHAR* ansi, const WIDECHAR*) { return ansi; }
+};
+
+template <> struct TLiteral<WIDECHAR>
+{
+	static const WIDECHAR  Select(const ANSICHAR, const WIDECHAR  wide) { return wide; }
+	static const WIDECHAR* Select(const ANSICHAR*, const WIDECHAR* wide) { return wide; }
+};
+
+#define LITERAL(CharType, StringLiteral) TLiteral<CharType>::Select(StringLiteral, TEXT(StringLiteral))

@@ -173,10 +173,19 @@ void APortalWarsRaceGameMode::HandleMatchHasEnded()
 
 void APortalWarsRaceGameMode::InitGame(const FString& MapName, const FString& Options, FString& ErrorMessage)
 {
-	FString NewDifficulty;
-	if (FParse::Value(*Options, TEXT("Difficulty="), NewDifficulty))
+	// Options: "?Name=Player?Game=RACE?Difficulty=Hard?Default" Ideally
+
+	std::string CSOptions = Options.ToString();
+	if (CSOptions.contains("Difficulty="))
 	{
-		OverrideDifficulty = ERaceDifficulty::FromString(NewDifficulty.ToString());
+		std::string Value = CSOptions.substr(CSOptions.find("Difficulty="));
+		if (Value.contains("?"))
+		{
+			Value = Value.substr(0, Value.find_first_of("?"));
+		}
+		Value = Value.substr(Value.find_first_of("=") + 1);
+
+		OverrideDifficulty = ERaceDifficulty::FromString(Value);
 	}
 	else
 	{
@@ -207,5 +216,4 @@ void APortalWarsRaceGameMode::InitRace()
 	}
 
 	::InitRace(this);
-	//*reinterpret_cast<int*>(__int64(this) + 0x884) = 0;
 }

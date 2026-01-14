@@ -2,10 +2,10 @@
 
 #include "Renderer.h"
 #include "UI/WindowManager.h"
-#include "UI/Windows/ToolInfoWindow.h"
-#include "UI/Windows/Settings/SettingsWindow.h"
-#include "UI/Windows/GameInfoWindow.h"
-#include "UI/Windows/HydraWindow.h"
+#include "Generic/ToolInfoWindow.h"
+#include "Settings/SettingsWindow.h"
+#include "Generic/GameInfoWindow.h"
+#include "Test/HydraWindow.h"
 
 void MainTitleBarEntry::Render()
 {
@@ -20,8 +20,8 @@ void MainTitleBarEntry::Render()
 	if (ImGui::MenuItem("Tool Info"))
 		WindowManager::Add<ToolInfoWindow>();
 
-	if (ImGui::MenuItem("hydra"))
-		WindowManager::Add<HydraWindow>();
+	//if (ImGui::MenuItem("hydra"))
+	//	WindowManager::Add<HydraWindow>();
 
 	ImGui::Separator();
 
