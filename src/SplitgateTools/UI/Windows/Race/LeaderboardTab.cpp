@@ -67,29 +67,29 @@ void LeaderboardTab::FetchLeaderboard()
         MapLeaderboardReq.path = std::format("/api/generate-leaderboard?map={}&difficulty={}&length=all", Name, Difficulty);
         MapLeaderboardReq.method = "GET";
 
-        HttpJob Job = HttpJob(RACEBASE_URL, MapLeaderboardReq, [&](httplib::Response Resp, httplib::Error Err)
+        HttpSystem::SendRequest(RACEBASE_URL, MapLeaderboardReq, [&](httplib::Response Resp, httplib::Error Err)
+        {
+            if (Err == httplib::Error::Success)
             {
-                if (Err == httplib::Error::Success)
-                {
-                    nlohmann::json LeaderboardData = nlohmann::json::parse(Resp.body);
-                    std::vector<LeaderboardEntry> Entries = LeaderboardData.get<std::vector<LeaderboardEntry>>();
+                nlohmann::json LeaderboardData = nlohmann::json::parse(Resp.body);
+                std::vector<LeaderboardEntry> Entries = LeaderboardData.get<std::vector<LeaderboardEntry>>();
 
-                    CachedLeaderboard[Difficulty] = Entries;
-                    UE_LOG(LogHttp, Display, "Adding Cached Entry {} {}", Name, Difficulty);
+                CachedLeaderboard[Difficulty] = Entries;
+                UE_LOG(LogHttp, Display, "Adding Cached Entry {} {}", Name, Difficulty);
 
-                    if (CachedLeaderboard.size() == 3) // All data, let it render now
-                    {
-                        LoadState = ELoadState::Loaded;
-                    }
-                }
-                else
+                if (CachedLeaderboard.size() == 3) // All data, let it render now
                 {
-                    ImGui::InsertNotification({
-                        ImGuiToastType::Error, 5000, "Failed to receive leaderboard data %s - %s",
-                        httplib::to_string(Err).c_str(), Resp.body.c_str()
-                        });
+                    LoadState = ELoadState::Loaded;
                 }
-            });
+            }
+            else
+            {
+                ImGui::InsertNotification({
+                    ImGuiToastType::Error, 5000, "Failed to receive leaderboard data %s - %s",
+                    httplib::to_string(Err).c_str(), Resp.body.c_str()
+                });
+            }
+        });
     }
 
     if (CachedLeaderboard.size() == 3) // All data, let it render now

@@ -1,12 +1,41 @@
 #include "HttpSystem.h"
 
-// httplib::Client HttpSystem::ProxyClient = httplib::Client("localhost:8888");
-// httplib::Client HttpSystem::RaceBase = httplib::Client("https://sgracers.vercel.app");
-// httplib::Client HttpSystem::RaceTestBase = httplib::Client("https://racertest.vercel.app");
-std::vector<HttpJob> HttpSystem::JobList = {};
+std::vector<HttpSystem::Job> JobList;
 
-HttpJob::HttpJob(const std::string& InHost, httplib::Request InRequest, std::function<void(httplib::Response, httplib::Error)> InCompletedCallback)
-	: Host(InHost), Request(InRequest), CompletedCallback(InCompletedCallback)
+void HttpSystem::SendRequest(const std::string& InHost, const httplib::Request& InRequest,
+	const std::function<CallbackFunc>& InCallback)
 {
-	HttpSystem::JobList.push_back(*this);
+	// flush previous requests
+	std::erase_if(JobList, [](Job& J) {
+		return J.bFinished;
+	});
+	JobList.emplace_back(InHost, InRequest, InCallback);
+}
+
+DWORD HttpSystem::Thread(LPVOID)
+{
+	while (true)
+	{
+		Sleep(100);
+		
+		for (auto& Job : JobList)
+		{
+			httplib::Client Client{Job.Host};
+			httplib::Response Resp;
+			httplib::Error Error;
+			
+			if (Client.is_valid())
+				Client.send(Job.Request, Resp, Error);
+			else
+			{
+				Resp.body = "http client was invalid";
+				Error = httplib::Error::Canceled;
+			}
+
+			if (Job.Callback)
+				Job.Callback(Resp, Error);
+
+			Job.bFinished = true;
+		}
+	}
 }
