@@ -67,7 +67,7 @@ void LeaderboardTab::FetchLeaderboard()
         MapLeaderboardReq.path = std::format("/api/generate-leaderboard?map={}&difficulty={}&length=all", Name, Difficulty);
         MapLeaderboardReq.method = "GET";
 
-        HttpJob Job = HttpJob(&HttpSystem::RaceBase, MapLeaderboardReq, [&](httplib::Response Resp, httplib::Error Err)
+        HttpJob Job = HttpJob(RACEBASE_URL, MapLeaderboardReq, [&](httplib::Response Resp, httplib::Error Err)
             {
                 if (Err == httplib::Error::Success)
                 {
@@ -144,20 +144,21 @@ void LeaderboardTab::DrawLeaderboardData(const char* Difficulty)
     //ImGui::Text(CachedLeaderboard.first.c_str());
     if (ImGui::BeginTabItem(Difficulty))
     {
-        ImGui::BeginChild("LeaderboardScrollableData", { 0, 0, }, ImGuiChildFlags_Border | ImGuiChildFlags_NavFlattened, ImGuiWindowFlags_NoSavedSettings);
+        ImGui::BeginChild("LeaderboardScrollableData", { 0, 0, }, ImGuiChildFlags_NavFlattened, ImGuiWindowFlags_NoSavedSettings);
         {
             std::string FormattedName = std::format("Leaderboard_{}_{}", Name, Difficulty);
-            if (ImGui::BeginTable(FormattedName.c_str(), 3, ImGuiTableFlags_Resizable | ImGuiTableFlags_NoSavedSettings))
+            if (ImGui::BeginTable(FormattedName.c_str(), 3, ImGuiTableFlags_Resizable | ImGuiTableFlags_NoSavedSettings | ImGuiTableFlags_RowBg | ImGuiTableFlags_Borders))
             {
                 ImGui::TableSetupColumn("Position");
                 ImGui::TableSetupColumn("Name");
                 ImGui::TableSetupColumn("Time");
+                ImGui::TableHeadersRow();
 
-                for (auto& Entry : CachedLeaderboard[Difficulty])
+                std::vector<LeaderboardEntry> EntryList = CachedLeaderboard[Difficulty];
+                for (auto& Entry : EntryList)
                 {
                     ImGui::TableNextColumn();
 
-                    auto& EntryList = CachedLeaderboard[Difficulty];
                     __int64 Position = (std::find(EntryList.begin(), EntryList.end(), Entry) - EntryList.begin()) + 1;
 
                     std::string PositionString = std::to_string(Position) + Suffix(Position); //std::format("{}{}", Position, Suffix(Position));
@@ -173,7 +174,9 @@ void LeaderboardTab::DrawLeaderboardData(const char* Difficulty)
                     //ImGui::Text(Entry.compositeUserId.platform.c_str());
                     //ImGui::TableNextColumn();
 
-                    ImGui::TableNextRow(ImGuiTableFlags_Borders, 20);
+                    // Ignore adding a new row if last entry
+                    if (Position != EntryList.size())
+                        ImGui::TableNextRow(ImGuiTableFlags_Borders, 20);
                 }
 
                 ImGui::EndTable();

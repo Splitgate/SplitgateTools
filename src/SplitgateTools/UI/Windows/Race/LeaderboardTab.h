@@ -1,5 +1,7 @@
 #pragma once
 #include "UI/Helpers/ImHelpers.h"
+#include "UI/Windows/TabbedWindowBase.h"
+
 #include <string>
 
 #include "Utilities/nlohmann/json.hpp"
@@ -33,13 +35,12 @@ struct LeaderboardEntry
 	NLOHMANN_DEFINE_TYPE_INTRUSIVE(LeaderboardEntry, compositeUserId, value, displayName)
 };
 
-class LeaderboardTab
+class LeaderboardTab : public TabEntryBase
 {
 public:
-	LeaderboardTab() : Name("None") {}
-	LeaderboardTab(std::string InName) : Name(InName) {}
+	LeaderboardTab() : TabEntryBase() {}
+	LeaderboardTab(std::string InName) : TabEntryBase(InName) {}
 
-	std::string Name;
 	std::map<std::string, std::vector<LeaderboardEntry>> CachedLeaderboard; // Difficulty, Data
 
 	// For checking if http data is loaded
@@ -48,6 +49,6 @@ public:
 	void FetchLeaderboard();
 	void DrawLeaderboardData(const char* Difficulty);
 
-	virtual void RenderContent();
-	void OnSelected();
+	virtual void RenderContent() override;
+	virtual void OnSelected() override;
 };

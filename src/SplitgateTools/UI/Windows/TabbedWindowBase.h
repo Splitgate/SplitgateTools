@@ -6,7 +6,14 @@
 
 class TabEntryBase
 {
+public:
+	TabEntryBase() : Name("None") {}
+	TabEntryBase(std::string InName) : Name(InName) {}
 
+	std::string Name;
+
+	virtual void RenderContent() {};
+	virtual void OnSelected() {};
 };
 
 class TabbedWindowBase : public UIWindowBase
@@ -14,20 +21,32 @@ class TabbedWindowBase : public UIWindowBase
 public:
 
 	TabbedWindowBase(std::string InName, bool InbCanHaveMultiple = false, bool InbIsClosable = true, ImGuiWindowFlags InWindowFlags = 0) 
-		: UIWindowBase("Tabbed Window", false, true,
-		ImGuiWindowFlags_NoDocking)
+		: UIWindowBase(InName, InbCanHaveMultiple, InbIsClosable,
+			InWindowFlags | ImGuiWindowFlags_NoDocking)
 	{
 	}
 
 	std::vector<std::unique_ptr<TabEntryBase>> Tabs;
 	int SelectedTabIndex = 0;
 
-	virtual void Render() override;
+	template<typename TabType = TabEntryBase>
+	TabType* GetTab(int Index = 0)
+	{
+		if (Index >= 0 && Index < Tabs.size())
+		{
+			return dynamic_cast<TabType*>(Tabs[Index].get());
+		}
 
-	virtual void OnOpen() override;
+		return nullptr;
+	}
+
+	virtual void Render() override;
+	virtual void RenderExtraButtons() {};
+
 	virtual void OnClose() override;
 
-private:
+protected:
 
+	virtual bool ShouldDisplayTabList() const;
 	virtual void SetTab(int TabIndex);
 };

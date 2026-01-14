@@ -4,6 +4,7 @@
 #include "UI/TitleBar/MainTitleBarEntry.h"
 #include "UI/TitleBar/MapsTitleBarEntry.h"
 #include "UI/TitleBar/RaceTitleBarEntry.h"
+#include "UI/TitleBar/ForgeTitleBarEntry.h"
 
 // Settings Tabs
 #include "UI/Windows/Settings/Tabs/MiscSettingsTab.h"
@@ -45,7 +46,8 @@ void Splitgate::Init_PostEngine()
 void Splitgate::PopulateTitleBarEntries(std::vector<std::unique_ptr<UITitleBarEntryBase>>& Entries)
 {
 	Entries.emplace_back(std::make_unique<MainTitleBarEntry>());
-	Entries.emplace_back(std::make_unique<MapsTitleBarEntry>());
+	Entries.emplace_back(std::make_unique<MapsTitleBarEntry>());	
+	Entries.emplace_back(std::make_unique<ForgeTitleBarEntry>());
 	Entries.emplace_back(std::make_unique<RaceTitleBarEntry>());
 }
 

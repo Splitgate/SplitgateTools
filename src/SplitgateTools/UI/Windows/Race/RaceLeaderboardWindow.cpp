@@ -7,64 +7,16 @@
 #include "ImGuiNotify/ImGuiNotify.hpp"
 #include "TabbedWindowBase.h"
 
-void RaceLeaderboardWindow::Render()
+void RaceLeaderboardWindow::RenderExtraButtons()
 {
-    if (WindowFlags & ImGuiWindowFlags_NoResize)
-        ImGui::SetWindowSize(ImVec2(620, 400));
-
-    ImGui::BeginGroup();
+    if (ImGui::Button("Refresh"))
     {
-        ImGui::BeginChild("Leaderboard", ImVec2(0, -ImGui::GetFrameHeightWithSpacing()));
+        if (SelectedTabIndex >= 0 && SelectedTabIndex < Tabs.size())
         {
-            ImGui::PushStyleVar(ImGuiStyleVar_ChildBorderSize, 1);
-            ImGui::BeginChild("MapList", { 220, 0, }, ImGuiChildFlags_Border | ImGuiChildFlags_AlwaysUseWindowPadding | ImGuiChildFlags_NavFlattened, ImGuiWindowFlags_NoSavedSettings);
-            {
-                if (LoadState == ELoadState::Loaded)
-                {
-                    for (int i = 0; i < Tabs.size(); i++)
-                    {
-                        auto& Tab = Tabs[i];
-                        ImGui::PushStyleVar(ImGuiStyleVar_SelectableTextAlign, ImVec2(0.5f, 0.5f));
-                        {
-                            if (ImGui::Selectable(Tab->Name.c_str(), (SelectedTabIndex == i), 0, { 0, 20 }))
-                            {
-                                SetTab(i); // Render this leaderboard
-                            }
-                        }
-                        ImGui::PopStyleVar();
-
-                        ImGui::Dummy({ 0, 2 });
-                    }
-                }
-
-                ImGui::EndChild();
-            }
-            ImGui::PopStyleVar();
-
-            ImGui::PushStyleVar(ImGuiStyleVar_ChildBorderSize, 1);
-            ImGui::SameLine(0, 1 * ImGui::GetStyle().ItemSpacing.x);
-            ImGui::BeginChild("LeaderboardData", { 0, 0, }, ImGuiChildFlags_Border | ImGuiChildFlags_AlwaysUseWindowPadding | ImGuiChildFlags_NavFlattened, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
-            {
-                if (SelectedTabIndex >= 0 && SelectedTabIndex < Tabs.size())
-                {
-                    Tabs[SelectedTabIndex]->RenderContent();
-                }
-
-                ImGui::EndChild();
-            }
-            ImGui::PopStyleVar();
-        }
-        ImGui::EndChild();
-
-        if (ImGui::Button("Refresh"))
-        {
-            if (SelectedTabIndex >= 0 && SelectedTabIndex < Tabs.size())
-            {
-                Tabs[SelectedTabIndex]->FetchLeaderboard();
-            }
+            if (LeaderboardTab* Tab = GetTab<LeaderboardTab>(SelectedTabIndex))
+                Tab->FetchLeaderboard();
         }
     }
-    ImGui::EndGroup();
 }
 
 void RaceLeaderboardWindow::OnOpen()
@@ -73,7 +25,7 @@ void RaceLeaderboardWindow::OnOpen()
     MapListReq.path = "/api/get-maps";
     MapListReq.method = "GET";
 
-    HttpJob MapListJob = HttpJob(&HttpSystem::RaceBase, MapListReq, [&](httplib::Response Resp, httplib::Error Err)
+    HttpJob MapListJob = HttpJob(RACEBASE_URL, MapListReq, [&](httplib::Response Resp, httplib::Error Err)
         {
             if (Err == httplib::Error::Success)
             {
@@ -96,25 +48,4 @@ void RaceLeaderboardWindow::OnOpen()
                     });
             }
         });
-}
-
-void RaceLeaderboardWindow::OnClose()
-{
-    Tabs.clear();
-}
-
-void RaceLeaderboardWindow::SetTab(int TabIndex)
-{
-    SelectedTabIndex = TabIndex;
-
-    auto& Tab = Tabs[SelectedTabIndex];
-    if (Tab)
-    {
-        Tab->OnSelected();
-    }
-    else
-    {
-        // Retry until tab is ready
-        SetTab(TabIndex);
-    }
 }

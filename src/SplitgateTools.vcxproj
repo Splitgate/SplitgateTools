@@ -107,8 +107,11 @@
     <ClCompile Include="SplitgateTools\Settings.cpp" />
     <ClCompile Include="SplitgateTools\SplitgateTools.cpp" />
     <ClCompile Include="SplitgateTools\UI\Helpers\ImHelpers.cpp" />
+    <ClCompile Include="SplitgateTools\UI\TitleBar\ForgeTitleBarEntry.cpp" />
     <ClCompile Include="SplitgateTools\UI\TitleBar\RaceTitleBarEntry.cpp" />
     <ClCompile Include="SplitgateTools\UI\WindowManager.cpp" />
+    <ClCompile Include="SplitgateTools\UI\Windows\Forge\ForgeMapsWindow.cpp" />
+    <ClCompile Include="SplitgateTools\UI\Windows\TabbedWindowBase.cpp" />
     <ClCompile Include="SplitgateTools\UI\Windows\Test\HydraWindow.cpp" />
     <ClCompile Include="SplitgateTools\UI\Windows\Race\RaceLeaderboardWindow.cpp" />
     <ClCompile Include="SplitgateTools\UI\Windows\Race\LeaderboardTab.cpp" />
@@ -210,8 +213,13 @@
     <ClInclude Include="SplitgateTools\Globals.h" />
     <ClInclude Include="SplitgateTools\Renderer.h" />
     <ClInclude Include="SplitgateTools\UI\Helpers\ImHelpers.h" />
+    <ClInclude Include="SplitgateTools\UI\TitleBar\ForgeTitleBarEntry.h" />
     <ClInclude Include="SplitgateTools\UI\TitleBar\RaceTitleBarEntry.h" />
     <ClInclude Include="SplitgateTools\UI\WindowManager.h" />
+    <ClInclude Include="SplitgateTools\UI\Windows\Forge\ForgeAllMapsTab.h" />
+    <ClInclude Include="SplitgateTools\UI\Windows\Forge\ForgeMapsWindow.h" />
+    <ClInclude Include="SplitgateTools\UI\Windows\Forge\ForgeMyMapsTab.h" />
+    <ClInclude Include="SplitgateTools\UI\Windows\TabbedWindowBase.h" />
     <ClInclude Include="SplitgateTools\UI\Windows\Test\HydraWindow.h" />
     <ClInclude Include="SplitgateTools\UI\Windows\Race\RaceLeaderboardWindow.h" />
     <ClInclude Include="SplitgateTools\UI\Windows\Race\LeaderboardTab.h" />
