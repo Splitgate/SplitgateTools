@@ -34,4 +34,25 @@ MS_ALIGN(16) struct FTransform
 		VectorStoreFloat3(Scale3D, &OutScale3D);
 		return OutScale3D;
 	}
+
+	void ParseJson(json JsonData)
+	{
+		if (JsonData.contains("ROTATION"))
+		{
+			FQuat NewRotation = uppercase_keys(JsonData.at("ROTATION"));
+			Rotation = VectorLoadAligned(&NewRotation);
+		}
+
+		if (JsonData.contains("TRANSLATION"))
+		{
+			FVector NewTranslation = uppercase_keys(JsonData.at("TRANSLATION"));
+			Translation = VectorLoadFloat3_W0(&NewTranslation);
+		}
+
+		if (JsonData.contains("SCALE3D"))
+		{
+			FVector NewScale3D = uppercase_keys(JsonData.at("SCALE3D"));
+			Scale3D = VectorLoadFloat3_W0(&NewScale3D);
+		}
+	}
 };

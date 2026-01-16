@@ -111,6 +111,7 @@
     <ClCompile Include="SplitgateTools\UI\TitleBar\RaceTitleBarEntry.cpp" />
     <ClCompile Include="SplitgateTools\UI\WindowManager.cpp" />
     <ClCompile Include="SplitgateTools\UI\Windows\Forge\ForgeMapsWindow.cpp" />
+    <ClCompile Include="SplitgateTools\UI\Windows\Forge\ForgeMyMapsTab.cpp" />
     <ClCompile Include="SplitgateTools\UI\Windows\TabbedWindowBase.cpp" />
     <ClCompile Include="SplitgateTools\UI\Windows\Test\HydraWindow.cpp" />
     <ClCompile Include="SplitgateTools\UI\Windows\Race\RaceLeaderboardWindow.cpp" />
@@ -135,6 +136,7 @@
     <ClCompile Include="Utilities\imgui\imgui_widgets.cpp" />
     <ClCompile Include="Utilities\Memory\Memory.cpp" />
     <ClCompile Include="Utilities\Steam\SteamUtilities.cpp" />
+    <ClCompile Include="Utilities\Strings\Strings.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

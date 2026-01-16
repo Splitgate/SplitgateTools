@@ -55,10 +55,22 @@ public:
 			FMemory::Free(Data);
 	}
 
+	inline void Reserve(int Num)
+	{
+		Data = (T*)FMemory::Realloc(Data, (Max = Count + Num) * sizeof(T));
+	}
+
+	inline T& Add(T InData)
+	{
+		Reserve(1);
+		Data[Count] = InData;
+		++Count;
+		return Data[Count - 1];
+	}
+
 	// TODO: TArray copy constructor
 	// TODO: TArray operators
 	// TODO: TArray iterators
-	// TODO: TArray Add
 	// TODO: TArray Remove
 };
 

@@ -1,6 +1,8 @@
 #include "FDateTime.h"
 #include "Math/UnrealMathUtility.h"
 
+#include "Strings/Strings.h"
+
 #include <windows.h>
 
 const int32 FDateTime::DaysPerMonth[] = { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
@@ -115,6 +117,39 @@ int32 FDateTime::GetMonth() const
 	return Month;
 }
 
+
+bool FDateTime::Parse(std::string DateTimeString, FDateTime& OutDateTime)
+{
+	std::string FixedString = Strings::Replace(DateTimeString, "-", " ");
+	Strings::ReplaceInline(FixedString, ":", " ");
+	Strings::ReplaceInline(FixedString, ".", " ");
+
+	std::vector<std::string> Tokens = Strings::Split(FixedString, " ");
+
+	// make sure it parsed it properly (within reason)
+	if ((Tokens.size() < 6) || (Tokens.size() > 7))
+	{
+		return false;
+	}
+
+	const int32 Year = atoi(Tokens[0].c_str());
+	const int32 Month = atoi(Tokens[1].c_str());
+	const int32 Day = atoi(Tokens[2].c_str());
+	const int32 Hour = atoi(Tokens[3].c_str());
+	const int32 Minute = atoi(Tokens[4].c_str());
+	const int32 Second = atoi(Tokens[5].c_str());
+	const int32 Millisecond = Tokens.size() > 6 ? atoi(Tokens[6].c_str()) : 0;
+
+	if (!Validate(Year, Month, Day, Hour, Minute, Second, Millisecond))
+	{
+		return false;
+	}
+
+	// convert the tokens to numbers
+	OutDateTime.Ticks = FDateTime(Year, Month, Day, Hour, Minute, Second, Millisecond).Ticks;
+
+	return true;
+}
 
 int32 FDateTime::GetYear() const
 {

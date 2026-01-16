@@ -14,6 +14,6 @@ std::string FNetworkVersion::GetProjectVersion()
 {
 	FString* WideBuildVer = ::GetProjectVersion_Internal();
 
-	std::string BuildVer = WideToString(WideBuildVer->Data);
+	std::string BuildVer = Strings::WideToString(WideBuildVer->Data);
 	return BuildVer;
 }

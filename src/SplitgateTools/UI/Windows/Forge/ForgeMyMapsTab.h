@@ -7,5 +7,5 @@ public:
 	ForgeMyMapsTab() : TabEntryBase() {}
 	ForgeMyMapsTab(std::string InName) : TabEntryBase(InName) {}
 
-	virtual void RenderContent() override {};
+	virtual void RenderContent() override;
 };

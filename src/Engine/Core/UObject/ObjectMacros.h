@@ -34,6 +34,18 @@ inline T& Name() { \
 	return *reinterpret_cast<T*>(__int64(this)+Offset); \
 } 
 
+inline nlohmann::json uppercase_keys(nlohmann::json InJson)
+{
+	nlohmann::json Json;
+	for (auto& JObject : InJson.items())
+	{
+		std::string LowerKey = JObject.key();
+		std::transform(LowerKey.begin(), LowerKey.end(), LowerKey.begin(), ::toupper);
+		Json[LowerKey] = JObject.value();
+	}
+	return Json;
+};
+
 enum EObjectFlags
 {
 	// Do not add new flags unless they truly belong here. There are alternatives.

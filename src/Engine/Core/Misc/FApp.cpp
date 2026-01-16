@@ -37,6 +37,6 @@ void FApp::SetGraphicsRHI(FString& RHIString)
 
 std::string FApp::GetBuildVersion()
 {
-	static std::string BuildVer = WideToString(::GetBuildVersion());
+	static std::string BuildVer = Strings::WideToString(::GetBuildVersion());
 	return BuildVer;
 }

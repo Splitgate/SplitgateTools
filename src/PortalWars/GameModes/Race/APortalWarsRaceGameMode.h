@@ -64,11 +64,11 @@ namespace ERaceDifficulty
 	}
 	Type inline FromString(std::string InDifficulty)
 	{
-		if (Lowercase(InDifficulty) == "easy")
+		if (Strings::Lowercase(InDifficulty) == "easy")
 			return Easy;
-		if (Lowercase(InDifficulty) == "medium")
+		if (Strings::Lowercase(InDifficulty) == "medium")
 			return Medium;
-		if (Lowercase(InDifficulty) == "hard")
+		if (Strings::Lowercase(InDifficulty) == "hard")
 			return Hard;
 		return None;
 	}

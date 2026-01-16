@@ -9,4 +9,6 @@ struct FQuat
 	float Y;
 	float Z;
 	float W;
+
+	NLOHMANN_DEFINE_TYPE_INTRUSIVE(FQuat, X, Y, Z, W)
 };

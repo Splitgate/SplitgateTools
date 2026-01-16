@@ -1,6 +1,7 @@
 #pragma once
 
 #include "CoreTypes.h"
+#include <string>
 
 enum class EDayOfWeek
 {
@@ -129,6 +130,8 @@ public:
 	{
 		return (double)(1721425.5 + Ticks / ETimespan::TicksPerDay);
 	}
+
+	static bool Parse(std::string DateTimeString, FDateTime& OutDateTime);
 
 	int32 GetYear() const;
 

@@ -8,4 +8,6 @@ struct FVector
 	float X;
 	float Y;
 	float Z;
+	
+	NLOHMANN_DEFINE_TYPE_INTRUSIVE(FVector, X, Y, Z)
 };

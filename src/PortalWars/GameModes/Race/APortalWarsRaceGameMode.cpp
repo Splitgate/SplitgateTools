@@ -123,7 +123,7 @@ void APortalWarsRaceGameMode::SendRaceStatUpdate()
 		return; // Failed to get encrypted ticket, do not allow request
 	}
 
-	std::string AuthenticationHeader = std::format("Bearer {}", BytesToHex(TicketBuffer, TicketSize));
+	std::string AuthenticationHeader = std::format("Bearer {}", Strings::BytesToHex(TicketBuffer, TicketSize));
 	RaceReq.headers.insert({ "Authorization", AuthenticationHeader });
 	RaceReq.body = RaceJson.dump();
 
