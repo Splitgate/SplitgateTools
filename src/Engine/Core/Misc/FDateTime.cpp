@@ -39,6 +39,11 @@ FDateTime::FDateTime(int32 Year, int32 Month, int32 Day, int32 Hour, int32 Minut
 		+ Millisecond * ETimespan::TicksPerMillisecond;
 }
 
+std::string FDateTime::ToString()
+{
+	return std::format("{:#04}.{:#02}.{:#02}-{:#02}:{:#02}:{:#02}", GetYear(), GetMonth(), GetDay(), GetHour(), GetMinute(), GetSecond());
+}
+
 int32 FDateTime::GetDay() const
 {
 	int32 Year, Month, Day;

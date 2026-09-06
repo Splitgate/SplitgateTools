@@ -54,6 +54,7 @@
       <DisableSpecificWarnings>5103;26495;</DisableSpecificWarnings>
       <LanguageStandard_C>stdclatest</LanguageStandard_C>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>MinSpace</Optimization>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -70,6 +71,7 @@
     <ClCompile Include="Engine\Core\Misc\FApp.cpp" />
     <ClCompile Include="Engine\Core\Misc\FDateTime.cpp" />
     <ClCompile Include="Engine\Core\Misc\FEngineVersion.cpp" />
+    <ClCompile Include="Engine\Core\Misc\FGuid.cpp" />
     <ClCompile Include="Engine\Core\Parse\FParse.cpp" />
     <ClCompile Include="Engine\Core\UObject\FName.cpp" />
     <ClCompile Include="Engine\Core\UObject\FWeakObjectPtr.cpp" />
@@ -84,6 +86,7 @@
     <ClCompile Include="Engine\GameFramework\APlayerController.cpp" />
     <ClCompile Include="Engine\Engine\UGameInstance.cpp" />
     <ClCompile Include="Engine\GameFramework\AWorldSettings.cpp" />
+    <ClCompile Include="Engine\Kismet\UBlueprintMapLibrary.cpp" />
     <ClCompile Include="Engine\Kismet\UGameplayStatics.cpp" />
     <ClCompile Include="Engine\Core\Misc\FNetworkVersion.cpp" />
     <ClCompile Include="Engine\Kismet\UKismetSystemLibrary.cpp" />
@@ -140,12 +143,14 @@
     <ClCompile Include="Utilities\Strings\Strings.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="cpp.hint" />
     <None Include="packages.config" />
     <None Include="Utilities\openssl\param_names.h.in" />
     <None Include="Utilities\spdlog\fmt\bundled\fmt.license.rst" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\ApplicationCore\FWindowsWindow.h" />
+    <ClInclude Include="Engine\CommonLoadingScreen\ULoadingScreenManager.h" />
     <ClInclude Include="Engine\Core\Containers\FString.h" />
     <ClInclude Include="Engine\Core\Containers\FText.h" />
     <ClInclude Include="Engine\Core\Containers\TArray.h" />
@@ -166,9 +171,6 @@
     <ClInclude Include="Engine\Core\Misc\FEngineVersion.h" />
     <ClInclude Include="Engine\Core\Misc\FGuid.h" />
     <ClInclude Include="Engine\Core\Parse\FParse.h" />
-    <ClInclude Include="Engine\Core\Templates\EnableIf.h" />
-    <ClInclude Include="Engine\Core\Templates\IsFloatingPoint.h" />
-    <ClInclude Include="Engine\Core\Templates\IsIntegral.h" />
     <ClInclude Include="Engine\Core\UObject\FName.h" />
     <ClInclude Include="Engine\Core\UObject\FPrimaryAssetId.h" />
     <ClInclude Include="Engine\Core\UObject\FWeakObjectPtr.h" />
@@ -189,6 +191,7 @@
     <ClInclude Include="Engine\GameFramework\Game\AGameMode.h" />
     <ClInclude Include="Engine\GameFramework\Game\AGameModeBase.h" />
     <ClInclude Include="Engine\Engine\UGameInstance.h" />
+    <ClInclude Include="Engine\Kismet\UBlueprintMapLibrary.h" />
     <ClInclude Include="Engine\Kismet\UKismetSystemLibrary.h" />
     <ClInclude Include="Engine\Kismet\UGameplayStatics.h" />
     <ClInclude Include="Engine\Core\Misc\FNetworkVersion.h" />

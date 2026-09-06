@@ -1,9 +1,11 @@
 ﻿#pragma once
 
 #include "FName.h"
+
 #include "Containers/TArray.h"
 #include "Containers/TMap.h"
 #include "Containers/TSet.h"
+
 #include "ObjectMacros.h"
 #include "CoreTypes.h"
 

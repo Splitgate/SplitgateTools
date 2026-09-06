@@ -9,5 +9,9 @@ class UPortalWarsSaveGame : public UObject
 public:
 	GENERATED_BODY(UPortalWarsSaveGame, UObject, "PortalWarsSaveGame", "/Script/PortalWars")
 
-	PROPERTY(UNPACK(TMap<FString, FForgeMap>), ForgeMaps)
+	static void Init_PostEngine();
+
+	UPROPERTY(UNPACK(TMap<FString, FForgeMap>), ForgeMaps)
+
+	PROPERTY(FString, SlotName)
 };

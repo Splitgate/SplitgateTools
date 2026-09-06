@@ -78,6 +78,8 @@ public:
 	}
 
 	FDateTime(int32 Year, int32 Month, int32 Day, int32 Hour = 0, int32 Minute = 0, int32 Second = 0, int32 Millisecond = 0);
+	
+	std::string ToString();
 
 	int32 GetDay() const;
 

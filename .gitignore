@@ -341,3 +341,5 @@ ASALocalRun/
 healthchecksdb
 /todo.txt
 *.lnk
+*.7z
+*.rar

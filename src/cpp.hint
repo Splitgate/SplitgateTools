@@ -1,0 +1,6 @@
+// Hint files help the Visual Studio IDE interpret Visual C++ identifiers
+// such as names of functions and macros.
+// For more information see https://go.microsoft.com/fwlink/?linkid=865984
+#define UNPACK(__VA_ARGS__)
+#define UPROPERTY(Type, Name) template<typename T = Type> inline T& Name() { static int Offset = Class->FindOffset(#Name); return Get<T>(Offset); }
+#define GENERATED_BODY(Clss, OuterClss, ClassName, Module) private: typedef Clss ThisClass; typedef OuterClss Super; public: static const wchar_t* StaticPackage() { return TEXT(Module##"."##ClassName); }; static inline UClass* StaticClass() { return StaticLoadObject<UClass>(StaticPackage()); }; static Clss* DefaultObject() { return (Clss*)StaticLoadObject<UObject>(TEXT(Module##".Default__"##ClassName)); }

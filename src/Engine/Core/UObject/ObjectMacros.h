@@ -15,11 +15,13 @@ class UFunction;
 
 #define UNPACK(...) __VA_ARGS__
 
+// Manually set property offset
 #define PROPERTY(Type, Name) \
 static inline int Name##_Offset; \
 template<typename T = Type> \
 inline T& Name() { return *reinterpret_cast<T*>(uintptr_t(this) + Name##_Offset); }
 
+// Automatically found property offset
 #define UPROPERTY(Type, Name) \
 template<typename T = Type> \
 inline T& Name() { \

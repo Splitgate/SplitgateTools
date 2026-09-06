@@ -5,6 +5,8 @@
 #include <locale>
 #include <tchar.h>
 
+#include "CoreTypes.h"
+
 // Disable "conversion from 'size_t' to 'unsigned int', possible loss of data"
 #pragma warning (disable : 4267 4244 4624)
 

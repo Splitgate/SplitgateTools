@@ -25,18 +25,18 @@ void LeaderboardTab::RenderContent()
             break;
         };
 
-        ImGuiStyle& style = ImGui::GetStyle();
+        ImGuiStyle& Style = ImGui::GetStyle();
 
-        float size = ImGui::CalcTextSize(LoadingText).x + style.FramePadding.x * 2.0f;
-        float sizey = ImGui::CalcTextSize(LoadingText).y + style.FramePadding.y * 2.0f;
-        ImVec2 avail = ImGui::GetContentRegionAvail();
+        float SizeX = ImGui::CalcTextSize(LoadingText).x + Style.FramePadding.x * 2.0f;
+        float SizeY = ImGui::CalcTextSize(LoadingText).y + Style.FramePadding.y * 2.0f;
+        ImVec2 Avail = ImGui::GetContentRegionAvail();
 
-        float off = (avail.x - size) * 0.5f;
-        float offy = (avail.y - sizey) * 0.5f;
-        if (off > 0.0f && offy > 0.0f)
+        float OffsetX = (Avail.x - SizeX) * 0.5f;
+        float OffsetY = (Avail.y - SizeY) * 0.5f;
+        if (OffsetX > 0.0f && OffsetY > 0.0f)
         {
-            ImGui::SetCursorPosX(ImGui::GetCursorPosX() + off);
-            ImGui::SetCursorPosY(ImGui::GetCursorPosY() + offy);
+            ImGui::SetCursorPosX(ImGui::GetCursorPosX() + OffsetX);
+            ImGui::SetCursorPosY(ImGui::GetCursorPosY() + OffsetY);
         }
 
         ImGui::Text(LoadingText);

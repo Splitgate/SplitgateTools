@@ -16,6 +16,7 @@
 #include "PortalWars/UPortalWarsGameInstance.h"
 #include "PortalWars/GameModes/APortalWarsGameMode.h"
 #include "PortalWars/GameModes/Race/APortalWarsRaceGameMode.h"
+#include "PortalWars/Save/UPortalWarsSaveGame.h"
 
 Splitgate::Splitgate()
 {
@@ -37,6 +38,7 @@ void Splitgate::Init_PostEngine()
 {
 	BaseGame::Init_PostEngine();
 	
+	UPortalWarsSaveGame::Init_PostEngine();
 	UPortalWarsGameEngine::Init_PostEngine();
 	FGameModeConfig::Init_PostEngine();
 	
